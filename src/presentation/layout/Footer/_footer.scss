@@ -1,0 +1,27 @@
+@use 'presentation/styles/variables' as *;
+
+.footer {
+  margin-top: auto;
+  padding-block: 32px;
+  border-top: 1px solid var(--border-secondary);
+  background: var(--primary-white);
+}
+
+.footer__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.footer__text {
+  color: var(--grey-800);
+  font-size: 14px;
+}
+
+@media (max-width: $bp-tablet) {
+  .footer__inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

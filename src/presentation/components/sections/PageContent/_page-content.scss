@@ -1,0 +1,14 @@
+@use 'presentation/styles/variables' as *;
+
+.page-content {
+  padding-block: 64px;
+}
+
+.page-content__title {
+  margin-bottom: 16px;
+}
+
+.page-content__text {
+  max-width: 720px;
+  color: var(--grey-800);
+}

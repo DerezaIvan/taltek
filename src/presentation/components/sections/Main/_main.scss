@@ -1,0 +1,9 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main__intro {
+  background: linear-gradient(180deg, #ffffff 0%, var(--page-background) 100%);
+}

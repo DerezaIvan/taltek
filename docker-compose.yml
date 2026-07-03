@@ -1,0 +1,52 @@
+services:
+  frontend:
+    build:
+      context: .
+      args:
+        PUBLIC_DIRECTUS_URL: ${PUBLIC_DIRECTUS_URL:-}
+        DIRECTUS_TOKEN: ${DIRECTUS_TOKEN:-}
+    ports:
+      - '8080:80'
+
+  postgres:
+    profiles: [cms]
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-directus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+      POSTGRES_DB: ${POSTGRES_DB:-directus}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U ${POSTGRES_USER:-directus} -d ${POSTGRES_DB:-directus}']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  directus:
+    profiles: [cms]
+    image: directus/directus:11.5.1
+    ports:
+      - '8055:8055'
+    environment:
+      SECRET: ${DIRECTUS_SECRET:-replace-with-a-random-secret}
+      DB_CLIENT: pg
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: ${POSTGRES_DB:-directus}
+      DB_USER: ${POSTGRES_USER:-directus}
+      DB_PASSWORD: ${POSTGRES_PASSWORD:-directus}
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:-directus}
+      PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:-http://localhost:8055}
+      CORS_ENABLED: 'true'
+      CORS_ORIGIN: 'true'
+    volumes:
+      - directus_uploads:/directus/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
+  directus_uploads:

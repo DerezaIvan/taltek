@@ -1,0 +1,61 @@
+$anim-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+$anim-duration: 0.65s;
+
+[data-anim] {
+  transition:
+    opacity $anim-duration $anim-ease,
+    transform 0.75s $anim-ease;
+}
+
+[data-anim]:not(.is-visible) {
+  opacity: 0;
+}
+
+[data-anim='fade-up']:not(.is-visible) {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+}
+
+[data-anim='fade-right']:not(.is-visible) {
+  opacity: 0;
+  transform: translate3d(-40px, 0, 0);
+}
+
+[data-anim='fade-left']:not(.is-visible) {
+  opacity: 0;
+  transform: translate3d(40px, 0, 0);
+}
+
+[data-anim='hero-line']:not(.is-visible) {
+  transform: translate3d(0, 32px, 0) scale(0.98);
+  transition:
+    opacity $anim-duration $anim-ease,
+    transform 0.8s $anim-ease;
+}
+
+[data-anim='fade-in']:not(.is-visible) {
+  transform: none;
+}
+
+[data-anim].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+[data-anim='fade-in'].is-visible {
+  transform: none;
+}
+
+@for $i from 1 through 12 {
+  [data-anim-delay='#{$i}'] {
+    transition-delay: #{36ms + $i * 52ms};
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-anim] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

@@ -1,0 +1,50 @@
+@use 'presentation/styles/variables' as *;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--primary-white);
+  border-bottom: 1px solid var(--border-secondary);
+}
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 72px;
+  gap: 24px;
+}
+
+.header__logo {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: -0.02em;
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header__link {
+  font-size: 15px;
+  color: var(--colors-text-primary);
+  transition: color 0.2s ease;
+
+  &:hover,
+  &.header__link--active {
+    color: var(--accent-700);
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .header__nav {
+    gap: 16px;
+  }
+
+  .header__link {
+    font-size: 14px;
+  }
+}
