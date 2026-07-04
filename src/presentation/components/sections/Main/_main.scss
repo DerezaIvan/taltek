@@ -1,9 +1,13 @@
 .main {
   display: flex;
   flex-direction: column;
+  width: var(--layout-width);
   min-height: 100vh;
-}
+  margin-inline: auto;
+  border-radius: var(--layout-radius);
+  overflow: hidden;
 
-.main__intro {
-  background: linear-gradient(180deg, #ffffff 0%, var(--page-background) 100%);
+  &__hero {
+    position: relative;
+  }
 }

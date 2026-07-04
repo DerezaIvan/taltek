@@ -1,13 +1,7 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
+  import type { PageContentProps } from '$shared/interfaces';
 
-  interface Props {
-    title: string;
-    description?: string;
-    children?: Snippet;
-  }
-
-  let { title, description, children }: Props = $props();
+  let { title, description, children }: PageContentProps = $props();
 </script>
 
 <style lang="scss">
@@ -16,16 +10,16 @@
 
 <section class="page-content">
   <div class="container">
-    <h1 class="h3 page-content__title" data-anim="fade-up">{title}</h1>
+    <h1 class="heading-lg page-content__title">{title}</h1>
 
     {#if description}
-      <p class="body1 page-content__text" data-anim="fade-up" data-anim-delay="1">
+      <p class="text-md page-content__text">
         {description}
       </p>
     {/if}
 
     {#if children}
-      <div data-anim="fade-up" data-anim-delay="2">
+      <div>
         {@render children()}
       </div>
     {/if}

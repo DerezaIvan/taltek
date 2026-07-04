@@ -14,7 +14,4 @@
   {@html `<script type="application/ld+json">${JSON.stringify(JSON_LD_ORGANIZATION)}</script>`}
 </svelte:head>
 
-<Main
-  heroTitle={data.page.heroTitle ?? data.page.title}
-  heroSubtitle={data.page.heroSubtitle ?? data.page.description}
-/>
+<Main heroTitle={data.page.heroTitle} heroSubtitle={data.page.heroSubtitle} />

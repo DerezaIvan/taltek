@@ -1,50 +1,125 @@
 @use 'presentation/styles/variables' as *;
 
 .header {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: 10;
-  background: var(--primary-white);
-  border-bottom: 1px solid var(--border-secondary);
-}
+  padding-top: 24px;
+  padding-bottom: 24px;
+  background: linear-gradient(90.01deg, rgb(30, 96, 179) 0.01%, rgb(13, 55, 118) 98.72%);
 
-.header__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 72px;
-  gap: 24px;
-}
-
-.header__logo {
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.02em;
-}
-
-.header__nav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.header__link {
-  font-size: 15px;
-  color: var(--colors-text-primary);
-  transition: color 0.2s ease;
-
-  &:hover,
-  &.header__link--active {
-    color: var(--accent-700);
-  }
-}
-
-@media (max-width: $bp-tablet) {
-  .header__nav {
-    gap: 16px;
+  &--overlay {
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    background: transparent;
   }
 
-  .header__link {
-    font-size: 14px;
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__logo {
+    display: block;
+    flex-shrink: 0;
+    height: 32px;
+    width: auto;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 70px;
+    margin-left: auto;
+  }
+
+  &__link {
+    position: relative;
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: #fff;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover::after,
+    &--active::after {
+      opacity: 1;
+    }
+  }
+
+  &__account {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+    color: #fff;
+  }
+
+  &__account-icon {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  &__account-label {
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__account-badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @media (max-width: $bp-tablet) {
+    &__inner {
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    &__nav {
+      order: 3;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-left: 0;
+    }
+
+    &__account {
+      margin-left: auto;
+    }
+
+    &__link {
+      font-size: 13px;
+    }
   }
 }

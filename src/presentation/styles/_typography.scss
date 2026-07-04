@@ -1,126 +1,78 @@
-@use 'sass:math';
-@use 'variables' as *;
+$font-family-uncage: 'UNCAGE', sans-serif;
+$font-family-ubuntu: 'Ubuntu', sans-serif;
 
-$h2-fluid-range: $bp-desktop-sm - $bp-mobile;
-$tablet-fluid-range: $bp-tablet - $bp-mobile;
-$desktop-sm-fluid-range: $bp-desktop-sm - $bp-tablet;
-$h4-fluid-min: $bp-tablet + 1px;
-$h4-fluid-range: $bp-desktop - $h4-fluid-min;
+$heading-xl-size: 64px;
+$heading-xl-line-height: 100%;
+$heading-xl-weight: 700;
+$heading-xl-letter-spacing: 1px;
 
-.h2 {
-  font-weight: 700;
-  font-size: clamp(
-    34px,
-    calc(34px + (100vw - #{$bp-mobile}) * #{math.div(30px, $h2-fluid-range)}),
-    64px
-  );
-  line-height: 120%;
-  letter-spacing: -0.5px;
+$heading-lg-size: 46px;
+$heading-lg-line-height: 67px;
+$heading-lg-weight: 500;
+$heading-lg-letter-spacing: 1px;
+
+$text-xl-size: 24px;
+$text-xl-line-height: 100%;
+$text-xl-weight: 500;
+$text-xl-letter-spacing: 0;
+
+$text-md-size: 18px;
+$text-md-line-height: 29px;
+$text-md-weight: 400;
+$text-md-letter-spacing: 0;
+
+$text-sm-size: 14px;
+$text-sm-line-height: 21px;
+$text-sm-weight: 400;
+$text-sm-letter-spacing: 0;
+
+:root {
+  --font-family-uncage: #{$font-family-uncage};
+  --font-family-ubuntu: #{$font-family-ubuntu};
 }
 
-.h3 {
-  font-weight: 500;
-  line-height: 117%;
-  letter-spacing: 0;
-
-  @media (max-width: $bp-tablet) {
-    font-size: 24px;
-  }
-
-  @media (min-width: #{$bp-tablet + 1}) and (max-width: #{$bp-desktop - 1}) {
-    font-size: 34px;
-  }
-
-  @media (min-width: $bp-desktop) {
-    font-size: 48px;
-  }
+body {
+  font-family: $font-family-ubuntu;
 }
 
-.h4 {
-  font-weight: 500;
-  line-height: 124%;
-  letter-spacing: 0.25px;
-
-  @media (max-width: $bp-tablet) {
-    font-size: 24px;
-  }
-
-  @media (min-width: $h4-fluid-min) {
-    font-size: clamp(
-      24px,
-      calc(24px + (100vw - #{$h4-fluid-min}) * #{math.div(10px, $h4-fluid-range)}),
-      34px
-    );
-  }
+.heading-xl {
+  font-family: $font-family-uncage;
+  font-weight: $heading-xl-weight;
+  font-size: $heading-xl-size;
+  line-height: $heading-xl-line-height;
+  letter-spacing: $heading-xl-letter-spacing;
+  text-transform: uppercase;
 }
 
-.h5 {
-  font-weight: 500;
-  line-height: 133%;
-  letter-spacing: 0;
-
-  @media (max-width: #{$bp-tablet - 1}) {
-    font-size: clamp(
-      16px,
-      calc(16px + (100vw - #{$bp-mobile}) * #{math.div(4px, $tablet-fluid-range)}),
-      20px
-    );
-  }
-
-  @media (min-width: $bp-tablet) {
-    font-size: clamp(
-      20px,
-      calc(20px + (100vw - #{$bp-tablet}) * #{math.div(4px, $desktop-sm-fluid-range)}),
-      24px
-    );
-  }
+.heading-lg {
+  font-family: $font-family-uncage;
+  font-weight: $heading-lg-weight;
+  font-size: $heading-lg-size;
+  line-height: $heading-lg-line-height;
+  letter-spacing: $heading-lg-letter-spacing;
+  text-transform: uppercase;
 }
 
-.h6 {
-  font-weight: 500;
-  line-height: 160%;
-  letter-spacing: 0.15px;
-
-  @media (max-width: $bp-tablet) {
-    font-size: 16px;
-  }
-
-  @media (min-width: #{$bp-tablet + 1}) {
-    font-size: 20px;
-  }
+.text-xl {
+  font-family: $font-family-ubuntu;
+  font-weight: $text-xl-weight;
+  font-size: $text-xl-size;
+  line-height: $text-xl-line-height;
+  letter-spacing: $text-xl-letter-spacing;
 }
 
-.body1 {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 150%;
-  letter-spacing: 0.15px;
+.text-md {
+  font-family: $font-family-ubuntu;
+  font-weight: $text-md-weight;
+  font-size: $text-md-size;
+  line-height: $text-md-line-height;
+  letter-spacing: $text-md-letter-spacing;
 }
 
-.body2 {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 143%;
-  letter-spacing: 0.17px;
-}
-
-.subtitle2 {
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 157%;
-  letter-spacing: 0.1px;
-}
-
-.label {
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 12px;
-  letter-spacing: 0.15px;
-}
-
-.value {
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  letter-spacing: 0.15px;
+.text-sm {
+  font-family: $font-family-ubuntu;
+  font-weight: $text-sm-weight;
+  font-size: $text-sm-size;
+  line-height: $text-sm-line-height;
+  letter-spacing: $text-sm-letter-spacing;
 }

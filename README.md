@@ -31,10 +31,10 @@ docker compose --profile cms up --build
 
 Скопируйте `.env.example` в `.env`.
 
-| Переменная | Описание |
-|------------|----------|
-| `PUBLIC_DIRECTUS_URL` | URL Directus API |
-| `DIRECTUS_TOKEN` | Read-only token для fetch на этапе build |
+| Переменная                 | Описание                                     |
+| -------------------------- | -------------------------------------------- |
+| `PUBLIC_DIRECTUS_URL`      | URL Directus API                             |
+| `DIRECTUS_TOKEN`           | Read-only token для fetch на этапе build     |
 | `DIRECTUS_*`, `POSTGRES_*` | Настройки Directus/Postgres в docker-compose |
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
@@ -45,23 +45,23 @@ docker compose --profile cms up --build
 
 ### `navigation_items`
 
-| Поле | Тип | Примечание |
-|------|-----|------------|
-| `label` | String | Текст ссылки |
-| `href` | String | Путь, напр. `/about/` |
-| `sort` | Integer | Порядок |
-| `status` | String | `published` / `draft` |
+| Поле     | Тип     | Примечание            |
+| -------- | ------- | --------------------- |
+| `label`  | String  | Текст ссылки          |
+| `href`   | String  | Путь, напр. `/about/` |
+| `sort`   | Integer | Порядок               |
+| `status` | String  | `published` / `draft` |
 
 ### `pages`
 
-| Поле | Тип | Примечание |
-|------|-----|------------|
-| `slug` | String | `home`, `about`, `services`, `contacts` |
-| `title` | String | SEO title |
-| `description` | Text | SEO description |
-| `hero_title` | String | опционально |
-| `hero_subtitle` | Text | опционально |
-| `status` | String | `published` / `draft` |
+| Поле            | Тип    | Примечание                              |
+| --------------- | ------ | --------------------------------------- |
+| `slug`          | String | `home`, `about`, `services`, `contacts` |
+| `title`         | String | SEO title                               |
+| `description`   | Text   | SEO description                         |
+| `hero_title`    | String | опционально                             |
+| `hero_subtitle` | Text   | опционально                             |
+| `status`        | String | `published` / `draft`                   |
 
 Public read: включите read-доступ для роли Public или используйте static token в `DIRECTUS_TOKEN`.
 

@@ -1,0 +1,63 @@
+:global {
+  .action-button {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    max-width: 100%;
+    border: none;
+    border-radius: 999px;
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    &--glass {
+      width: 345px;
+      height: 71px;
+      padding: 0 32px;
+      border: 1px solid #ffffff33;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+    }
+
+    &--ghost {
+      padding: 0;
+      background: transparent;
+      border: none;
+      gap: 8px;
+    }
+
+    &--solid {
+      min-width: 345px;
+      height: 71px;
+      padding: 0 32px;
+      background: linear-gradient(93.45deg, #1e60b3 23.1%, #0d3776 95.22%);
+      border: none;
+    }
+
+    &__icons {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+  }
+}

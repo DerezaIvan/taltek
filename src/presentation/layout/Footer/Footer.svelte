@@ -9,8 +9,8 @@
 </style>
 
 <footer class="footer">
-  <div class="container footer__inner">
-    <p class="footer__text">© {year} {SITE_NAME}</p>
-    <p class="footer__text">Заготовка лендинга</p>
+  <div class="container-wide footer__inner">
+    <p class="footer__text text-sm">© {year} {SITE_NAME}</p>
+    <p class="footer__text text-sm">Заготовка лендинга</p>
   </div>
 </footer>

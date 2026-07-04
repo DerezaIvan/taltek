@@ -72,7 +72,7 @@ export async function getPageContent(slug: PageSeoKey): Promise<PageContent> {
 
   return {
     ...mapPage(record, fallback.path),
-    heroTitle: record.hero_title ?? fallbackContent.title,
+    heroTitle: record.hero_title ?? undefined,
     heroSubtitle: record.hero_subtitle ?? undefined,
   };
 }

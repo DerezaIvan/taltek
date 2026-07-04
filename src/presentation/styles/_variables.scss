@@ -3,8 +3,17 @@ $bp-tablet: 768px;
 $bp-desktop-sm: 1024px;
 $bp-desktop: 1440px;
 
+$layout-width: 1920px;
+$layout-radius: 30px;
+$container-width: 1400px;
+$container-width-wide: 1720px;
+
 :root {
-  --font-family-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --layout-width: #{$layout-width};
+  --layout-radius: #{$layout-radius};
+  --container-width: #{$container-width};
+  --container-width-wide: #{$container-width-wide};
+
   --primary-white: #ffffff;
   --primary-black: #000000de;
   --color-black: #000000;
