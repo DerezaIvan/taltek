@@ -35,15 +35,20 @@ $brand-blue-dark: #0d3776;
   --brand-navy: #{$brand-navy};
   --brand-navy-80: #032051cc;
   --delivery-card-bg: #{$delivery-card-bg};
-  --brand-gradient: linear-gradient(93.45deg, #{$brand-blue} 23.1%, #{$brand-blue-dark} 95.22%);
+  --brand-overlay-gradient: linear-gradient(
+    90.01deg,
+    rgba(30, 96, 179, 0.7) 0.01%,
+    rgba(13, 55, 118, 0.7) 98.72%
+  );
   --brand-section-gradient: linear-gradient(
     90.01deg,
     #{$brand-blue} 0.01%,
     #{$brand-blue-dark} 98.72%
   );
+  --brand-gradient: var(--brand-section-gradient);
   --delivery-card-num-gradient: linear-gradient(
-    93.45deg,
-    rgba(30, 96, 179, 0.06) 23.1%,
-    rgba(13, 55, 118, 0.06) 95.22%
+    90.01deg,
+    rgba(30, 96, 179, 0.06) 0.01%,
+    rgba(13, 55, 118, 0.06) 98.72%
   );
 }

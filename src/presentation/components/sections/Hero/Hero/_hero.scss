@@ -20,11 +20,7 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90.01deg,
-      rgba(30, 96, 179, 0.7) 0.01%,
-      rgba(13, 55, 118, 0.7) 98.72%
-    );
+    background: var(--brand-overlay-gradient);
   }
 
   &__content {
