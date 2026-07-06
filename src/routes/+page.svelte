@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Delivery, Main } from '$presentation/components/sections';
+  import { Delivery, Main, Stats } from '$presentation/components/sections';
   import { JSON_LD_ORGANIZATION } from '$shared/constants/seo';
   import type { PageData } from './$types';
 
@@ -17,5 +17,6 @@
 <Main heroTitle={data.page.heroTitle} heroSubtitle={data.page.heroSubtitle}>
   {#snippet afterHero()}
     <Delivery />
+    <Stats />
   {/snippet}
 </Main>
