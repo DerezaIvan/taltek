@@ -1,26 +1,191 @@
 @use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography' as *;
 
 .footer {
+  position: relative;
   margin-top: auto;
-  padding-block: 32px;
-  border-top: 1px solid var(--border-secondary);
-  background: var(--primary-white);
+  overflow: hidden;
+  border-radius: $layout-radius;
+  color: var(--primary-white);
 
-  &__inner {
+  &__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90.01deg,
+        rgba(30, 96, 179, 0.88) 0.01%,
+        rgba(13, 55, 118, 0.92) 98.72%);
+  }
+
+  &__content {
+    position: relative;
+    z-index: 1;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+  }
+
+  &__top {
+    display: flex;
+    gap: 92px;
+    align-items: flex-start;
+    padding-top: 100px;
+  }
+
+  &__brand {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    display: block;
+    height: 32px;
+    width: auto;
+  }
+
+  &__description {
+    max-width: 389px;
+    color: var(--primary-white);
+    font-family: var(--font-family-ubuntu);
+    padding-top: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+  }
+
+  &__legal {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding-top: 60px;
+  }
+
+  &__privacy {
+    width: fit-content;
+    font-family: var(--font-family-ubuntu);
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    text-decoration: underline;
+    color: var(--primary-white);
+  }
+
+  &__copyright {
+    color: var(--primary-white);
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+  }
+
+  &__nav {
+    flex-shrink: 0;
+  }
+
+  &__contacts {
+    display: flex;
+    flex: 1;
     justify-content: space-between;
-    gap: 16px;
+    gap: 7px;
+    min-width: 0;
+    flex-direction: column;
   }
 
-  &__text {
-    color: var(--grey-800);
+  &__contacts-info {
+    flex-shrink: 0;
   }
 
-  @media (max-width: $bp-tablet) {
-    &__inner {
-      flex-direction: column;
-      align-items: flex-start;
+  &__cta {
+    flex-shrink: 0;
+    margin-left: auto;
+    align-self: end;
+  }
+
+  &__section-title {
+    margin-bottom: 30px;
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--primary-white);
+  }
+
+  &__nav-list,
+  &__contacts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__nav-link,
+  &__contact-link {
+    font-family: var(--font-family-ubuntu);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    color: var(--primary-white);
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
   }
+
+  &__contact-text {
+    font-family: var(--font-family-ubuntu);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0%;
+    color: var(--primary-white);
+    white-space: nowrap;
+  }
+
+  &__nav-link--active {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  &__nav-link--muted {
+    opacity: 0.7;
+  }
+
+  &__bottom {
+    margin-top: 64px;
+    overflow: hidden;
+  }
+
+  &__brand-name {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-uncage);
+    font-weight: 500;
+    font-size: 217px;
+    line-height: 100%;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--primary-white);
+    white-space: nowrap;
+    transform: translateY(0.25em);
+  }
+
 }
