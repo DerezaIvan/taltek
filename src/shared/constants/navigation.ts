@@ -19,9 +19,5 @@ export function getFooterNavigation(navigation: readonly NavItem[]): FooterNavIt
     return [{ label: 'Личный кабинет - скоро', muted: true }];
   }
 
-  return [
-    navigation[0],
-    { label: 'Личный кабинет - скоро', muted: true },
-    ...navigation.slice(1),
-  ];
+  return [navigation[0], { label: 'Личный кабинет - скоро', muted: true }, ...navigation.slice(1)];
 }

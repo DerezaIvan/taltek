@@ -21,7 +21,8 @@
       src={asset('/images/footer-bckg.png')}
       alt=""
       loading="lazy"
-      decoding="async" />
+      decoding="async"
+    />
     <div class="footer__overlay"></div>
   </div>
 
@@ -54,7 +55,8 @@
                 <a
                   class="footer__nav-link"
                   class:footer__nav-link--active={isActiveRoute(item.href, page.url.pathname)}
-                  href={resolve(item.href)}>
+                  href={resolve(item.href)}
+                >
                   {item.label}
                 </a>
               {/if}
@@ -70,7 +72,9 @@
             <a class="footer__contact-link" href="tel:+74959001095">+7 (495) 900 10 95</a>
           </li>
           <li>
-            <span class="footer__contact-text">Главный офис: Россия, г. Москва, Дукат Плейс 3, Гашека 6, офис 1210</span>
+            <span class="footer__contact-text"
+              >Главный офис: Россия, г. Москва, Дукат Плейс 3, Гашека 6, офис 1210</span
+            >
           </li>
           <li>
             <a class="footer__contact-link" href="mailto:infor@taltektrans.pro">
