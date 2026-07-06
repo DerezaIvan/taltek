@@ -7,6 +7,10 @@ $layout-width: 1920px;
 $layout-radius: 30px;
 $container-width: 1400px;
 $container-width-wide: 1720px;
+$brand-navy: #032051;
+$delivery-card-bg: #f5f9ff;
+$brand-blue: #1e60b3;
+$brand-blue-dark: #0d3776;
 
 :root {
   --layout-width: #{$layout-width};
@@ -15,14 +19,7 @@ $container-width-wide: 1720px;
   --container-width-wide: #{$container-width-wide};
 
   --primary-white: #ffffff;
-  --primary-black: #000000de;
-  --color-black: #000000;
-  --grey-900: #212121;
   --grey-800: #424242;
-  --grey-500: #9e9e9e;
-  --grey-300: #e0e0e0;
-  --grey-100: #f5f5f5;
-  --grey-50: #fafafa;
   --accent-700: #2563eb;
   --button-primary-hover: #1d4ed8;
   --button-primary-active: #1e40af;
@@ -33,4 +30,14 @@ $container-width-wide: 1720px;
   --border-secondary: #000b1914;
   --colors-border-accent-primary: #2563eb;
   --page-background: #f3f4f6;
+
+  --brand-navy: #{$brand-navy};
+  --brand-navy-80: #032051cc;
+  --delivery-card-bg: #{$delivery-card-bg};
+  --brand-gradient: linear-gradient(93.45deg, #{$brand-blue} 23.1%, #{$brand-blue-dark} 95.22%);
+  --delivery-card-num-gradient: linear-gradient(
+    93.45deg,
+    rgba(30, 96, 179, 0.06) 23.1%,
+    rgba(13, 55, 118, 0.06) 95.22%
+  );
 }

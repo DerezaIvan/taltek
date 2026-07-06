@@ -4,4 +4,5 @@ export interface MainProps {
   heroTitle?: string;
   heroSubtitle?: string;
   children?: Snippet;
+  afterHero?: Snippet;
 }

@@ -1,0 +1,194 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$delivery-gap: 30px;
+$delivery-cell-height: 170px;
+
+.delivery {
+  padding-block: 80px;
+
+  &__title {
+    max-width: 1200px;
+    margin-bottom: 40px;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: typography.$heading-lg-line-height;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__top {
+    display: flex;
+    gap: $delivery-gap;
+    align-items: flex-start;
+  }
+
+  &__top-rows {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-gap;
+  }
+
+  &__row {
+    display: flex;
+    gap: $delivery-gap;
+    align-items: flex-start;
+    width: fit-content;
+  }
+
+  &__bottom {
+    margin-top: $delivery-gap;
+  }
+
+  &__card {
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    align-self: start;
+    min-width: 0;
+    padding: 35px 30px;
+    border-radius: 30px;
+    background: var(--delivery-card-bg);
+    overflow: hidden;
+  }
+
+  &__card-title {
+    position: relative;
+    z-index: 1;
+    color: var(--brand-navy);
+    font-family: var(--font-family-ubuntu);
+    font-size: typography.$text-card-title-size;
+    font-weight: typography.$text-card-title-weight;
+    line-height: typography.$text-card-title-line-height;
+    overflow-wrap: break-word;
+  }
+
+  &__card-desc {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+  }
+
+  &__card-num {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    z-index: 0;
+    font-family: typography.$font-family-uncage;
+    font-weight: 700;
+    font-size: typography.$delivery-card-num-size;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: right;
+    background: var(--delivery-card-num-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    pointer-events: none;
+    user-select: none;
+    transform: translateY(typography.$delivery-card-num-offset);
+  }
+
+  &__icon {
+    box-sizing: border-box;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    align-self: start;
+    padding: 55px;
+    border-radius: 30px;
+    background: var(--brand-gradient);
+
+    :global(svg) {
+      display: block;
+      flex-shrink: 0;
+    }
+  }
+
+  &__image {
+    box-sizing: border-box;
+    display: block;
+    flex-shrink: 0;
+    overflow: hidden;
+    border-radius: 30px;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &--side {
+      aspect-ratio: 410 / 370;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .delivery {
+    padding-block: 48px;
+
+    &__title {
+      margin-bottom: 24px;
+    }
+
+    &__top,
+    &__top-rows,
+    &__row {
+      width: 100%;
+    }
+
+    &__top {
+      flex-direction: column;
+    }
+
+    &__row {
+      flex-wrap: wrap;
+    }
+
+    &__card,
+    &__icon,
+    &__image {
+      flex: 1 1 100% !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: none !important;
+    }
+
+    &__card,
+    &__icon {
+      height: $delivery-cell-height !important;
+    }
+
+    &__image {
+      height: auto !important;
+      aspect-ratio: 16 / 10;
+
+      &--side {
+        aspect-ratio: 410 / 370;
+      }
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .delivery {
+    &__icon {
+      padding: 40px;
+    }
+
+    &__card-num {
+      font-size: 96px;
+    }
+  }
+}

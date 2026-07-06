@@ -3,7 +3,7 @@
   import { Hero } from '$presentation/components/sections';
   import type { MainProps } from '$shared/interfaces';
 
-  let { heroTitle, heroSubtitle, children }: MainProps = $props();
+  let { heroTitle, heroSubtitle, children, afterHero }: MainProps = $props();
 </script>
 
 <style lang="scss">
@@ -22,6 +22,10 @@
         {...heroSubtitle?.trim() ? { subtitle: heroSubtitle } : {}}
       />
     </div>
+
+    {#if afterHero}
+      {@render afterHero()}
+    {/if}
   {/if}
 
   <Footer />

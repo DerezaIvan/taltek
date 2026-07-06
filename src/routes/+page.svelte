@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Main } from '$presentation/components/sections';
+  import { Delivery, Main } from '$presentation/components/sections';
   import { JSON_LD_ORGANIZATION } from '$shared/constants/seo';
   import type { PageData } from './$types';
 
@@ -14,4 +14,8 @@
   {@html `<script type="application/ld+json">${JSON.stringify(JSON_LD_ORGANIZATION)}</script>`}
 </svelte:head>
 
-<Main heroTitle={data.page.heroTitle} heroSubtitle={data.page.heroSubtitle} />
+<Main heroTitle={data.page.heroTitle} heroSubtitle={data.page.heroSubtitle}>
+  {#snippet afterHero()}
+    <Delivery />
+  {/snippet}
+</Main>
