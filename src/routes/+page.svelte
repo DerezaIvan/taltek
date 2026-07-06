@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Delivery, Main, Stats } from '$presentation/components/sections';
+  import { Cta, Delivery, Main, Stats } from '$presentation/components/sections';
   import { JSON_LD_ORGANIZATION } from '$shared/constants/seo';
   import type { PageData } from './$types';
 
@@ -18,5 +18,6 @@
   {#snippet afterHero()}
     <Delivery />
     <Stats />
+    <Cta />
   {/snippet}
 </Main>

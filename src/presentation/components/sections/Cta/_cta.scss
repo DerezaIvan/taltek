@@ -1,0 +1,58 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+.cta {
+  padding-block: 100px;
+  color: var(--brand-navy);
+  background: var(--primary-white);
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 35px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-md-size;
+    font-weight: typography.$text-md-weight;
+    letter-spacing: typography.$text-md-letter-spacing;
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .cta {
+    padding-block: 64px;
+
+    &__inner {
+      gap: 32px;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .cta {
+    padding-block: 48px;
+
+    &__text {
+      gap: 12px;
+    }
+  }
+}

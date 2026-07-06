@@ -1,12 +1,7 @@
 <script lang="ts">
   import { asset, resolve } from '$app/paths';
-  import { ActionButton } from '$presentation/components/ui';
-  import {
-    IconArrowUpRight,
-    IconWagonBox,
-    IconWagonFlat,
-    IconWagonHopper,
-  } from '$presentation/components/icons';
+  import { ActionButton, RequestButton } from '$presentation/components/ui';
+  import { IconArrowUpRight } from '$presentation/components/icons';
   import { DEFAULT_HERO_SUBTITLE, DEFAULT_HERO_TITLE } from '$shared/constants/hero';
   import type { HeroProps } from '$shared/interfaces';
 
@@ -39,14 +34,7 @@
       </p>
 
       <div class="hero__actions">
-        <ActionButton variant="glass">
-          Оставить запрос
-          {#snippet icons()}
-            <IconWagonHopper />
-            <IconWagonFlat />
-            <IconWagonBox />
-          {/snippet}
-        </ActionButton>
+        <RequestButton variant="glass" />
 
         <ActionButton variant="ghost" href={resolve('/services/')}>
           Услуги и парк вагонов

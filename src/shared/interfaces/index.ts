@@ -1,4 +1,5 @@
 export type { ActionButtonProps, ActionButtonVariant } from './action-button';
+export type { RequestButtonProps } from './request-button';
 export type { ButtonProps, ButtonSize, ButtonVariant } from './button';
 export type { HeaderProps } from './header';
 export type { HeroProps } from './hero';

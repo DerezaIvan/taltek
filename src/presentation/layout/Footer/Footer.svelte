@@ -1,8 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import { asset, resolve } from '$app/paths';
-  import { ActionButton } from '$presentation/components/ui';
-  import { IconWagonBox, IconWagonFlat, IconWagonHopper } from '$presentation/components/icons';
+  import { RequestButton } from '$presentation/components/ui';
   import { getFooterNavigation } from '$shared/constants/navigation';
   import { isActiveRoute } from '$shared/utils/is-active-route';
 
@@ -85,14 +84,7 @@
       </div>
 
       <div class="footer__cta">
-        <ActionButton variant="glass">
-          Оставить запрос
-          {#snippet icons()}
-            <IconWagonHopper />
-            <IconWagonFlat />
-            <IconWagonBox />
-          {/snippet}
-        </ActionButton>
+        <RequestButton variant="glass" />
       </div>
     </div>
 
