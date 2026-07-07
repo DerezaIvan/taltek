@@ -1,0 +1,120 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$om-image-width: 340px;
+$om-image-height: 405px;
+$om-image-gap: 25px;
+$om-content-gap: 70px;
+$om-image-overlay: linear-gradient(180deg,
+    rgba(0, 58, 135, 0.55) 0%,
+    rgba(0, 58, 135, 0.85) 100%);
+
+.our-mission {
+  padding-block: 100px;
+
+  &__inner {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: $om-image-gap;
+    width: fit-content;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
+  &__group {
+    display: flex;
+    align-items: flex-end;
+    gap: $om-content-gap;
+  }
+
+  &__image {
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    width: $om-image-width;
+    height: $om-image-height;
+    margin: 0;
+    border-radius: var(--layout-radius);
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: $om-image-overlay;
+      pointer-events: none;
+    }
+  }
+
+  &__content {
+    flex-shrink: 0;
+    align-self: center;
+    width: fit-content;
+    max-width: 390px;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: 100%;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__text {
+    margin: 0;
+    padding-top: 25px;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: 400;
+    font-size: typography.$text-card-title-size;
+    line-height: 27px;
+    text-align: justify;
+  }
+}
+
+@media (max-width: $bp-desktop) {
+  .our-mission {
+    &__inner {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 32px;
+    }
+
+    &__group {
+      flex-wrap: wrap;
+      justify-content: center;
+      row-gap: 32px;
+    }
+
+    &__content {
+      text-align: center;
+    }
+
+    &__text {
+      text-align: justify;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .our-mission {
+    padding-block: 48px;
+
+    &__image {
+      width: min(100%, $om-image-width);
+      height: auto;
+      aspect-ratio: 340 / 405;
+    }
+  }
+}
