@@ -1,3 +1,4 @@
+export { default as IconCheckmark } from './IconCheckmark.svelte';
 export { default as IconWhyOwnFleet } from './IconWhyOwnFleet.svelte';
 export { default as IconWhyGeography } from './IconWhyGeography.svelte';
 export { default as IconWhyAutomation } from './IconWhyAutomation.svelte';

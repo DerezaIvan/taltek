@@ -51,7 +51,7 @@ $why-us-icon-size: 89px;
     height: $why-us-icon-size;
     padding: 29px 27px;
     border-radius: 20px;
-    background: var(--why-us-icon-gradient);
+    background: var(--card-icon-gradient);
     color: var(--primary-white);
 
     :global(svg) {

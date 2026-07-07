@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { AboutIntro, Main, PageHero, WhyUs } from '$presentation/components/sections';
+  import { AboutIntro, Main, PageHero, WhatYouGet, WhyUs } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('about');
@@ -23,4 +23,5 @@
 
   <AboutIntro />
   <WhyUs />
+  <WhatYouGet />
 </Main>

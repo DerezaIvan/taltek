@@ -1,10 +1,11 @@
+@use 'sass:math';
 @use 'presentation/styles/variables' as *;
 @use 'presentation/styles/typography-tokens' as typography;
 
 $about-intro-content-fr: 658;
 $about-intro-media-fr: 692;
 $about-intro-gap-ratio: calc(50 / 1400 * 100%);
-$about-intro-image-ratio: 692 / 461;
+$about-intro-image-ratio: math.div(692, 461);
 
 .about-intro {
   padding-top: 82px;
