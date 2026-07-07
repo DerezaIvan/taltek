@@ -40,14 +40,17 @@
   height: number,
   modifier = ''
 )}
-  {@const images = DELIVERY_IMAGES[imageKey]}
-  <picture
+  {@const src = DELIVERY_IMAGES[imageKey]}
+  <img
     class="delivery__image{modifier ? ` delivery__image${modifier}` : ''}"
     style={itemSizeStyle(width, height)}
-  >
-    <source srcset={asset(images.webp)} type="image/webp" />
-    <img loading="lazy" decoding="async" src={asset(images.png)} {alt} {width} {height} />
-  </picture>
+    loading="lazy"
+    decoding="async"
+    src={asset(src)}
+    {alt}
+    {width}
+    {height}
+  />
 {/snippet}
 
 {#snippet rowItem(item: DeliveryRowItem)}

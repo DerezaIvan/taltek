@@ -1,0 +1,36 @@
+@use 'presentation/styles/mixins/hero-media' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+.page-hero {
+  @include hero-media-layout;
+
+  &__image {
+    @include hero-media-cover;
+  }
+
+  &__body {
+    padding-top: 80px;
+    padding-bottom: 89px;
+  }
+
+  &__breadcrumbs {
+    padding-top: 49px;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    margin: 29px 0 0;
+    color: var(--primary-white);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$page-hero-title-weight;
+    font-size: typography.$page-hero-title-size;
+    line-height: typography.$page-hero-title-line-height;
+    letter-spacing: typography.$page-hero-title-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__title-line {
+    display: block;
+  }
+}

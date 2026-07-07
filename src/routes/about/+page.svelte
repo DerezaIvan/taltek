@@ -1,8 +1,15 @@
 <script lang="ts">
-  import { Main, PageContent } from '$presentation/components/sections';
+  import { AboutIntro, Main, PageHero } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('about');
+
+  const breadcrumbs = [
+    { label: 'Главная', href: '/' },
+    { label: 'О компании' },
+  ];
+
+  const titleLines = ['[ЭКО]ЛОГИЧНЫЙ выбор', 'для Ваших грузов'];
 </script>
 
 <svelte:head>
@@ -13,8 +20,9 @@
 </svelte:head>
 
 <Main>
-  <PageContent
-    title="О компании"
-    description="Заготовка страницы «О компании». Контент будет добавлен позже."
-  />
+  {#snippet pageHero()}
+    <PageHero imageSrc="/images/about-hero.webp" {breadcrumbs} {titleLines} />
+  {/snippet}
+
+  <AboutIntro />
 </Main>

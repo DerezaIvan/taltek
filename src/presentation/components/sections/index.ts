@@ -1,5 +1,6 @@
 export { default as Main } from './Main/Main.svelte';
 export { Hero } from './Hero';
+export { PageHero } from './PageHero';
 export { Delivery } from './Delivery';
 export { Stats } from './Stats';
 export { Cta } from './Cta';

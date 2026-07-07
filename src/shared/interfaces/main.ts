@@ -5,4 +5,5 @@ export interface MainProps {
   heroSubtitle?: string;
   children?: Snippet;
   afterHero?: Snippet;
+  pageHero?: Snippet;
 }

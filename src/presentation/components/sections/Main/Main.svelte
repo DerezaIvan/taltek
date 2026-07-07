@@ -3,7 +3,7 @@
   import { Hero } from '$presentation/components/sections';
   import type { MainProps } from '$shared/interfaces';
 
-  let { heroTitle, heroSubtitle, children, afterHero }: MainProps = $props();
+  let { heroTitle, heroSubtitle, children, afterHero, pageHero }: MainProps = $props();
 </script>
 
 <style lang="scss">
@@ -11,7 +11,16 @@
 </style>
 
 <main class="main">
-  {#if children}
+  {#if pageHero}
+    <div class="main__hero">
+      <Header overlay />
+      {@render pageHero()}
+    </div>
+
+    {#if children}
+      {@render children()}
+    {/if}
+  {:else if children}
     <Header />
     {@render children()}
   {:else}
