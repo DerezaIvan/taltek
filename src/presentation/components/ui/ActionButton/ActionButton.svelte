@@ -25,11 +25,17 @@
     class:action-button--solid={variant === 'solid'}
     {...rest}
   >
-    {@render children?.()}
     {#if icons}
-      <span class="action-button__icons">
-        {@render icons()}
+      <span class="action-button__content">
+        <span class="action-button__runway" aria-hidden="true">
+          {@render icons()}
+        </span>
+        <span class="action-button__label">
+          {@render children?.()}
+        </span>
       </span>
+    {:else}
+      {@render children?.()}
     {/if}
   </a>
 {:else}
@@ -42,11 +48,17 @@
     class:action-button--solid={variant === 'solid'}
     {...rest}
   >
-    {@render children?.()}
     {#if icons}
-      <span class="action-button__icons">
-        {@render icons()}
+      <span class="action-button__content">
+        <span class="action-button__runway" aria-hidden="true">
+          {@render icons()}
+        </span>
+        <span class="action-button__label">
+          {@render children?.()}
+        </span>
       </span>
+    {:else}
+      {@render children?.()}
     {/if}
   </button>
 {/if}

@@ -22,8 +22,15 @@
 <ActionButton {variant} href={requestHref} {type} {disabled} {...rest}>
   {REQUEST_BUTTON_LABEL}
   {#snippet icons()}
-    <IconWagonHopper />
-    <IconWagonFlat />
-    <IconWagonBox />
+    <span class="action-button__icons-set action-button__icons-set--clone">
+      <IconWagonHopper />
+      <IconWagonFlat />
+      <IconWagonBox />
+    </span>
+    <span class="action-button__icons-set action-button__icons-set--active">
+      <IconWagonHopper />
+      <IconWagonFlat />
+      <IconWagonBox />
+    </span>
   {/snippet}
 </ActionButton>
