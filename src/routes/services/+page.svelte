@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Main, PageHero } from '$presentation/components/sections';
+  import { KeyServices, Main, PageHero } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('services');
@@ -25,4 +25,6 @@
   {#snippet pageHero()}
     <PageHero imageSrc="/images/services-hero.webp" {breadcrumbs} {titleLines} />
   {/snippet}
+
+  <KeyServices />
 </Main>

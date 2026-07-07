@@ -3,6 +3,7 @@ export { AboutIntro } from './AboutIntro';
 export { WhyUs } from './WhyUs';
 export { WhatYouGet } from './WhatYouGet';
 export { OurMission } from './OurMission';
+export { KeyServices } from './KeyServices';
 export { Hero } from './Hero';
 export { PageHero } from './PageHero';
 export { Delivery } from './Delivery';

@@ -1,0 +1,122 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$key-services-grid-gap: 25px;
+$key-services-card-gap: 30px;
+$key-services-card-padding: 30px;
+$key-services-card-min-height: 149px;
+$key-services-icon-size: 89px;
+$key-services-icon-inner-size: 35px;
+$key-services-title-max-width: 880px;
+
+.key-services {
+  padding-top: 70px;
+  padding-bottom: 50px;
+
+  &__title {
+    max-width: min(100%, $key-services-title-max-width);
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: typography.$heading-lg-line-height;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: $key-services-grid-gap;
+    margin: 35px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__card {
+    display: flex;
+    box-sizing: border-box;
+    gap: $key-services-card-gap;
+    align-items: center;
+    min-width: 0;
+    min-height: $key-services-card-min-height;
+    padding: $key-services-card-padding;
+    border-radius: var(--layout-radius);
+    background: var(--delivery-card-bg);
+  }
+
+  &__icon {
+    display: flex;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: $key-services-icon-size;
+    height: $key-services-icon-size;
+    padding: 29px 27px;
+    border-radius: 20px;
+    background: var(--card-icon-gradient);
+    color: var(--primary-white);
+
+    :global(svg) {
+      display: block;
+      width: 100%;
+      max-width: $key-services-icon-inner-size;
+      max-height: $key-services-icon-inner-size;
+      height: auto;
+    }
+  }
+
+  &__content {
+    min-width: 0;
+  }
+
+  &__card-title {
+    margin: 0;
+    overflow-wrap: break-word;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-xl-size;
+    line-height: typography.$text-xl-line-height;
+    letter-spacing: typography.$text-xl-letter-spacing;
+  }
+
+  &__card-desc {
+    margin: 10px 0 0;
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .key-services {
+    padding-top: 64px;
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .key-services {
+    padding-top: 48px;
+    padding-bottom: 64px;
+
+    &__card {
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 0;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile) {
+  .key-services {
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+}

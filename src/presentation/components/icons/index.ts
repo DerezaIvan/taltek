@@ -13,3 +13,6 @@ export { default as IconArrowUpRight } from './IconArrowUpRight.svelte';
 export { default as IconDeliveryRoute } from './IconDeliveryRoute.svelte';
 export { default as IconDeliveryCrane } from './IconDeliveryCrane.svelte';
 export { default as IconDeliveryDocuments } from './IconDeliveryDocuments.svelte';
+export { default as IconServiceWagonSupply } from './IconServiceWagonSupply.svelte';
+export { default as IconServiceTariff } from './IconServiceTariff.svelte';
+export { default as IconServiceDispatch } from './IconServiceDispatch.svelte';
