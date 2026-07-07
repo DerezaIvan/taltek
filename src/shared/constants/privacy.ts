@@ -1,6 +1,5 @@
 type PrivacyBlock =
-  | { type: 'paragraph'; text: string }
-  | { type: 'list'; items: readonly string[] };
+  { type: 'paragraph'; text: string } | { type: 'list'; items: readonly string[] };
 
 type PrivacySection = {
   id: string;

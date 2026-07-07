@@ -9,5 +9,4 @@ export const ABOUT_CTA_SUBTITLE = 'Расскажем про подвижной 
 
 export const SERVICES_CTA_TITLE = 'Подберём вагоны под Ваш груз';
 
-export const SERVICES_CTA_SUBTITLE =
-  'Укажите тип груза и направление — рассчитаем решение.';
+export const SERVICES_CTA_SUBTITLE = 'Укажите тип груза и направление — рассчитаем решение.';

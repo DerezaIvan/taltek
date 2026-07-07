@@ -42,6 +42,11 @@ export const PAGE_SEO = {
     description: 'Политика конфиденциальности и обработки персональных данных АО «ТалТЭК Транс»',
     path: '/privacy/',
   },
+  notFound: {
+    title: 'Taltek — Страница не найдена',
+    description: 'Запрашиваемая страница не найдена',
+    path: '/404/',
+  },
 } as const;
 
 export type PageSeoKey = keyof typeof PAGE_SEO;

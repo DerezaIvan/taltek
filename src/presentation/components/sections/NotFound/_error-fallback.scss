@@ -1,0 +1,28 @@
+@use 'presentation/styles/typography-tokens' as typography;
+
+.error-fallback {
+  padding: 100px 0;
+  text-align: center;
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-size: typography.$heading-lg-size;
+    text-transform: uppercase;
+  }
+
+  &__text {
+    margin: 0;
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-md-size;
+    line-height: 35px;
+  }
+}
