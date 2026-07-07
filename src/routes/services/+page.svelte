@@ -1,8 +1,17 @@
 <script lang="ts">
-  import { Main, PageContent } from '$presentation/components/sections';
+  import { Main, PageHero } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('services');
+
+  const breadcrumbs = [
+    { label: 'Главная', href: '/' },
+    { label: 'Услуги и подвижной состав' },
+  ];
+
+  const titleLines = [
+    'Максимально надёжное и оперативное решение Ваших транспортных задач',
+  ];
 </script>
 
 <svelte:head>
@@ -13,8 +22,7 @@
 </svelte:head>
 
 <Main>
-  <PageContent
-    title="Услуги"
-    description="Заготовка страницы «Услуги». Контент будет добавлен позже."
-  />
+  {#snippet pageHero()}
+    <PageHero imageSrc="/images/services-hero.webp" {breadcrumbs} {titleLines} />
+  {/snippet}
 </Main>

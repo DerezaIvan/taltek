@@ -28,8 +28,8 @@ export const PAGE_SEO = {
     path: '/about/',
   },
   services: {
-    title: 'Taltek — Услуги',
-    description: 'Услуги компании Taltek',
+    title: 'Taltek — Услуги и подвижной состав',
+    description: 'Услуги и подвижной состав компании Taltek',
     path: '/services/',
   },
   contacts: {
