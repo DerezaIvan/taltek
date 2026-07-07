@@ -1,8 +1,14 @@
 <script lang="ts">
-  import { Main, PageContent } from '$presentation/components/sections';
+  import { Main, PageHero } from '$presentation/components/sections';
+  import { CONTACTS_SUBTITLE, CONTACTS_TITLE } from '$shared/constants/contacts';
+  import { PAGE_HERO_IMAGE, PAGE_HERO_IMAGE_POSITION } from '$shared/constants/page-hero';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('contacts');
+
+  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: CONTACTS_TITLE }];
+
+  const titleLines = [CONTACTS_TITLE];
 </script>
 
 <svelte:head>
@@ -13,8 +19,13 @@
 </svelte:head>
 
 <Main>
-  <PageContent
-    title="Контакты"
-    description="Заготовка страницы «Контакты». Контент будет добавлен позже."
-  />
+  {#snippet pageHero()}
+    <PageHero
+      imageSrc={PAGE_HERO_IMAGE}
+      imagePosition={PAGE_HERO_IMAGE_POSITION}
+      {breadcrumbs}
+      {titleLines}
+      subtitle={CONTACTS_SUBTITLE}
+    />
+  {/snippet}
 </Main>

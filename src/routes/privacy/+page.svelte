@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Main, PageHero, PrivacyContent } from '$presentation/components/sections';
+  import { PAGE_HERO_IMAGE, PAGE_HERO_IMAGE_POSITION } from '$shared/constants/page-hero';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('privacy');
@@ -18,7 +19,12 @@
 
 <Main>
   {#snippet pageHero()}
-    <PageHero imageSrc="/images/taltek.webp" {breadcrumbs} {titleLines} />
+    <PageHero
+      imageSrc={PAGE_HERO_IMAGE}
+      imagePosition={PAGE_HERO_IMAGE_POSITION}
+      {breadcrumbs}
+      {titleLines}
+    />
   {/snippet}
 
   <PrivacyContent />

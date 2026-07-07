@@ -3,7 +3,7 @@
   import { Breadcrumbs } from '$presentation/components/ui';
   import type { PageHeroProps } from '$shared/interfaces';
 
-  let { imageSrc, breadcrumbs, titleLines }: PageHeroProps = $props();
+  let { imageSrc, breadcrumbs, titleLines, subtitle, imagePosition }: PageHeroProps = $props();
 </script>
 
 <style lang="scss">
@@ -12,7 +12,12 @@
 
 <section class="page-hero">
   <div class="page-hero__media" aria-hidden="true">
-    <img class="page-hero__image" src={asset(imageSrc)} alt="" />
+    <img
+      class="page-hero__image"
+      src={asset(imageSrc)}
+      alt=""
+      style:object-position={imagePosition}
+    />
     <div class="page-hero__overlay"></div>
   </div>
 
@@ -27,6 +32,10 @@
           <span class="page-hero__title-line">{line}</span>
         {/each}
       </h1>
+
+      {#if subtitle}
+        <p class="page-hero__subtitle">{subtitle}</p>
+      {/if}
     </div>
   </div>
 </section>

@@ -4,4 +4,6 @@ export interface PageHeroProps {
   imageSrc: string;
   breadcrumbs: BreadcrumbItem[];
   titleLines: string[];
+  subtitle?: string;
+  imagePosition?: string;
 }
