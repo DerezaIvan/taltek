@@ -5,6 +5,9 @@ export const NAV_ITEMS = [
   { label: 'Контакты', href: '/contacts/' },
 ] as const;
 
+export const CONTACTS_FORM_ANCHOR = 'contacts-form';
+export const FLEET_MODELS_ANCHOR = 'fleet-models';
+
 export type NavItem = (typeof NAV_ITEMS)[number];
 
 export type FooterNavItem =

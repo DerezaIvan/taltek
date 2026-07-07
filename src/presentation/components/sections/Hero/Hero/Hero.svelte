@@ -2,6 +2,7 @@
   import { asset, resolve } from '$app/paths';
   import { ActionButton, RequestButton } from '$presentation/components/ui';
   import { IconArrowUpRight } from '$presentation/components/icons';
+  import { FLEET_MODELS_ANCHOR } from '$shared/constants/navigation';
   import { DEFAULT_HERO_SUBTITLE, DEFAULT_HERO_TITLE } from '$shared/constants/hero';
   import type { HeroProps } from '$shared/interfaces';
 
@@ -36,7 +37,7 @@
       <div class="hero__actions">
         <RequestButton variant="glass" />
 
-        <ActionButton variant="ghost" href={resolve('/services/')}>
+        <ActionButton variant="ghost" href={`${resolve('/services/')}#${FLEET_MODELS_ANCHOR}`}>
           Услуги и парк вагонов
           <IconArrowUpRight />
         </ActionButton>

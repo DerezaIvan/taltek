@@ -8,7 +8,7 @@
 </style>
 
 <section class="contacts-content" aria-label="Форма обратной связи и контакты">
-  <div class="container contacts-content__inner">
+  <div id="contacts-form" class="container contacts-content__inner">
     <ContactsForm />
     <ContactsInfo />
   </div>

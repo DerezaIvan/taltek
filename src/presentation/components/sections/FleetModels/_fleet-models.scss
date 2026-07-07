@@ -1,9 +1,10 @@
+@use 'sass:math';
 @use 'presentation/styles/variables' as *;
 @use 'presentation/styles/typography-tokens' as typography;
 
 $fleet-grid-gap: 25px;
 $fleet-card-radius: 20px;
-$fleet-media-aspect-ratio: 313 / 209;
+$fleet-media-aspect-ratio: math.div(313, 209);
 $fleet-media-padding: 9px;
 $fleet-badge-offset: 7px;
 $fleet-badge-bg: #f5f9ffcc;

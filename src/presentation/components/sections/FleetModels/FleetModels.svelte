@@ -11,7 +11,7 @@
   @use './_fleet-models.scss';
 </style>
 
-<section class="fleet-models" aria-labelledby="fleet-models-title">
+<section id="fleet-models" class="fleet-models" aria-labelledby="fleet-models-title">
   <div class="container">
     <header class="fleet-models__header">
       <h2 id="fleet-models-title" class="fleet-models__title">
