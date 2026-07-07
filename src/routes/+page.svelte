@@ -1,5 +1,6 @@
 <script lang="ts">
   import { Cta, Delivery, Main, Stats } from '$presentation/components/sections';
+  import { CTA_SECTION_SUBTITLE, CTA_SECTION_TITLE } from '$shared/constants/cta';
   import { JSON_LD_ORGANIZATION } from '$shared/constants/seo';
   import type { PageData } from './$types';
 
@@ -18,6 +19,6 @@
   {#snippet afterHero()}
     <Delivery />
     <Stats />
-    <Cta />
+    <Cta title={CTA_SECTION_TITLE} subtitle={CTA_SECTION_SUBTITLE} />
   {/snippet}
 </Main>

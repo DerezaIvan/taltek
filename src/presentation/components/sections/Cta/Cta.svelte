@@ -1,6 +1,8 @@
 <script lang="ts">
   import { RequestButton } from '$presentation/components/ui';
-  import { CTA_SECTION_SUBTITLE, CTA_SECTION_TITLE } from '$shared/constants/cta';
+  import type { CtaProps } from '$shared/interfaces';
+
+  let { title, subtitle }: CtaProps = $props();
 </script>
 
 <style lang="scss">
@@ -11,11 +13,11 @@
   <div class="container cta__inner">
     <div class="cta__text">
       <h2 id="cta-title" class="cta__title">
-        {CTA_SECTION_TITLE}
+        {title}
       </h2>
 
       <p class="cta__subtitle">
-        {CTA_SECTION_SUBTITLE}
+        {subtitle}
       </p>
     </div>
 

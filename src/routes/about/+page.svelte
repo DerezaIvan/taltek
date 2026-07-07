@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { AboutIntro, Main, OurMission, PageHero, WhatYouGet, WhyUs } from '$presentation/components/sections';
+  import { AboutIntro, Cta, Main, OurMission, PageHero, WhatYouGet, WhyUs } from '$presentation/components/sections';
+  import { ABOUT_CTA_SUBTITLE, ABOUT_CTA_TITLE } from '$shared/constants/cta';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('about');
@@ -25,4 +26,5 @@
   <WhyUs />
   <WhatYouGet />
   <OurMission />
+  <Cta title={ABOUT_CTA_TITLE} subtitle={ABOUT_CTA_SUBTITLE} />
 </Main>
