@@ -17,7 +17,7 @@
   <div class="footer__media" aria-hidden="true">
     <img
       class="footer__image"
-      src={asset('/images/footer-bckg.png')}
+      src={asset('/images/footer-bckg.webp')}
       alt=""
       loading="lazy"
       decoding="async"

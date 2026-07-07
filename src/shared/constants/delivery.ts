@@ -35,18 +35,9 @@ export type DeliveryStep = (typeof DELIVERY_STEPS)[number];
 export type DeliveryIconId = 'route' | 'crane' | 'documents';
 
 export const DELIVERY_IMAGES = {
-  taltek: {
-    webp: '/images/taltek.webp',
-    png: '/images/taltek.png',
-  },
-  train: {
-    webp: '/images/train.webp',
-    png: '/images/train.png',
-  },
-  train2: {
-    webp: '/images/train-2.webp',
-    png: '/images/train-2.png',
-  },
+  taltek: '/images/taltek.webp',
+  train: '/images/train.webp',
+  train2: '/images/train-2.webp',
 } as const;
 
 export type DeliveryImageKey = keyof typeof DELIVERY_IMAGES;
