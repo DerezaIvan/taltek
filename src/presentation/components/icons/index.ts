@@ -1,4 +1,7 @@
 export { default as IconCheckmark } from './IconCheckmark.svelte';
+export { default as IconPhone } from './IconPhone.svelte';
+export { default as IconLocationPin } from './IconLocationPin.svelte';
+export { default as IconAt } from './IconAt.svelte';
 export { default as IconWhyOwnFleet } from './IconWhyOwnFleet.svelte';
 export { default as IconWhyGeography } from './IconWhyGeography.svelte';
 export { default as IconWhyAutomation } from './IconWhyAutomation.svelte';

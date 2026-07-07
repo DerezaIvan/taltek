@@ -13,4 +13,5 @@ export { Stats } from './Stats';
 export { Cta } from './Cta';
 export { default as PageContent } from './PageContent/PageContent.svelte';
 export { PrivacyContent } from './PrivacyContent';
+export { ContactsContent } from './ContactsContent';
 export { NotFound, NotFoundPage, ErrorFallback } from './NotFound';

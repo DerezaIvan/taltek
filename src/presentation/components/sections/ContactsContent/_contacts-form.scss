@@ -1,0 +1,205 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+@use './contacts-tokens' as *;
+
+.contacts-form {
+  flex: 1 1 $contacts-form-width;
+  max-width: $contacts-form-width;
+  min-width: 0;
+
+  &__title {
+    margin: 0 0 30px;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: typography.$heading-lg-line-height;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: $contacts-grid-gap;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+
+    &--half {
+      grid-column: span 2;
+    }
+
+    &--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  &__label {
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-base-size;
+    line-height: 32px;
+    letter-spacing: typography.$text-base-letter-spacing;
+  }
+
+  &__required {
+    color: #c44422;
+  }
+
+  &__input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: $contacts-input-height;
+    padding: 18px 25px;
+    border: 1px solid $contacts-input-border;
+    border-radius: $contacts-input-radius;
+    background: var(--primary-white);
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+    outline: none;
+    transition: border-color 0.2s ease;
+
+    &::placeholder {
+      color: var(--brand-navy);
+      opacity: 0.45;
+    }
+
+    &:hover {
+      border-color: var(--colors-border-hover);
+    }
+
+    &:focus {
+      border-color: var(--colors-border-accent-primary);
+    }
+  }
+
+  &__select-wrap {
+    position: relative;
+  }
+
+  &__select {
+    appearance: none;
+    padding-right: 48px;
+    cursor: pointer;
+  }
+
+  &__select-wrap::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 25px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--brand-navy);
+    border-bottom: 2px solid var(--brand-navy);
+    transform: translateY(-70%) rotate(45deg);
+    pointer-events: none;
+  }
+
+  &__direction {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__direction-arrow {
+    flex-shrink: 0;
+    color: var(--brand-navy-60);
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-base-size;
+    line-height: 1;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-top: 30px;
+  }
+
+  &__consent {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+  }
+
+  &__checkbox {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 2px;
+    accent-color: var(--brand-blue);
+    cursor: pointer;
+  }
+
+  &__consent-text {
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+  }
+
+  &__consent-link {
+    color: var(--brand-navy);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .contacts-form {
+    flex: 1 1 auto;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .contacts-form {
+    &__grid {
+      grid-template-columns: 1fr;
+    }
+
+    &__field--half,
+    &__field--full {
+      grid-column: auto;
+    }
+
+    &__title {
+      font-size: 32px;
+      line-height: 40px;
+    }
+
+    &__footer {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__consent {
+      max-width: none;
+    }
+
+    :global(.action-button--solid) {
+      width: 100%;
+      min-width: 0;
+    }
+  }
+}
