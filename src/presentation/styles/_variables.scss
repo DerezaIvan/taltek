@@ -45,6 +45,7 @@ $brand-blue-dark: #0d3776;
     #{$brand-blue} 0.01%,
     #{$brand-blue-dark} 98.72%
   );
+  --why-us-icon-gradient: linear-gradient(93.45deg, #{$brand-blue} 23.1%, #{$brand-blue-dark} 95.22%);
   --brand-gradient: var(--brand-section-gradient);
   --delivery-card-num-gradient: linear-gradient(
     90.01deg,

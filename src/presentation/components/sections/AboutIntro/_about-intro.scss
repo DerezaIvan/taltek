@@ -8,11 +8,14 @@ $about-intro-image-ratio: 692 / 461;
 
 .about-intro {
   padding-top: 82px;
-  padding-bottom: 100px;
+  padding-bottom: 50px;
 
   &__inner {
     display: grid;
-    grid-template-columns: minmax(0, #{$about-intro-content-fr}fr) minmax(0, #{$about-intro-media-fr}fr);
+    grid-template-columns: minmax(0, #{$about-intro-content-fr}fr) minmax(
+        0,
+        #{$about-intro-media-fr}fr
+      );
     gap: $about-intro-gap-ratio;
     align-items: stretch;
   }

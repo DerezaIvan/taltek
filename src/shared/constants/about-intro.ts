@@ -1,7 +1,6 @@
 export const ABOUT_INTRO_IMAGE = '/images/about-intro.webp';
 
-export const ABOUT_INTRO_IMAGE_ALT =
-  'Вагон с логотипом ТалТЭК Транс на железнодорожных путях';
+export const ABOUT_INTRO_IMAGE_ALT = 'Вагон с логотипом ТалТЭК Транс на железнодорожных путях';
 
 export const ABOUT_INTRO_TITLE = 'АО «ТалТЭК Транс»';
 

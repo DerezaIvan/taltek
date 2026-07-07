@@ -23,9 +23,11 @@
   &__overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(90.01deg,
-        rgba(30, 96, 179, 0.88) 0.01%,
-        rgba(13, 55, 118, 0.92) 98.72%);
+    background: linear-gradient(
+      90.01deg,
+      rgba(30, 96, 179, 0.88) 0.01%,
+      rgba(13, 55, 118, 0.92) 98.72%
+    );
   }
 
   &__content {

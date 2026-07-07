@@ -1,13 +1,10 @@
 <script lang="ts">
-  import { AboutIntro, Main, PageHero } from '$presentation/components/sections';
+  import { AboutIntro, Main, PageHero, WhyUs } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('about');
 
-  const breadcrumbs = [
-    { label: 'Главная', href: '/' },
-    { label: 'О компании' },
-  ];
+  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О компании' }];
 
   const titleLines = ['[ЭКО]ЛОГИЧНЫЙ выбор', 'для Ваших грузов'];
 </script>
@@ -25,4 +22,5 @@
   {/snippet}
 
   <AboutIntro />
+  <WhyUs />
 </Main>
