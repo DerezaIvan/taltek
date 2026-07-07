@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { ContactsContent, ContractContacts, Main, PageHero } from '$presentation/components/sections';
+  import {
+    ContactsContent,
+    ContractContacts,
+    Main,
+    OperationsContacts,
+    PageHero,
+  } from '$presentation/components/sections';
   import { CONTACTS_SUBTITLE, CONTACTS_TITLE } from '$shared/constants/contacts';
   import { PAGE_HERO_IMAGE, PAGE_HERO_IMAGE_POSITION } from '$shared/constants/page-hero';
   import { getPageSeo } from '$shared/constants/seo';
@@ -31,4 +37,5 @@
 
   <ContactsContent />
   <ContractContacts />
+  <OperationsContacts />
 </Main>

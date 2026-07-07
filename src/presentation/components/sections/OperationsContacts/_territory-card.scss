@@ -1,0 +1,28 @@
+@use 'presentation/styles/typography-tokens' as typography;
+
+$territory-card-padding: 30px;
+$territory-card-radius: 30px;
+$territory-phone-offset: 20px;
+
+.territory-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: $territory-card-padding;
+  border-radius: $territory-card-radius;
+  background: var(--delivery-card-bg);
+
+  &__title {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-xl-size;
+    line-height: typography.$text-xl-line-height;
+    letter-spacing: typography.$text-xl-letter-spacing;
+  }
+
+  &__phone {
+    margin-top: $territory-phone-offset;
+  }
+}

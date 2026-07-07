@@ -1,0 +1,30 @@
+@use 'presentation/styles/typography-tokens' as typography;
+
+$dispatcher-card-padding: 30px;
+$dispatcher-card-radius: 30px;
+$dispatcher-card-min-height: 139px;
+$dispatcher-phone-offset: 20px;
+
+.dispatcher-card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: $dispatcher-card-min-height;
+  padding: $dispatcher-card-padding;
+  border-radius: $dispatcher-card-radius;
+  background: var(--delivery-card-bg);
+
+  &__title {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-xl-size;
+    line-height: typography.$text-xl-line-height;
+    letter-spacing: typography.$text-xl-letter-spacing;
+  }
+
+  &__phone {
+    margin-top: $dispatcher-phone-offset;
+  }
+}

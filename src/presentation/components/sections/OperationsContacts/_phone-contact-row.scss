@@ -1,0 +1,61 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$phone-row-icon-size: 31px;
+$phone-row-gap: 10px;
+
+.phone-contact-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: $phone-row-gap;
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: $phone-row-icon-size;
+    height: $phone-row-icon-size;
+    border-radius: 20px;
+    background: var(--delivery-card-num-gradient);
+  }
+
+  &__phone {
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-base-weight;
+    font-size: typography.$text-xl-size;
+    line-height: 21px;
+    letter-spacing: typography.$text-xl-letter-spacing;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 6px;
+    border-radius: 3px;
+    background: var(--card-icon-gradient);
+    color: var(--primary-white);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .phone-contact-row {
+    &__badge {
+      white-space: normal;
+    }
+  }
+}

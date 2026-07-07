@@ -15,4 +15,5 @@ export { default as PageContent } from './PageContent/PageContent.svelte';
 export { PrivacyContent } from './PrivacyContent';
 export { ContactsContent } from './ContactsContent';
 export { ContractContacts } from './ContractContacts';
+export { OperationsContacts } from './OperationsContacts';
 export { NotFound, NotFoundPage, ErrorFallback } from './NotFound';

@@ -1,0 +1,122 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$oc-section-padding: 100px;
+$oc-header-gap: 30px;
+$oc-header-cards-gap: 40px;
+$oc-cards-gap: 30px;
+$oc-dispatcher-columns: 2;
+$oc-territory-columns: 3;
+
+.operations-contacts {
+  padding-block: $oc-section-padding;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+  }
+
+  &__block {
+    display: flex;
+    flex-direction: column;
+    gap: $oc-header-cards-gap;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $oc-header-gap;
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: typography.$heading-lg-line-height;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__subtitle {
+    margin: 0;
+    max-width: 392px;
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+    text-align: right;
+  }
+
+  &__dispatchers,
+  &__territories {
+    display: grid;
+    gap: $oc-cards-gap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__dispatchers {
+    grid-template-columns: repeat($oc-dispatcher-columns, minmax(0, 1fr));
+  }
+
+  &__territories {
+    grid-template-columns: repeat($oc-territory-columns, minmax(0, 1fr));
+  }
+
+  &__dispatcher-item,
+  &__territory-item {
+    min-width: 0;
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .operations-contacts {
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &__subtitle {
+      max-width: none;
+      text-align: left;
+    }
+
+    &__dispatchers {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    &__territories {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .operations-contacts {
+    padding-block: 32px;
+
+    &__inner {
+      gap: 48px;
+    }
+
+    &__block {
+      gap: 32px;
+    }
+
+    &__title {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    &__territories {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
