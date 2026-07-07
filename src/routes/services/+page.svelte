@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { FleetModels, KeyServices, Main, PageHero } from '$presentation/components/sections';
+  import {
+    FleetModels,
+    FleetPark,
+    KeyServices,
+    Main,
+    PageHero,
+  } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('services');
@@ -23,4 +29,5 @@
 
   <KeyServices />
   <FleetModels />
+  <FleetPark />
 </Main>

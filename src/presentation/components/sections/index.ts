@@ -5,6 +5,7 @@ export { WhatYouGet } from './WhatYouGet';
 export { OurMission } from './OurMission';
 export { KeyServices } from './KeyServices';
 export { FleetModels } from './FleetModels';
+export { FleetPark } from './FleetPark';
 export { Hero } from './Hero';
 export { PageHero } from './PageHero';
 export { Delivery } from './Delivery';
