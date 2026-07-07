@@ -5,7 +5,9 @@
     KeyServices,
     Main,
     PageHero,
+    Cta,
   } from '$presentation/components/sections';
+  import { SERVICES_CTA_SUBTITLE, SERVICES_CTA_TITLE } from '$shared/constants/cta';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('services');
@@ -30,4 +32,5 @@
   <KeyServices />
   <FleetModels />
   <FleetPark />
+  <Cta title={SERVICES_CTA_TITLE} subtitle={SERVICES_CTA_SUBTITLE} />
 </Main>
