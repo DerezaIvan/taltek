@@ -23,6 +23,7 @@ $key-services-title-max-width: 880px;
     line-height: typography.$heading-lg-line-height;
     letter-spacing: typography.$heading-lg-letter-spacing;
     text-transform: uppercase;
+    white-space: pre-line;
   }
 
   &__list {

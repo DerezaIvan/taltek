@@ -1,17 +1,12 @@
 <script lang="ts">
-  import { KeyServices, Main, PageHero } from '$presentation/components/sections';
+  import { FleetModels, KeyServices, Main, PageHero } from '$presentation/components/sections';
   import { getPageSeo } from '$shared/constants/seo';
 
   const seo = getPageSeo('services');
 
-  const breadcrumbs = [
-    { label: 'Главная', href: '/' },
-    { label: 'Услуги и подвижной состав' },
-  ];
+  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'Услуги и подвижной состав' }];
 
-  const titleLines = [
-    'Максимально надёжное и оперативное решение Ваших транспортных задач',
-  ];
+  const titleLines = ['Максимально надёжное и оперативное решение Ваших транспортных задач'];
 </script>
 
 <svelte:head>
@@ -27,4 +22,5 @@
   {/snippet}
 
   <KeyServices />
+  <FleetModels />
 </Main>

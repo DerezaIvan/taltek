@@ -5,5 +5,4 @@ export const CTA_SECTION_SUBTITLE =
 
 export const ABOUT_CTA_TITLE = 'Хотите узнать о парке и условиях?';
 
-export const ABOUT_CTA_SUBTITLE =
-  'Расскажем про подвижной состав и подберём решение под Ваш груз.';
+export const ABOUT_CTA_SUBTITLE = 'Расскажем про подвижной состав и подберём решение под Ваш груз.';

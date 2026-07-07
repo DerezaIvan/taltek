@@ -1,4 +1,4 @@
-export const KEY_SERVICES_TITLE = 'Три ключевые услуги — одна точка ответственности';
+export const KEY_SERVICES_TITLE = 'Три ключевые услуги —\nодна точка ответственности';
 
 export const KEY_SERVICES_ITEMS = [
   {

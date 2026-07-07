@@ -4,6 +4,7 @@ export { WhyUs } from './WhyUs';
 export { WhatYouGet } from './WhatYouGet';
 export { OurMission } from './OurMission';
 export { KeyServices } from './KeyServices';
+export { FleetModels } from './FleetModels';
 export { Hero } from './Hero';
 export { PageHero } from './PageHero';
 export { Delivery } from './Delivery';
