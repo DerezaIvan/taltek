@@ -38,7 +38,7 @@
         </p>
 
         <div class="footer__legal">
-          <a class="footer__privacy" href={resolve('/')}>Политика конфиденциальности</a>
+          <a class="footer__privacy" href={resolve('/privacy/')}>Политика конфиденциальности</a>
           <p class="footer__copyright text-sm">© {year} АО «ТалТЭК Транс»</p>
         </div>
       </div>

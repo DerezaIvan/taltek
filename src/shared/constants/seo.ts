@@ -37,6 +37,11 @@ export const PAGE_SEO = {
     description: 'Контактная информация компании Taltek',
     path: '/contacts/',
   },
+  privacy: {
+    title: 'Taltek — Политика конфиденциальности',
+    description: 'Политика конфиденциальности и обработки персональных данных АО «ТалТЭК Транс»',
+    path: '/privacy/',
+  },
 } as const;
 
 export type PageSeoKey = keyof typeof PAGE_SEO;
