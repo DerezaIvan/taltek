@@ -8,6 +8,8 @@ export { default as IconWhyAutomation } from './IconWhyAutomation.svelte';
 export { default as IconWhySpeed } from './IconWhySpeed.svelte';
 export { default as IconWhyCompetencies } from './IconWhyCompetencies.svelte';
 export { default as IconWhyTeam } from './IconWhyTeam.svelte';
+export { default as IconMenuBurger } from './IconMenuBurger.svelte';
+export { default as IconMenuClose } from './IconMenuClose.svelte';
 export { default as IconUser } from './IconUser.svelte';
 export { default as IconWagonHopper } from './IconWagonHopper.svelte';
 export { default as IconWagonFlat } from './IconWagonFlat.svelte';

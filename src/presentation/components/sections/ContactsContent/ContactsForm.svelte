@@ -197,7 +197,12 @@
 
   <div class="contacts-form__footer">
     <label class="contacts-form__consent">
-      <input class="contacts-form__checkbox" type="checkbox" name="consent" bind:checked={consent} />
+      <input
+        class="contacts-form__checkbox"
+        type="checkbox"
+        name="consent"
+        bind:checked={consent}
+      />
       <span class="contacts-form__consent-text">
         {CONTACTS_CONSENT.prefix}
         <a class="contacts-form__consent-link" href={resolve('/privacy/')}>

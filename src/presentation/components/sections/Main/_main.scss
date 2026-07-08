@@ -1,7 +1,8 @@
 .main {
   display: flex;
   flex-direction: column;
-  width: var(--layout-width);
+  width: 100%;
+  max-width: var(--layout-width);
   min-height: 100vh;
   margin-inline: auto;
   border-radius: var(--layout-radius);

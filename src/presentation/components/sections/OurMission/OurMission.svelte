@@ -15,21 +15,30 @@
 
 <section class="our-mission" aria-labelledby="our-mission-title">
   <div class="our-mission__inner">
-    {#each [firstImage, secondImage] as image (image.id)}
-      <figure class="our-mission__image">
-        <img
-          src={asset(image.src)}
-          alt={image.alt}
-          width="340"
-          height="405"
-          loading="lazy"
-          decoding="async"
-        />
-      </figure>
-    {/each}
+    <figure class="our-mission__image our-mission__image--slot-1">
+      <img
+        src={asset(firstImage.src)}
+        alt={firstImage.alt}
+        width="340"
+        height="405"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
+
+    <figure class="our-mission__image our-mission__image--slot-2">
+      <img
+        src={asset(secondImage.src)}
+        alt={secondImage.alt}
+        width="340"
+        height="405"
+        loading="lazy"
+        decoding="async"
+      />
+    </figure>
 
     <div class="our-mission__group">
-      <figure class="our-mission__image">
+      <figure class="our-mission__image our-mission__image--slot-3">
         <img
           src={asset(thirdImage.src)}
           alt={thirdImage.alt}
@@ -47,7 +56,7 @@
         <p class="our-mission__text">{OUR_MISSION_TEXT}</p>
       </div>
 
-      <figure class="our-mission__image">
+      <figure class="our-mission__image our-mission__image--slot-4">
         <img
           src={asset(fourthImage.src)}
           alt={fourthImage.alt}

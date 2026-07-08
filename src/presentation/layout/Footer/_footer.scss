@@ -97,7 +97,6 @@
 
   &__contacts {
     display: flex;
-    flex: 1;
     justify-content: space-between;
     gap: 7px;
     min-width: 0;
@@ -109,7 +108,9 @@
   }
 
   &__cta {
+    flex: 0 0 auto;
     flex-shrink: 0;
+    min-width: 345px;
     margin-left: auto;
     align-self: end;
   }
@@ -187,6 +188,77 @@
     text-transform: uppercase;
     color: var(--primary-white);
     white-space: nowrap;
-    transform: translateY(0.25em);
+    transform: translateY(0.23em);
+  }
+}
+
+@media (max-width: $bp-desktop) {
+  .footer {
+    &__top {
+      flex-wrap: wrap;
+      gap: 40px 56px;
+      padding-top: 80px;
+    }
+
+    &__nav {
+      flex: 0 1 auto;
+    }
+
+    &__contact-text {
+      white-space: normal;
+      overflow-wrap: break-word;
+    }
+
+    &__cta {
+      flex: 0 0 345px;
+      min-width: 345px;
+    }
+
+    &__brand-name {
+      font-size: 175px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .footer {
+    &__top {
+      flex-wrap: wrap;
+      gap: 40px;
+    }
+
+    &__brand-name {
+      font-size: 130px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .footer {
+    &__top {
+      gap: 40px;
+      padding-top: 64px;
+    }
+
+    &__cta {
+      min-width: 0;
+      margin-left: 0;
+
+      :global(.action-button--glass) {
+        width: 100%;
+      }
+    }
+
+    &__brand-name {
+      font-size: 122px;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .footer {
+    &__brand-name {
+      font-size: 72px;
+    }
   }
 }

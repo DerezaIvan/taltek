@@ -164,6 +164,13 @@
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .contacts-form {
+    flex: 1 1 68%;
+    max-width: none;
+  }
+}
+
 @media (max-width: $bp-desktop-sm) {
   .contacts-form {
     flex: 1 1 auto;

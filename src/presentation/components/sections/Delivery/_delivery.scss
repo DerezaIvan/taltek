@@ -3,6 +3,7 @@
 
 $delivery-gap: 30px;
 $delivery-cell-height: 170px;
+$delivery-adaptive-gap: 20px;
 
 .delivery {
   padding-block: 100px;
@@ -14,7 +15,7 @@ $delivery-cell-height: 170px;
     font-family: typography.$font-family-uncage;
     font-weight: typography.$heading-lg-weight;
     font-size: typography.$heading-lg-size;
-    line-height: typography.$heading-lg-line-height;
+    line-height: 100%;
     letter-spacing: typography.$heading-lg-letter-spacing;
     text-transform: uppercase;
   }
@@ -40,6 +41,33 @@ $delivery-cell-height: 170px;
 
   &__bottom {
     margin-top: $delivery-gap;
+  }
+
+  &__adaptive--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: $delivery-gap;
+    align-items: start;
+  }
+
+  &__adaptive--stack {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-adaptive-gap;
+  }
+
+  &__media {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-adaptive-gap;
+    min-width: 0;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-adaptive-gap;
+    min-width: 0;
   }
 
   &__card {
@@ -127,6 +155,28 @@ $delivery-cell-height: 170px;
     &--side {
       aspect-ratio: 410 / 370;
     }
+
+    &--adaptive {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-nav) {
+  .delivery {
+    padding-block: 80px;
+
+    &__title {
+      margin-bottom: 32px;
+    }
+
+    &__card {
+      width: 100%;
+      min-height: $delivery-cell-height;
+    }
   }
 }
 
@@ -137,52 +187,11 @@ $delivery-cell-height: 170px;
     &__title {
       margin-bottom: 24px;
     }
-
-    &__top,
-    &__top-rows,
-    &__row {
-      width: 100%;
-    }
-
-    &__top {
-      flex-direction: column;
-    }
-
-    &__row {
-      flex-wrap: wrap;
-    }
-
-    &__card,
-    &__icon,
-    &__image {
-      flex: 1 1 100% !important;
-      width: 100% !important;
-      min-width: 0 !important;
-      max-width: none !important;
-    }
-
-    &__card,
-    &__icon {
-      height: $delivery-cell-height !important;
-    }
-
-    &__image {
-      height: auto !important;
-      aspect-ratio: 16 / 10;
-
-      &--side {
-        aspect-ratio: 410 / 370;
-      }
-    }
   }
 }
 
 @media (max-width: $bp-tablet) {
   .delivery {
-    &__icon {
-      padding: 40px;
-    }
-
     &__card-num {
       font-size: 96px;
     }

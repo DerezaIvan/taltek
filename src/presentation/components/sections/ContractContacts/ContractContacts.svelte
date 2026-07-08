@@ -34,8 +34,12 @@
     </h2>
 
     <ul class="contract-contacts__cards">
-      {#each CONTRACT_CONTACTS_CARDS as card (card.id)}
-        <li class="contract-contacts__card-item">
+      {#each CONTRACT_CONTACTS_CARDS as card, index (card.id)}
+        <li
+          class="contract-contacts__card-item"
+          class:contract-contacts__card-item--solo={index === CONTRACT_CONTACTS_CARDS.length - 1 &&
+            CONTRACT_CONTACTS_CARDS.length % 2 === 1}
+        >
           <ContractContactCard {card} />
         </li>
       {/each}

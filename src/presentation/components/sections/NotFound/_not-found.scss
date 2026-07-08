@@ -64,6 +64,19 @@ $not-found-code-size: 168px;
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .not-found {
+    &__body {
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+
+    &__code {
+      font-size: 120px;
+    }
+  }
+}
+
 @media (max-width: $bp-tablet) {
   .not-found {
     &__body {

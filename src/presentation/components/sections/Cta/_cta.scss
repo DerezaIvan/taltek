@@ -36,6 +36,12 @@
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .cta {
+    padding-block: 80px;
+  }
+}
+
 @media (max-width: $bp-desktop-sm) {
   .cta {
     padding-block: 64px;

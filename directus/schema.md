@@ -29,7 +29,7 @@
 
 Пример для главной (`slug: home`):
 
-- title: `Taltek — Главная`
+- title: `Талтэк — Главная`
 - description: текст для meta
 - hero_title / hero_subtitle: контент Hero-секции
 

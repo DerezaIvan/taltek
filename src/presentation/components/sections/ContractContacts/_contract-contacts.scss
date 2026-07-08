@@ -4,6 +4,8 @@
 $cc-section-padding: 100px;
 $cc-cards-gap: 25px;
 $cc-title-cards-gap: 50px;
+$cc-card-min-column: 420px;
+$cc-cards-single-col-max: 889px;
 
 .contract-contacts {
   position: relative;
@@ -57,7 +59,7 @@ $cc-title-cards-gap: 50px;
 
   &__cards {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(#{$cc-card-min-column}, 1fr));
     gap: $cc-cards-gap;
     width: 100%;
     margin: 0;
@@ -66,15 +68,45 @@ $cc-title-cards-gap: 50px;
   }
 
   &__card-item {
-    min-width: 0;
+    min-width: min(100%, #{$cc-card-min-column});
   }
 }
 
-@media (max-width: $bp-desktop-sm) {
+@media (max-width: $bp-contract-contacts-stack) {
+  .contract-contacts {
+    &__inner {
+      align-items: center;
+    }
+
+    &__cards {
+      grid-template-columns: repeat(2, minmax(#{$cc-card-min-column}, 1fr));
+    }
+
+    &__card-item--solo {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(100%, calc((100% - #{$cc-cards-gap}) / 2));
+    }
+  }
+}
+
+@media (max-width: $cc-cards-single-col-max) {
   .contract-contacts {
     &__cards {
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
     }
+
+    &__card-item--solo {
+      grid-column: auto;
+      justify-self: stretch;
+      width: auto;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .contract-contacts {
+    padding-block: 80px;
   }
 }
 

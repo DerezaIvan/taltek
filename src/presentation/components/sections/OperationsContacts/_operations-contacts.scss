@@ -5,8 +5,8 @@ $oc-section-padding: 100px;
 $oc-header-gap: 30px;
 $oc-header-cards-gap: 40px;
 $oc-cards-gap: 30px;
-$oc-dispatcher-columns: 2;
-$oc-territory-columns: 3;
+$oc-dispatcher-card-min-column: 654px;
+$oc-territory-card-min-column: 450px;
 
 .operations-contacts {
   padding-block: $oc-section-padding;
@@ -63,16 +63,31 @@ $oc-territory-columns: 3;
   }
 
   &__dispatchers {
-    grid-template-columns: repeat($oc-dispatcher-columns, minmax(0, 1fr));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, #{$oc-dispatcher-card-min-column}), 1fr)
+    );
   }
 
   &__territories {
-    grid-template-columns: repeat($oc-territory-columns, minmax(0, 1fr));
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, #{$oc-territory-card-min-column}), 1fr)
+    );
   }
 
-  &__dispatcher-item,
+  &__dispatcher-item {
+    min-width: min(100%, #{$oc-dispatcher-card-min-column});
+  }
+
   &__territory-item {
-    min-width: 0;
+    min-width: min(100%, #{$oc-territory-card-min-column});
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .operations-contacts {
+    padding-block: 80px;
   }
 }
 
@@ -86,14 +101,6 @@ $oc-territory-columns: 3;
     &__subtitle {
       max-width: none;
       text-align: left;
-    }
-
-    &__dispatchers {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    &__territories {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 }
@@ -113,10 +120,6 @@ $oc-territory-columns: 3;
     &__title {
       font-size: 32px;
       line-height: 1.2;
-    }
-
-    &__territories {
-      grid-template-columns: minmax(0, 1fr);
     }
   }
 }

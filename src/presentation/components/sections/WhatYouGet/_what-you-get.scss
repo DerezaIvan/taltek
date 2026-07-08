@@ -111,9 +111,9 @@ $wyg-icon-size: 57px;
   }
 }
 
-@media (max-width: $bp-desktop-sm) {
+@media (max-width: $bp-desktop-md) {
   .what-you-get {
-    padding-block: 64px;
+    padding-block: 80px;
 
     &__inner {
       grid-template-columns: minmax(0, 1fr);
@@ -121,8 +121,18 @@ $wyg-icon-size: 57px;
     }
 
     &__grid {
-      grid-template-columns: minmax(0, 1fr);
+      gap: 20px;
     }
+
+    &__card {
+      max-width: none;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .what-you-get {
+    padding-block: 64px;
 
     &__card {
       min-height: 0;

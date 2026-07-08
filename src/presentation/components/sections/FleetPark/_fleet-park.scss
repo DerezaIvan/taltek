@@ -142,6 +142,21 @@ $fp-card-content-gap: 10px;
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .fleet-park {
+    &__card {
+      &--small,
+      &--feature {
+        padding: 32px;
+      }
+    }
+
+    &__value {
+      font-size: clamp(48px, 4.5vw, #{typography.$heading-xl-size});
+    }
+  }
+}
+
 @media (max-width: $bp-desktop-sm) {
   .fleet-park {
     padding-block: 64px;

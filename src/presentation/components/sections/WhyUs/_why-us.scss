@@ -83,6 +83,12 @@ $why-us-icon-size: 89px;
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .why-us {
+    padding-block: 40px;
+  }
+}
+
 @media (max-width: $bp-desktop-sm) {
   .why-us {
     padding-block: 64px;

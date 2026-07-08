@@ -12,6 +12,14 @@
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .contacts-content {
+    &__inner {
+      gap: 30px;
+    }
+  }
+}
+
 @media (max-width: $bp-desktop-sm) {
   .contacts-content {
     &__inner {

@@ -15,7 +15,7 @@
   }: RequestButtonProps = $props();
 
   const requestHref = $derived(
-    type === 'submit' ? href : (href ?? `${resolve('/contacts/')}#${CONTACTS_FORM_ANCHOR}`),
+    type === 'submit' ? href : (href ?? `${resolve('/contacts/')}#${CONTACTS_FORM_ANCHOR}`)
   );
 </script>
 

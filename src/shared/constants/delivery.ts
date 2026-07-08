@@ -79,6 +79,21 @@ export const DELIVERY_SIDE_IMAGE = {
   alt: 'Грузовой поезд на ж/д путях',
 } as const;
 
+export const DELIVERY_ADAPTIVE_IMAGES = [
+  {
+    imageKey: 'taltek',
+    width: 290,
+    height: 170,
+    alt: 'Вагон ТалТЭК Транс',
+  },
+  {
+    imageKey: 'train2',
+    width: 340,
+    height: 170,
+    alt: 'Колёсная пара грузового вагона',
+  },
+] as const;
+
 export const DELIVERY_BOTTOM_ROW: DeliveryRowItem[] = [
   { type: 'icon', iconId: 'documents', width: 170, height: 170 },
   { type: 'text', stepId: '04', width: 390, height: 170 },

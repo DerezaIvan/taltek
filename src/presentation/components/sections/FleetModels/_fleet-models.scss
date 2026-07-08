@@ -179,6 +179,17 @@ $fleet-reserve-brown-60: #51270399;
   }
 }
 
+@media (max-width: $bp-desktop-md) {
+  .fleet-models {
+    padding-top: 40px;
+    padding-bottom: 40px;
+
+    &__grid {
+      gap: 20px;
+    }
+  }
+}
+
 @media (max-width: $bp-desktop-sm) {
   .fleet-models {
     padding-top: 40px;

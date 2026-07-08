@@ -10,7 +10,8 @@
   }
 
   &__body {
-    padding: 100px 0;
+    padding-top: 100px;
+    padding-bottom: 100px;
   }
 
   &__breadcrumbs {
@@ -43,6 +44,29 @@
     font-size: typography.$text-md-size;
     line-height: 100%;
     letter-spacing: typography.$text-md-letter-spacing;
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .page-hero {
+    &__body {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+
+    &__title {
+      font-size: 56px;
+      line-height: 64px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .page-hero {
+    &__title {
+      font-size: 48px;
+      line-height: 56px;
+    }
   }
 }
 

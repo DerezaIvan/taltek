@@ -105,10 +105,12 @@
     height="17"
     viewBox="0 0 42 17"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg">
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M4.34464e-06 9.65024L4.09176e-06 7.67035L37.3318 7.49533L31.2506 1.41421L32.6649 4.13482e-07L41.1501 8.48528L32.6649 16.9706L31.2506 15.5564L37.3318 9.47524L4.34464e-06 9.65024Z"
-      fill="currentColor" />
+      fill="currentColor"
+    />
   </svg>
   <svg
     class="explore-arrow__svg explore-arrow__svg--short"
@@ -116,9 +118,11 @@
     height="17"
     viewBox="0 0 18 17"
     fill="none"
-    xmlns="http://www.w3.org/2000/svg">
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M1.5075e-05 9.47525L1.48222e-05 7.49535H13.5765L7.49535 1.41423L8.90956 1.44839e-05L17.3948 8.4853L8.90956 16.9706L7.49535 15.5564L13.5765 9.47525L1.5075e-05 9.47525Z"
-      fill="currentColor" />
+      fill="currentColor"
+    />
   </svg>
 </span>
