@@ -89,7 +89,7 @@ GitHub Actions (`.github/workflows/ci.yml`): `npm run check`, `npm run build`, `
 Локальная проверка сборки под Pages:
 
 ```bash
-BASE_PATH=/taltek npm run build
+BASE_PATH=/taltek npm run build:pages
 BASE_PATH=/taltek npm run preview
 ```
 

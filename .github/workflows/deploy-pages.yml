@@ -32,9 +32,7 @@ jobs:
         run: npm run check
 
       - name: Build for GitHub Pages
-        run: npm run build
-        env:
-          BASE_PATH: /taltek
+        run: npm run build:pages
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
