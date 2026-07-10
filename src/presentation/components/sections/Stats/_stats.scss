@@ -6,7 +6,6 @@
   overflow: hidden;
   padding-block: 100px;
   color: var(--primary-white);
-  background: var(--brand-section-gradient);
   border-radius: 30px;
 
   &__bg {
@@ -22,6 +21,13 @@
     height: 100%;
     object-fit: cover;
     object-position: center bottom;
+    filter: var(--brand-image-filter);
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: var(--brand-image-overlay);
   }
 
   &__inner {

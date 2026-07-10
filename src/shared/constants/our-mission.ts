@@ -1,7 +1,3 @@
-export const OUR_MISSION_TITLE = 'Наша миссия';
-
-export const OUR_MISSION_TEXT = 'Делать совместный бизнес во благо всех заинтересованных сторон.';
-
 export const OUR_MISSION_IMAGES = [
   {
     id: 'railway',

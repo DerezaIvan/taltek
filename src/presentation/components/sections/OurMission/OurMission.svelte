@@ -1,10 +1,6 @@
 <script lang="ts">
   import { asset } from '$app/paths';
-  import {
-    OUR_MISSION_IMAGES,
-    OUR_MISSION_TEXT,
-    OUR_MISSION_TITLE,
-  } from '$shared/constants/our-mission';
+  import { OUR_MISSION_IMAGES } from '$shared/constants/our-mission';
 
   const [firstImage, secondImage, thirdImage, fourthImage] = OUR_MISSION_IMAGES;
 </script>
@@ -13,7 +9,7 @@
   @use './_our-mission.scss';
 </style>
 
-<section class="our-mission" aria-labelledby="our-mission-title">
+<section class="our-mission">
   <div class="our-mission__inner">
     <figure class="our-mission__image our-mission__image--slot-1">
       <img
@@ -48,13 +44,6 @@
           decoding="async"
         />
       </figure>
-
-      <div class="our-mission__content">
-        <h2 id="our-mission-title" class="our-mission__title">
-          {OUR_MISSION_TITLE}
-        </h2>
-        <p class="our-mission__text">{OUR_MISSION_TEXT}</p>
-      </div>
 
       <figure class="our-mission__image our-mission__image--slot-4">
         <img

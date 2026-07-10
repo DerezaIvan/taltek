@@ -31,12 +31,13 @@ $wyg-icon-size: 57px;
     height: 100%;
     object-fit: cover;
     object-position: center;
+    filter: var(--brand-image-filter);
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: var(--brand-photo-overlay-gradient);
+    background: var(--brand-image-overlay);
   }
 
   &__inner {

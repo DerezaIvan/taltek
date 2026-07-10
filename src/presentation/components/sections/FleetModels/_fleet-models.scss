@@ -6,7 +6,7 @@ $fleet-grid-gap: 25px;
 $fleet-card-radius: 20px;
 $fleet-media-aspect-ratio: math.div(313, 209);
 $fleet-media-padding: 9px;
-$fleet-badge-offset: 7px;
+$fleet-badge-offset: 14px;
 $fleet-badge-bg: #f5f9ffcc;
 $fleet-badge-color: #0f1628;
 $fleet-badge-reserve-bg: #d54b00;
@@ -36,18 +36,9 @@ $fleet-reserve-brown-60: #51270399;
     text-transform: uppercase;
   }
 
-  &__subtitle {
-    margin: 0;
-    color: var(--brand-navy-80);
-    font-family: typography.$font-family-ubuntu;
-    font-weight: typography.$text-sm-weight;
-    font-size: typography.$text-sm-size;
-    line-height: typography.$text-sm-line-height;
-  }
-
   &__grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
     gap: $fleet-grid-gap;
     margin: 35px 0 0;
     padding: 0;
@@ -185,7 +176,6 @@ $fleet-reserve-brown-60: #51270399;
     padding-bottom: 40px;
 
     &__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
     }
   }

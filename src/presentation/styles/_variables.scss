@@ -45,19 +45,25 @@ $brand-blue-dark: #0d3776;
   --delivery-card-bg: #{$delivery-card-bg};
   --brand-overlay-gradient: linear-gradient(
     90.01deg,
-    rgba(30, 96, 179, 0.7) 0.01%,
-    rgba(13, 55, 118, 0.7) 98.72%
+    rgba(3, 32, 81, 0.8) 0.01%,
+    rgba(3, 32, 81, 0.75) 98.72%
   );
   --brand-photo-overlay-gradient: linear-gradient(
     90.01deg,
-    rgba(30, 96, 179, 0.85) 0.01%,
-    rgba(13, 55, 118, 0.85) 98.72%
+    rgba(3, 32, 81, 0.8) 0.01%,
+    rgba(3, 32, 81, 0.75) 98.72%
   );
   --brand-section-gradient: linear-gradient(
     90.01deg,
     #{$brand-blue} 0.01%,
     #{$brand-blue-dark} 98.72%
   );
+  --brand-image-overlay: linear-gradient(
+    90.01deg,
+    rgba(30, 96, 179, 0.75) 0.01%,
+    rgba(13, 55, 118, 0.7) 98.72%
+  );
+  --brand-image-filter: brightness(0.9) saturate(0.95);
   --card-icon-gradient: linear-gradient(93.45deg, #{$brand-blue} 23.1%, #{$brand-blue-dark} 95.22%);
   --why-us-icon-gradient: var(--card-icon-gradient);
   --brand-gradient: var(--brand-section-gradient);

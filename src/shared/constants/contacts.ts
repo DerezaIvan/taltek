@@ -8,7 +8,7 @@ export const CONTACTS_FORM_TITLE = 'Оставить запрос';
 export const CONTACTS_FORM_FIELDS = {
   name: {
     label: 'Имя',
-    placeholder: 'Как к вам обращаться',
+    placeholder: 'Ваше имя',
     required: true,
   },
   phone: {
@@ -57,9 +57,9 @@ export const CONTACTS_CONSENT = {
 } as const;
 
 export const CONTACTS_HOTLINE = {
-  title: 'Горячая линия',
-  phone: '+7 (495) 900 10 95',
-  phoneHref: 'tel:+74959001095',
+  title: 'Единный номер',
+  phone: '8 800 533 9 888',
+  phoneHref: 'tel:+78005339888',
   subtitle: 'Главный офис · Москва',
 } as const;
 

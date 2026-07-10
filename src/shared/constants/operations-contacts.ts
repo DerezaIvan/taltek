@@ -11,15 +11,15 @@ export const DISPATCHER_CARDS = [
   {
     id: 'gondola',
     title: 'Полувагоны',
-    phone: '+7 (495) 900 10 95 доб. 101',
-    phoneHref: 'tel:+74959001095,101',
+    phone: '8 800 533 9 888 доб. 101',
+    phoneHref: 'tel:+78005339888,101',
     badge: 'Круглосуточно',
   },
   {
     id: 'covered-grain',
-    title: 'Крытые вагоны и зерновозы',
-    phone: '+7 (495) 900 10 95 доб. 102',
-    phoneHref: 'tel:+74959001095,102',
+    title: 'Крытые вагоны',
+    phone: '8 800 533 9 888 доб. 102',
+    phoneHref: 'tel:+78005339888,102',
     badge: 'Режим работы: 08:00 – 20:00 (по МСК)',
   },
 ] as const;

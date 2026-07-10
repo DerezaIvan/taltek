@@ -22,6 +22,7 @@
       loading="eager"
       decoding="async"
     />
+    <div class="stats__overlay"></div>
   </div>
 
   <div class="container-wide stats__inner">

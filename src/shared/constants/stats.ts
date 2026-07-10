@@ -7,7 +7,7 @@ export const STATS_ITEMS = [
     id: 'fleet',
     label: 'Общий парк',
     value: '16 000',
-    description: 'вагонов подвижного состава в управлении',
+    description: 'вагонов в управлении',
   },
   {
     id: 'turnover',
@@ -35,9 +35,8 @@ export const STATS_ITEMS = [
   },
   {
     id: 'geography',
-    label: 'География присутствия',
+    label: 'Представительства',
     value: '6',
-    description:
-      'территорий России: Москва, Санкт-Петербург, Новосибирск, Иркутск, Бийск, Новокузнецк',
+    description: 'Москва, Санкт-Петербург, Новосибирск, Иркутск, Бийск, Новокузнецк',
   },
 ] as const;

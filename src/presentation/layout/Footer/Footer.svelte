@@ -68,7 +68,7 @@
         <p class="footer__section-title">Контакты</p>
         <ul class="footer__contacts-list">
           <li>
-            <a class="footer__contact-link" href="tel:+74959001095">+7 (495) 900 10 95</a>
+            <a class="footer__contact-link" href="tel:+78005339888">+7 (800) 533 9 888</a>
           </li>
           <li>
             <span class="footer__contact-text"
@@ -76,8 +76,8 @@
             >
           </li>
           <li>
-            <a class="footer__contact-link" href="mailto:infor@taltektrans.pro">
-              infor@taltektrans.pro
+            <a class="footer__contact-link" href="mailto:info@taltektrans.pro">
+              info@taltektrans.pro
             </a>
           </li>
         </ul>

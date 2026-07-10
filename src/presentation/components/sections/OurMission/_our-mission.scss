@@ -4,7 +4,7 @@
 $om-image-width: 340px;
 $om-image-height: 405px;
 $om-image-gap: 25px;
-$om-content-gap: 70px;
+$om-group-gap: 25px;
 $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58, 135, 0.85) 100%);
 
 .our-mission {
@@ -23,7 +23,7 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
   &__group {
     display: flex;
     align-items: flex-end;
-    gap: $om-content-gap;
+    gap: $om-group-gap;
   }
 
   &__image {
@@ -49,35 +49,6 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
       background: $om-image-overlay;
       pointer-events: none;
     }
-  }
-
-  &__content {
-    flex-shrink: 0;
-    align-self: center;
-    width: fit-content;
-    max-width: 390px;
-  }
-
-  &__title {
-    margin: 0;
-    color: var(--brand-navy);
-    font-family: typography.$font-family-uncage;
-    font-weight: typography.$heading-lg-weight;
-    font-size: typography.$heading-lg-size;
-    line-height: 100%;
-    letter-spacing: typography.$heading-lg-letter-spacing;
-    text-transform: uppercase;
-  }
-
-  &__text {
-    margin: 0;
-    padding-top: 25px;
-    color: var(--brand-navy);
-    font-family: typography.$font-family-ubuntu;
-    font-weight: 400;
-    font-size: typography.$text-card-title-size;
-    line-height: 27px;
-    text-align: justify;
   }
 }
 
@@ -107,14 +78,6 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
       justify-content: center;
       row-gap: 32px;
     }
-
-    &__content {
-      text-align: center;
-    }
-
-    &__text {
-      text-align: justify;
-    }
   }
 }
 
@@ -133,15 +96,6 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
 
     &__group {
       display: contents;
-    }
-
-    &__content {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      align-self: auto;
-      max-width: none;
-      width: 100%;
-      text-align: center;
     }
 
     &__image--slot-1 {
@@ -190,20 +144,6 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
 
     &__inner {
       gap: 16px;
-    }
-
-    &__content {
-      text-align: left;
-    }
-
-    &__title {
-      text-align: left;
-    }
-
-    &__text {
-      padding-top: 16px;
-      font-size: typography.$text-base-size;
-      line-height: typography.$text-base-line-height;
     }
   }
 }

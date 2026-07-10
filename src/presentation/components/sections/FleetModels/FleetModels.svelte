@@ -1,10 +1,6 @@
 <script lang="ts">
   import { asset } from '$app/paths';
-  import {
-    FLEET_MODELS_ITEMS,
-    FLEET_MODELS_SUBTITLE,
-    FLEET_MODELS_TITLE,
-  } from '$shared/constants/fleet-models';
+  import { FLEET_MODELS_ITEMS, FLEET_MODELS_TITLE } from '$shared/constants/fleet-models';
 </script>
 
 <style lang="scss">
@@ -17,7 +13,6 @@
       <h2 id="fleet-models-title" class="fleet-models__title">
         {FLEET_MODELS_TITLE}
       </h2>
-      <p class="fleet-models__subtitle">{FLEET_MODELS_SUBTITLE}</p>
     </header>
 
     <ul class="fleet-models__grid">
