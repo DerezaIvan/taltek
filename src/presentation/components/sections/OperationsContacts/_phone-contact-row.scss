@@ -59,3 +59,11 @@ $phone-row-gap: 10px;
     }
   }
 }
+
+@media (max-width: $bp-mobile-lg) {
+  .phone-contact-row {
+    &__badge {
+      margin-left: calc(#{$phone-row-icon-size} + #{$phone-row-gap});
+    }
+  }
+}

@@ -137,5 +137,10 @@ $oc-territory-card-min-column: 450px;
       font-size: 14px;
       line-height: 20px;
     }
+
+    &__dispatchers,
+    &__territories {
+      gap: 16px;
+    }
   }
 }

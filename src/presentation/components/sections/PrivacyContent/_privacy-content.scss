@@ -74,6 +74,12 @@
 
 @media (max-width: $bp-mobile-lg) {
   .privacy-content {
+    padding-block: 24px;
+
+    &__inner {
+      gap: 24px;
+    }
+
     &__list {
       padding-left: 16px;
     }

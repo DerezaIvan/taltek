@@ -195,6 +195,7 @@
   @media (max-width: $bp-desktop-nav) {
     &__inner {
       gap: 10px;
+      padding: 0;
     }
 
     &__nav,
@@ -208,7 +209,7 @@
   }
 
   @media (max-width: $bp-mobile-lg) {
-    padding: 16px;
+    padding: 10px;
 
     &__logo {
       height: 28px;
@@ -220,7 +221,7 @@
     }
 
     &__menu {
-      padding: 16px;
+      padding: 10px;
     }
 
     &__menu-link {
@@ -238,6 +239,7 @@
 }
 
 :global {
+
   .header__menu,
   .header__backdrop {
     font-family: var(--font-family-ubuntu);

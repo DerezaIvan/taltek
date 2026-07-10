@@ -1,13 +1,12 @@
 $font-family-uncage: 'UNCAGE', sans-serif;
 $font-family-ubuntu: 'Ubuntu', sans-serif;
 
-// Fluid type scales: desktop (1920px) -> mobile (375px)
 $heading-xl-size: clamp(31px, 2.65vw + 21.05px, 72px);
 $heading-xl-line-height: clamp(43px, 2.72vw + 32.81px, 85px);
 $heading-xl-weight: 700;
 $heading-xl-letter-spacing: 1px;
 
-$heading-lg-size: clamp(28px, 1.165vw + 23.63px, 46px);
+$heading-lg-size: clamp(26px, 1.165vw + 21.63px, 46px);
 $heading-lg-line-height: clamp(36px, 2.006vw + 28.48px, 67px);
 $heading-lg-weight: 500;
 $heading-lg-letter-spacing: 1px;

@@ -5,6 +5,7 @@
   margin-top: auto;
   overflow: hidden;
   border-radius: $layout-radius;
+  background: #005edd;
   color: var(--primary-white);
 
   &__media {
@@ -17,33 +18,36 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: var(--brand-image-filter);
+    filter: brightness(0.9) saturate(0.95);
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: var(--brand-image-overlay);
+    background: linear-gradient(
+      90.01deg,
+      rgba(30, 96, 179, 0.7) 0.01%,
+      rgba(13, 55, 118, 0.7) 98.72%
+    );
   }
 
   &__content {
     position: relative;
     z-index: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  &__top {
-    display: flex;
-    gap: 92px;
-    align-items: flex-start;
+    display: grid;
+    grid-template-columns: 1.25fr 1fr 1fr 1fr;
+    grid-template-areas:
+      'brand nav contacts cta'
+      'legal . . .'
+      'bottom bottom bottom bottom';
+    gap: 60px 40px;
     padding-top: 100px;
   }
 
   &__brand {
+    grid-area: brand;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0;
   }
 
   &__logo {
@@ -64,10 +68,10 @@
   }
 
   &__legal {
+    grid-area: legal;
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding-top: 60px;
   }
 
   &__privacy {
@@ -88,23 +92,20 @@
   }
 
   &__nav {
-    flex-shrink: 0;
+    grid-area: nav;
   }
 
   &__contacts {
+    grid-area: contacts;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: 7px;
     min-width: 0;
-    flex-direction: column;
   }
 
   &__cta {
-    flex: 0 0 auto;
-    flex-shrink: 0;
-    min-width: 345px;
-    margin-left: auto;
-    align-self: end;
+    grid-area: cta;
+    min-width: 0;
   }
 
   &__section-title {
@@ -165,7 +166,8 @@
   }
 
   &__bottom {
-    margin-top: 64px;
+    grid-area: bottom;
+    margin-top: 4px;
     overflow: hidden;
   }
 
@@ -186,76 +188,49 @@
 
 @media (max-width: $bp-desktop) {
   .footer {
-    &__top {
-      flex-wrap: wrap;
+    &__content {
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-areas:
+        'brand nav contacts'
+        'cta cta cta'
+        'legal legal legal'
+        'bottom bottom bottom';
       gap: 40px 56px;
       padding-top: 80px;
     }
 
-    &__nav {
-      flex: 0 1 auto;
+    &__cta {
+      :global(.action-button--glass) {
+        width: 100%;
+      }
     }
 
     &__contact-text {
       white-space: normal;
       overflow-wrap: break-word;
     }
-
-    &__cta {
-      flex: 0 0 345px;
-      min-width: 345px;
-    }
   }
 }
 
 @media (max-width: $bp-desktop-md) {
   .footer {
-    &__top {
-      flex-wrap: wrap;
+    &__content {
       gap: 40px;
-    }
-
-    &__cta {
-      flex: 1 1 100%;
-      min-width: 0;
-      margin-left: 0;
-      align-self: stretch;
-
-      :global(.action-button--glass) {
-        width: 100%;
-      }
-    }
-  }
-}
-
-@media (max-width: $bp-desktop-sm) {
-  .footer {
-    &__top {
-      gap: 40px;
-      padding-top: 64px;
-    }
-
-    &__brand {
-      flex: 1 1 100%;
-    }
-
-    &__legal {
-      padding-top: 32px;
     }
   }
 }
 
 @media (max-width: $bp-tablet) {
   .footer {
-    &__top {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 32px;
-    }
-
-    &__nav,
-    &__contacts {
-      flex: 1 1 auto;
+    &__content {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        'brand brand'
+        'nav contacts'
+        'cta cta'
+        'legal legal'
+        'bottom bottom';
+      padding-top: 64px;
     }
 
     &__contacts {
@@ -267,16 +242,57 @@
     }
 
     &__bottom {
-      margin-top: 40px;
+      margin-top: 0;
     }
   }
 }
 
 @media (max-width: $bp-mobile-lg) {
   .footer {
-    &__top {
-      padding-top: 48px;
+    border-radius: var(--layout-radius) var(--layout-radius) 0 0;
+
+    &__content {
+      grid-template-columns: 1fr;
+      grid-template-areas:
+        'brand'
+        'nav'
+        'contacts'
+        'cta'
+        'legal'
+        'bottom';
       gap: 24px;
+      padding-top: 48px;
+      text-align: center;
+      justify-items: center;
+    }
+
+    &__brand {
+      align-items: center;
+    }
+
+    &__legal {
+      align-items: center;
+      gap: 16px;
+    }
+
+    &__nav,
+    &__contacts {
+      align-items: center;
+      width: 100%;
+    }
+
+    &__nav-list,
+    &__contacts-list {
+      align-items: center;
+      gap: 12px;
+    }
+
+    &__cta {
+      width: 100%;
+
+      :global(.action-button--glass) {
+        width: 100%;
+      }
     }
 
     &__description,
@@ -293,9 +309,8 @@
       font-size: 16px;
     }
 
-    &__nav-list,
-    &__contacts-list {
-      gap: 12px;
+    &__bottom {
+      display: none;
     }
   }
 }

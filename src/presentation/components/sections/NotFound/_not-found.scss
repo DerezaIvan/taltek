@@ -87,10 +87,41 @@
 
 @media (max-width: $bp-mobile-lg) {
   .not-found {
+    &__body {
+      padding-top: 80px;
+      padding-bottom: 100px;
+    }
+
+    &__code {
+      font-size: 120px;
+    }
+
+    &__title {
+      padding-top: 16px;
+      font-size: 26px;
+      line-height: 1.2;
+    }
+
+    &__description {
+      padding-top: 16px;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
     &__actions {
       flex-direction: column;
       align-items: stretch;
       gap: 16px;
+      margin-top: 24px;
+
+      :global(.action-button--glass) {
+        width: 100%;
+        max-width: none;
+      }
+
+      :global(.action-button--ghost) {
+        align-self: center;
+      }
     }
   }
 }

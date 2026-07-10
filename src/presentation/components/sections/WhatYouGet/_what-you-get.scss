@@ -16,7 +16,7 @@ $wyg-icon-size: 57px;
   overflow: hidden;
   padding-block: 100px;
   border-radius: var(--layout-radius);
-  background: var(--brand-section-gradient);
+  background: #005edd;
 
   &__bg {
     position: absolute;
@@ -31,13 +31,17 @@ $wyg-icon-size: 57px;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: var(--brand-image-filter);
+    filter: brightness(0.9) saturate(0.95);
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: var(--brand-image-overlay);
+    background: linear-gradient(
+      90.01deg,
+      rgba(30, 96, 179, 0.7) 0.01%,
+      rgba(13, 55, 118, 0.7) 98.72%
+    );
   }
 
   &__inner {
@@ -169,9 +173,9 @@ $wyg-icon-size: 57px;
     }
 
     &__card {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
       min-height: 0;
       padding: 16px;
     }

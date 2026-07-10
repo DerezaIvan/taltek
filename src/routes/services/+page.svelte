@@ -5,6 +5,7 @@
     KeyServices,
     Main,
     PageHero,
+    WhyUs,
     Cta,
   } from '$presentation/components/sections';
   import { SERVICES_CTA_SUBTITLE, SERVICES_CTA_TITLE } from '$shared/constants/cta';
@@ -30,6 +31,7 @@
   {/snippet}
 
   <KeyServices />
+  <WhyUs />
   <FleetModels />
   <FleetPark />
   <Cta title={SERVICES_CTA_TITLE} subtitle={SERVICES_CTA_SUBTITLE} />

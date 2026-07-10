@@ -15,7 +15,7 @@
 
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О компании' }];
 
-  const titleLines = ['[ЭКО]ЛОГИЧНЫЙ выбор', 'для Ваших грузов'];
+  const titleLines = ['[ЭКО]ЛОГИЧНЫЙ', 'ВЫБОР ДЛЯ ВАШИХ', 'ГРУЗОВ'];
 </script>
 
 <svelte:head>

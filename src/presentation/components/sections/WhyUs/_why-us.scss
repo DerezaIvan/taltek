@@ -127,13 +127,14 @@ $why-us-icon-size: 89px;
 
     &__card {
       padding: 20px;
+      border-radius: 20px;
     }
 
     &__icon {
-      width: 56px;
-      height: 56px;
-      padding: 18px 16px;
-      border-radius: 16px;
+      width: 48px;
+      height: 48px;
+      padding: 14px 12px;
+      border-radius: 14px;
     }
 
     &__card-title {

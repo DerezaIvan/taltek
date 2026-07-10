@@ -115,14 +115,8 @@ $cc-role-offset: 10px;
     }
 
     &__contact-row {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 4px;
+      gap: 12px;
       margin-top: 8px;
-    }
-
-    &__contact-value {
-      text-align: left;
     }
   }
 }
@@ -130,12 +124,28 @@ $cc-role-offset: 10px;
 @media (max-width: $bp-mobile-lg) {
   .contract-contact-card {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
+    align-items: normal;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 24px;
 
     &__photo {
-      width: 80px;
-      height: 88px;
+      width: 120px;
+      height: 130px;
+      border-radius: 16px;
+    }
+
+    &__contact-row {
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    &__contact-label {
+      font-size: 12px;
+    }
+
+    &__contact-link {
+      font-size: 13px;
     }
   }
 }

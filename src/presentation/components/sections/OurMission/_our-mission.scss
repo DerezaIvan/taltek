@@ -1,39 +1,26 @@
 @use 'presentation/styles/variables' as *;
-@use 'presentation/styles/typography-tokens' as typography;
 
-$om-image-width: 340px;
-$om-image-height: 405px;
-$om-image-gap: 25px;
-$om-group-gap: 25px;
+$om-image-gap: 16px;
 $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58, 135, 0.85) 100%);
 
 .our-mission {
   padding-top: 100px;
 
   &__inner {
-    display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
     gap: $om-image-gap;
-    width: fit-content;
-    max-width: 100%;
-    margin-inline: auto;
-  }
-
-  &__group {
-    display: flex;
-    align-items: flex-end;
-    gap: $om-group-gap;
+    width: 100%;
   }
 
   &__image {
     position: relative;
-    flex-shrink: 0;
     overflow: hidden;
-    width: $om-image-width;
-    height: $om-image-height;
+    width: 100%;
+    height: auto;
     margin: 0;
     border-radius: var(--layout-radius);
+    aspect-ratio: 340 / 405;
 
     img {
       display: block;
@@ -52,88 +39,12 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
   }
 }
 
-@media (max-width: $bp-desktop-md) {
-  .our-mission {
-    &__group {
-      gap: 40px;
-    }
-
-    &__image {
-      width: 280px;
-      height: 334px;
-    }
-  }
-}
-
-@media (max-width: $bp-desktop) {
-  .our-mission {
-    &__inner {
-      flex-wrap: wrap;
-      justify-content: center;
-      row-gap: 32px;
-    }
-
-    &__group {
-      flex-wrap: wrap;
-      justify-content: center;
-      row-gap: 32px;
-    }
-  }
-}
-
-@media (max-width: $bp-our-mission-stack) {
-  .our-mission {
-    padding-inline: 20px;
-
-    &__inner {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: $om-image-gap;
-      width: 100%;
-      max-width: none;
-      align-items: stretch;
-    }
-
-    &__group {
-      display: contents;
-    }
-
-    &__image--slot-1 {
-      grid-row: 2;
-      grid-column: 1;
-    }
-
-    &__image--slot-2 {
-      grid-row: 2;
-      grid-column: 2;
-    }
-
-    &__image--slot-3 {
-      grid-row: 3;
-      grid-column: 1;
-    }
-
-    &__image--slot-4 {
-      grid-row: 3;
-      grid-column: 2;
-    }
-
-    &__image {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 340 / 405;
-    }
-  }
-}
-
 @media (max-width: $bp-tablet) {
   .our-mission {
     padding-block: 48px;
 
-    &__image {
-      width: min(100%, $om-image-width);
-      height: auto;
-      aspect-ratio: 340 / 405;
+    &__inner {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }
@@ -141,9 +52,14 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
 @media (max-width: $bp-mobile-lg) {
   .our-mission {
     padding-top: 32px;
+    padding-inline: 10px;
 
     &__inner {
-      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+
+    &__image {
+      border-radius: 24px;
     }
   }
 }

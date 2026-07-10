@@ -13,7 +13,7 @@ $fp-card-content-gap: 10px;
   padding-top: 100px;
   padding-bottom: 50px;
   border-radius: var(--layout-radius);
-  background: var(--brand-section-gradient);
+  background: #005edd;
 
   &__bg {
     position: absolute;
@@ -28,13 +28,17 @@ $fp-card-content-gap: 10px;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: var(--brand-image-filter);
+    filter: brightness(0.9) saturate(0.95);
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: var(--brand-image-overlay);
+    background: linear-gradient(
+      90.01deg,
+      rgba(30, 96, 179, 0.7) 0.01%,
+      rgba(13, 55, 118, 0.7) 98.72%
+    );
   }
 
   &__inner {
@@ -204,6 +208,28 @@ $fp-card-content-gap: 10px;
 
 @media (max-width: $bp-mobile-lg) {
   .fleet-park {
+    &__inner {
+      grid-template-areas:
+        'title'
+        'feature'
+        'cards';
+    }
+
+    &__title {
+      text-align: center;
+    }
+
+    &__small-cards {
+      gap: 16px;
+    }
+
+    &__card {
+      &--small,
+      &--feature {
+        padding: 20px;
+      }
+    }
+
     &__value {
       font-size: typography.$heading-xl-size;
     }

@@ -34,3 +34,11 @@
     padding-bottom: 32px;
   }
 }
+
+@media (max-width: $bp-mobile-lg) {
+  .contacts-content {
+    &__inner {
+      gap: 24px;
+    }
+  }
+}

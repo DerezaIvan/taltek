@@ -117,6 +117,10 @@ $about-intro-image-ratio: math.div(692, 461);
       line-height: typography.$text-base-line-height;
     }
 
+    &__paragraph + &__paragraph {
+      margin-top: 16px;
+    }
+
     &__image {
       border-radius: 24px;
     }

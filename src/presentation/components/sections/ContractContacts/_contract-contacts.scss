@@ -12,7 +12,7 @@ $cc-cards-single-col-max: 889px;
   overflow: hidden;
   padding-block: $cc-section-padding;
   border-radius: var(--layout-radius);
-  background: var(--brand-section-gradient);
+  background: #005edd;
 
   &__bg {
     position: absolute;
@@ -27,13 +27,15 @@ $cc-cards-single-col-max: 889px;
     height: 100%;
     object-fit: cover;
     object-position: center;
-    filter: var(--brand-image-filter);
+    filter: brightness(0.9) saturate(0.95);
   }
 
   &__overlay {
     position: absolute;
     inset: 0;
-    background: var(--brand-image-overlay);
+    background: linear-gradient(90.01deg,
+        rgba(30, 96, 179, 0.7) 0.01%,
+        rgba(13, 55, 118, 0.7) 98.72%);
   }
 
   &__inner {
@@ -98,7 +100,7 @@ $cc-cards-single-col-max: 889px;
     padding-block: 48px;
 
     &__title {
-      font-size: 32px;
+      font-size: 26px;
       line-height: 1.2;
     }
 
@@ -122,6 +124,10 @@ $cc-cards-single-col-max: 889px;
   .contract-contacts {
     &__inner {
       gap: 24px;
+    }
+
+    &__cards {
+      gap: 16px;
     }
   }
 }

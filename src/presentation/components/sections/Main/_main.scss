@@ -1,3 +1,5 @@
+@use 'presentation/styles/variables' as *;
+
 .main {
   display: flex;
   flex-direction: column;
@@ -10,5 +12,11 @@
 
   &__hero {
     position: relative;
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .main {
+    border-radius: 0;
   }
 }

@@ -21,6 +21,8 @@
       </p>
     </div>
 
-    <RequestButton variant="solid" />
+    <div class="cta__action">
+      <RequestButton variant="solid" />
+    </div>
   </div>
 </section>
