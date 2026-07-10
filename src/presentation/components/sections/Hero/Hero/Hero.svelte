@@ -19,7 +19,8 @@
 <section id="hero" class="hero">
   <div class="hero__media" aria-hidden="true">
     <video class="hero__video" autoplay muted loop playsinline>
-      <source src={asset('/video/5965009_Train_Pass_By_1920x1080.mp4')} type="video/mp4" />
+      <source src={asset('/video/hero-train-loop.webm')} type="video/webm" />
+      <source src={asset('/video/hero-train-loop.mp4')} type="video/mp4" />
     </video>
     <div class="hero__overlay"></div>
   </div>
