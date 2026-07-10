@@ -39,6 +39,45 @@ docker compose --profile cms up --build
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
+## Отправка заявок из контактной формы
+
+Заявки отправляются через собственный минимальный Node.js API (`api/`), который работает в Docker Compose рядом с фронтендом. Письма уходят на настроенный SMTP без использования сторонних форм-сервисов.
+
+### Архитектура
+
+- Фронтенд (SvelteKit static) → `POST /api/contact` → Nginx → `api` сервис → SMTP → email заказчика.
+- Валидация есть и на фронтенде, и на бэкенде.
+- Rate limit: не более 10 запросов за 15 минут с одного IP.
+
+### Настройка
+
+1. Скопировать `.env.example` в `.env` и заполнить SMTP:
+   ```
+   SMTP_HOST=smtp.example.com
+   SMTP_PORT=587
+   SMTP_USER=noreply@example.com
+   SMTP_PASS=your_password
+   FROM_EMAIL=noreply@example.com
+   TO_EMAIL=info@taltektrans.pro
+   ```
+2. Указать `PUBLIC_API_URL`:
+   - локально: `http://localhost:8080/api`
+   - прод: `https://yourdomain.com/api`
+3. Запустить:
+   ```bash
+   docker compose up --build frontend
+   ```
+
+### Локальная разработка API
+
+```bash
+cd api
+npm install
+SMTP_HOST=... SMTP_USER=... SMTP_PASS=... FROM_EMAIL=... TO_EMAIL=... npm run dev
+```
+
+API будет доступен на http://localhost:3001, health-check — http://localhost:3001/health.
+
 ## Directus — схема коллекций
 
 Создайте в Directus Admin две коллекции:

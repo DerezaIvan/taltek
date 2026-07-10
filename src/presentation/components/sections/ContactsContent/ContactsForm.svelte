@@ -9,6 +9,18 @@
   } from '$shared/constants/contacts';
   import { submitContactsForm } from '$infrastructure/api/submit-form';
 
+  interface FormErrors {
+    name?: string;
+    phone?: string;
+    email?: string;
+  }
+
+  interface TouchedFields {
+    name?: boolean;
+    phone?: boolean;
+    email?: boolean;
+  }
+
   let name = $state('');
   let phone = $state('');
   let email = $state('');
@@ -19,13 +31,78 @@
   let comment = $state('');
   let consent = $state(false);
   let isSubmitting = $state(false);
+  let errors = $state<FormErrors>({});
+  let touched = $state<TouchedFields>({});
+  let formError = $state('');
+  let formSuccess = $state('');
 
-  const isSubmitDisabled = $derived(isSubmitting || !consent || !name.trim() || !phone.trim());
+  const isFormValid = $derived(!validateName(name) && !validatePhone(phone) && consent);
+  const isSubmitDisabled = $derived(isSubmitting || !isFormValid);
+
+  function validateName(value: string): string | undefined {
+    const trimmed = value.trim();
+    if (!trimmed) return 'Укажите имя';
+    if (trimmed.length < 2) return 'Имя должно содержать не менее 2 символов';
+    return undefined;
+  }
+
+  function validatePhone(value: string): string | undefined {
+    const digits = value.replace(/\D/g, '');
+    if (!digits) return 'Укажите телефон';
+    if (digits.length < 10) return 'Введите корректный номер телефона';
+    return undefined;
+  }
+
+  function validateEmail(value: string): string | undefined {
+    if (!value.trim()) return undefined;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(value)) return 'Введите корректный email';
+    return undefined;
+  }
+
+  $effect(() => {
+    if (touched.name) errors.name = validateName(name);
+  });
+
+  $effect(() => {
+    if (touched.phone) errors.phone = validatePhone(phone);
+  });
+
+  $effect(() => {
+    if (touched.email) errors.email = validateEmail(email);
+  });
+
+  function resetForm() {
+    name = '';
+    phone = '';
+    email = '';
+    company = '';
+    wagonType = '';
+    directionFrom = '';
+    directionTo = '';
+    comment = '';
+    consent = false;
+    touched = {};
+    errors = {};
+  }
 
   async function handleSubmit(event: SubmitEvent) {
     event.preventDefault();
 
-    if (isSubmitDisabled) {
+    formError = '';
+    formSuccess = '';
+
+    touched = { name: true, phone: true, email: true };
+    errors = {
+      name: validateName(name),
+      phone: validatePhone(phone),
+      email: validateEmail(email),
+    };
+
+    if (errors.name || errors.phone || errors.email || !consent) {
+      if (!consent) {
+        formError = 'Необходимо согласие на обработку персональных данных';
+      }
       return;
     }
 
@@ -43,17 +120,11 @@
         comment: comment.trim(),
       });
 
-      name = '';
-      phone = '';
-      email = '';
-      company = '';
-      wagonType = '';
-      directionFrom = '';
-      directionTo = '';
-      comment = '';
-      consent = false;
-    } catch {
-      return;
+      formSuccess = 'Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.';
+      resetForm();
+    } catch (error) {
+      formError =
+        error instanceof Error ? error.message : 'Не удалось отправить форму. Попробуйте позже.';
     } finally {
       isSubmitting = false;
     }
@@ -64,7 +135,7 @@
   @use './_contacts-form.scss';
 </style>
 
-<form class="contacts-form" onsubmit={handleSubmit}>
+<form class="contacts-form" onsubmit={handleSubmit} novalidate>
   <h2 class="contacts-form__title">{CONTACTS_FORM_TITLE}</h2>
 
   <div class="contacts-form__grid">
@@ -78,13 +149,21 @@
       <input
         id="contacts-name"
         class="contacts-form__input"
+        class:contacts-form__input--error={touched.name && errors.name}
         type="text"
         name="name"
         autocomplete="name"
         placeholder={CONTACTS_FORM_FIELDS.name.placeholder}
         bind:value={name}
-        required
+        onblur={() => (touched.name = true)}
+        aria-invalid={touched.name && errors.name ? 'true' : 'false'}
+        aria-describedby={touched.name && errors.name ? 'contacts-name-error' : undefined}
       />
+      {#if touched.name && errors.name}
+        <span id="contacts-name-error" class="contacts-form__error" role="alert">
+          {errors.name}
+        </span>
+      {/if}
     </div>
 
     <div class="contacts-form__field">
@@ -97,13 +176,21 @@
       <input
         id="contacts-phone"
         class="contacts-form__input"
+        class:contacts-form__input--error={touched.phone && errors.phone}
         type="tel"
         name="phone"
         autocomplete="tel"
         placeholder={CONTACTS_FORM_FIELDS.phone.placeholder}
         bind:value={phone}
-        required
+        onblur={() => (touched.phone = true)}
+        aria-invalid={touched.phone && errors.phone ? 'true' : 'false'}
+        aria-describedby={touched.phone && errors.phone ? 'contacts-phone-error' : undefined}
       />
+      {#if touched.phone && errors.phone}
+        <span id="contacts-phone-error" class="contacts-form__error" role="alert">
+          {errors.phone}
+        </span>
+      {/if}
     </div>
 
     <div class="contacts-form__field">
@@ -113,12 +200,21 @@
       <input
         id="contacts-email"
         class="contacts-form__input"
+        class:contacts-form__input--error={touched.email && errors.email}
         type="email"
         name="email"
         autocomplete="email"
         placeholder={CONTACTS_FORM_FIELDS.email.placeholder}
         bind:value={email}
+        onblur={() => (touched.email = true)}
+        aria-invalid={touched.email && errors.email ? 'true' : 'false'}
+        aria-describedby={touched.email && errors.email ? 'contacts-email-error' : undefined}
       />
+      {#if touched.email && errors.email}
+        <span id="contacts-email-error" class="contacts-form__error" role="alert">
+          {errors.email}
+        </span>
+      {/if}
     </div>
 
     <div class="contacts-form__field">
@@ -213,4 +309,16 @@
 
     <RequestButton variant="solid" type="submit" disabled={isSubmitDisabled} />
   </div>
+
+  {#if formError}
+    <div class="contacts-form__message contacts-form__message--error" role="alert">
+      {formError}
+    </div>
+  {/if}
+
+  {#if formSuccess}
+    <div class="contacts-form__message contacts-form__message--success" role="status">
+      {formSuccess}
+    </div>
+  {/if}
 </form>

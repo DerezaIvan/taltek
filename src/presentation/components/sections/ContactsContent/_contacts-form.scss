@@ -81,6 +81,41 @@
     &:focus {
       border-color: var(--colors-border-accent-primary);
     }
+
+    &--error {
+      border-color: #c44422;
+
+      &:hover,
+      &:focus {
+        border-color: #c44422;
+      }
+    }
+  }
+
+  &__error {
+    color: #c44422;
+    font-family: typography.$font-family-ubuntu;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  &__message {
+    margin-top: 16px;
+    padding: 14px 18px;
+    border-radius: $contacts-input-radius;
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+
+    &--error {
+      background: #fdf2f0;
+      color: #c44422;
+    }
+
+    &--success {
+      background: #f0fdf4;
+      color: #15803d;
+    }
   }
 
   &__select-wrap {
