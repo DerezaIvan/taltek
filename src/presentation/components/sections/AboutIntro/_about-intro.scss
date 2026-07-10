@@ -104,3 +104,21 @@ $about-intro-image-ratio: math.div(692, 461);
     padding-bottom: 48px;
   }
 }
+
+@media (max-width: $bp-mobile-lg) {
+  .about-intro {
+    &__lead,
+    &__body {
+      margin-top: 16px;
+    }
+
+    &__lead {
+      font-size: typography.$text-base-size;
+      line-height: typography.$text-base-line-height;
+    }
+
+    &__image {
+      border-radius: 24px;
+    }
+  }
+}

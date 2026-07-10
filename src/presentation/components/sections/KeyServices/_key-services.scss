@@ -129,9 +129,20 @@ $key-services-title-max-width: 880px;
   }
 }
 
-@media (max-width: $bp-mobile) {
+@media (max-width: $bp-mobile-lg) {
   .key-services {
     padding-top: 40px;
     padding-bottom: 48px;
+
+    &__card {
+      gap: 20px;
+      padding: 20px;
+    }
+
+    &__icon {
+      width: 60px;
+      height: 60px;
+      padding: 18px 16px;
+    }
   }
 }

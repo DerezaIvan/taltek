@@ -69,10 +69,13 @@
     &__inner {
       gap: 32px;
     }
+  }
+}
 
-    &__section-title {
-      font-size: 32px;
-      line-height: 40px;
+@media (max-width: $bp-mobile-lg) {
+  .privacy-content {
+    &__list {
+      padding-left: 16px;
     }
   }
 }

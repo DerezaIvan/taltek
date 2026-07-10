@@ -72,14 +72,16 @@ $cc-cards-single-col-max: 889px;
   }
 }
 
-@media (max-width: $bp-contract-contacts-stack) {
+@media (max-width: $bp-desktop-md) {
   .contract-contacts {
+    padding-block: 80px;
+
     &__inner {
       align-items: center;
     }
 
     &__cards {
-      grid-template-columns: repeat(2, minmax(#{$cc-card-min-column}, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     &__card-item--solo {
@@ -90,8 +92,19 @@ $cc-cards-single-col-max: 889px;
   }
 }
 
-@media (max-width: $cc-cards-single-col-max) {
+@media (max-width: $bp-tablet) {
   .contract-contacts {
+    padding-block: 48px;
+
+    &__title {
+      font-size: 32px;
+      line-height: 1.2;
+    }
+
+    &__inner {
+      gap: 32px;
+    }
+
     &__cards {
       grid-template-columns: minmax(0, 1fr);
     }
@@ -104,23 +117,10 @@ $cc-cards-single-col-max: 889px;
   }
 }
 
-@media (max-width: $bp-desktop-md) {
+@media (max-width: $bp-mobile-lg) {
   .contract-contacts {
-    padding-block: 80px;
-  }
-}
-
-@media (max-width: $bp-tablet) {
-  .contract-contacts {
-    padding-block: 32px;
-
-    &__title {
-      font-size: 32px;
-      line-height: 1.2;
-    }
-
     &__inner {
-      gap: 32px;
+      gap: 24px;
     }
   }
 }

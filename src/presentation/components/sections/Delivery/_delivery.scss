@@ -192,8 +192,51 @@ $delivery-adaptive-gap: 20px;
 
 @media (max-width: $bp-tablet) {
   .delivery {
+    padding-block: 48px;
+
+    &__title {
+      margin-bottom: 20px;
+    }
+
+    &__card {
+      padding: 24px 20px;
+      min-height: 0;
+    }
+
     &__card-num {
       font-size: 96px;
+    }
+
+    &__icon {
+      padding: 40px;
+      border-radius: 24px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .delivery {
+    padding-block: 40px;
+
+    &__title {
+      margin-bottom: 16px;
+    }
+
+    &__card {
+      padding: 20px 16px;
+      border-radius: 24px;
+    }
+
+    &__card-num {
+      font-size: 72px;
+    }
+
+    &__icon {
+      padding: 32px;
+    }
+
+    &__image {
+      border-radius: 24px;
     }
   }
 }

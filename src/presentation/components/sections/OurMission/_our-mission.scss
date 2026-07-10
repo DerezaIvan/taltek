@@ -183,3 +183,27 @@ $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58
     }
   }
 }
+
+@media (max-width: $bp-mobile-lg) {
+  .our-mission {
+    padding-top: 32px;
+
+    &__inner {
+      gap: 16px;
+    }
+
+    &__content {
+      text-align: left;
+    }
+
+    &__title {
+      text-align: left;
+    }
+
+    &__text {
+      padding-top: 16px;
+      font-size: typography.$text-base-size;
+      line-height: typography.$text-base-line-height;
+    }
+  }
+}

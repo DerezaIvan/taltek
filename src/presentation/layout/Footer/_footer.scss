@@ -1,5 +1,4 @@
 @use 'presentation/styles/variables' as *;
-@use 'presentation/styles/typography' as *;
 
 .footer {
   position: relative;
@@ -103,10 +102,6 @@
     flex-direction: column;
   }
 
-  &__contacts-info {
-    flex-shrink: 0;
-  }
-
   &__cta {
     flex: 0 0 auto;
     flex-shrink: 0;
@@ -182,7 +177,7 @@
     padding: 0;
     font-family: var(--font-family-uncage);
     font-weight: 500;
-    font-size: 217px;
+    font-size: clamp(40px, 12vw, 217px);
     line-height: 100%;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -213,10 +208,6 @@
       flex: 0 0 345px;
       min-width: 345px;
     }
-
-    &__brand-name {
-      font-size: 175px;
-    }
   }
 }
 
@@ -227,8 +218,15 @@
       gap: 40px;
     }
 
-    &__brand-name {
-      font-size: 130px;
+    &__cta {
+      flex: 1 1 100%;
+      min-width: 0;
+      margin-left: 0;
+      align-self: stretch;
+
+      :global(.action-button--glass) {
+        width: 100%;
+      }
     }
   }
 }
@@ -240,25 +238,67 @@
       padding-top: 64px;
     }
 
-    &__cta {
-      min-width: 0;
-      margin-left: 0;
-
-      :global(.action-button--glass) {
-        width: 100%;
-      }
+    &__brand {
+      flex: 1 1 100%;
     }
 
-    &__brand-name {
-      font-size: 122px;
+    &__legal {
+      padding-top: 32px;
     }
   }
 }
 
 @media (max-width: $bp-tablet) {
   .footer {
-    &__brand-name {
-      font-size: 72px;
+    &__top {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 32px;
+    }
+
+    &__nav,
+    &__contacts {
+      flex: 1 1 auto;
+    }
+
+    &__contacts {
+      gap: 16px;
+    }
+
+    &__section-title {
+      margin-bottom: 16px;
+    }
+
+    &__bottom {
+      margin-top: 40px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .footer {
+    &__top {
+      padding-top: 48px;
+      gap: 24px;
+    }
+
+    &__description,
+    &__nav-link,
+    &__contact-link,
+    &__contact-text,
+    &__copyright,
+    &__privacy {
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    &__section-title {
+      font-size: 16px;
+    }
+
+    &__nav-list,
+    &__contacts-list {
+      gap: 12px;
     }
   }
 }

@@ -144,22 +144,7 @@ $fp-card-content-gap: 10px;
 
 @media (max-width: $bp-desktop-md) {
   .fleet-park {
-    &__card {
-      &--small,
-      &--feature {
-        padding: 32px;
-      }
-    }
-
-    &__value {
-      font-size: clamp(48px, 4.5vw, #{typography.$heading-xl-size});
-    }
-  }
-}
-
-@media (max-width: $bp-desktop-sm) {
-  .fleet-park {
-    padding-block: 64px;
+    padding-block: 80px;
 
     &__inner {
       grid-template-columns: minmax(0, 1fr);
@@ -171,6 +156,27 @@ $fp-card-content-gap: 10px;
     }
 
     &__small-cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__card {
+      &--small,
+      &--feature {
+        padding: 32px;
+      }
+    }
+
+    &__value {
+      font-size: typography.$heading-xl-size;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .fleet-park {
+    padding-block: 64px;
+
+    &__small-cards {
       grid-template-columns: minmax(0, 1fr);
     }
   }
@@ -180,5 +186,25 @@ $fp-card-content-gap: 10px;
   .fleet-park {
     margin-top: 32px;
     padding-block: 48px;
+
+    &__card {
+      &--small,
+      &--feature {
+        padding: 24px;
+      }
+    }
+
+    &__badge {
+      font-size: 12px;
+      padding: 8px 12px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .fleet-park {
+    &__value {
+      font-size: typography.$heading-xl-size;
+    }
   }
 }

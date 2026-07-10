@@ -185,6 +185,7 @@ $fleet-reserve-brown-60: #51270399;
     padding-bottom: 40px;
 
     &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
     }
   }
@@ -194,10 +195,6 @@ $fleet-reserve-brown-60: #51270399;
   .fleet-models {
     padding-top: 40px;
     padding-bottom: 40px;
-
-    &__grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 }
 
@@ -213,6 +210,36 @@ $fleet-reserve-brown-60: #51270399;
 
     &__grid {
       grid-template-columns: 1fr;
+    }
+
+    &__card-title {
+      font-size: typography.$text-md-size;
+      line-height: typography.$text-md-line-height;
+    }
+
+    &__specs {
+      margin-top: 16px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .fleet-models {
+    &__card {
+      padding: 8px 8px 16px;
+    }
+
+    &__content {
+      padding-inline: 8px;
+    }
+
+    &__card-title {
+      margin-top: 16px;
+    }
+
+    &__card-desc {
+      font-size: 12px;
+      line-height: 18px;
     }
   }
 }

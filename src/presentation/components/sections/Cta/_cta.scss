@@ -61,3 +61,16 @@
     }
   }
 }
+
+@media (max-width: $bp-mobile-lg) {
+  .cta {
+    &__inner {
+      gap: 24px;
+    }
+
+    &__subtitle {
+      font-size: typography.$text-base-size;
+      line-height: typography.$text-base-line-height;
+    }
+  }
+}

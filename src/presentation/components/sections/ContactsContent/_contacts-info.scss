@@ -122,3 +122,30 @@
     width: 100%;
   }
 }
+
+@media (max-width: $bp-mobile-lg) {
+  .contacts-info {
+    gap: 16px;
+
+    &__card {
+      gap: 16px;
+      padding: 16px;
+      border-radius: 20px;
+
+      &--hotline {
+        min-height: 0;
+      }
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+    }
+
+    &__phone {
+      font-size: typography.$text-md-size;
+      line-height: typography.$text-md-line-height;
+    }
+  }
+}

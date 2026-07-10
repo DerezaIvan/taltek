@@ -168,6 +168,10 @@
   .contacts-form {
     flex: 1 1 68%;
     max-width: none;
+
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 }
 
@@ -191,8 +195,7 @@
     }
 
     &__title {
-      font-size: 32px;
-      line-height: 40px;
+      line-height: 1.2;
     }
 
     &__footer {
@@ -207,6 +210,38 @@
     :global(.action-button--solid) {
       width: 100%;
       min-width: 0;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .contacts-form {
+    &__title {
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    &__input {
+      min-height: 56px;
+      padding: 14px 18px;
+      border-radius: 12px;
+    }
+
+    &__select-wrap::after {
+      right: 18px;
+    }
+
+    &__direction {
+      gap: 8px;
+    }
+
+    &__footer {
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    &__consent {
+      gap: 8px;
     }
   }
 }

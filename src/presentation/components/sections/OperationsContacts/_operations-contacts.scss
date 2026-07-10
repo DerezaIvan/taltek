@@ -116,10 +116,26 @@ $oc-territory-card-min-column: 450px;
     &__block {
       gap: 32px;
     }
+  }
+}
 
-    &__title {
-      font-size: 32px;
-      line-height: 1.2;
+@media (max-width: $bp-mobile-lg) {
+  .operations-contacts {
+    &__inner {
+      gap: 40px;
+    }
+
+    &__block {
+      gap: 24px;
+    }
+
+    &__header {
+      gap: 16px;
+    }
+
+    &__subtitle {
+      font-size: 14px;
+      line-height: 20px;
     }
   }
 }

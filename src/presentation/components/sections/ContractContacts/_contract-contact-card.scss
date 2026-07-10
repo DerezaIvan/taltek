@@ -97,3 +97,45 @@ $cc-role-offset: 10px;
     }
   }
 }
+
+@media (max-width: $bp-tablet) {
+  .contract-contact-card {
+    gap: 16px;
+    min-height: 0;
+    padding: 20px;
+
+    &__photo {
+      width: 100px;
+      height: 110px;
+    }
+
+    &__name {
+      font-size: typography.$text-md-size;
+      line-height: typography.$text-md-line-height;
+    }
+
+    &__contact-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    &__contact-value {
+      text-align: left;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .contract-contact-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+
+    &__photo {
+      width: 80px;
+      height: 88px;
+    }
+  }
+}

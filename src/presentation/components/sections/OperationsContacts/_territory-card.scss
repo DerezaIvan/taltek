@@ -1,3 +1,4 @@
+@use 'presentation/styles/variables' as *;
 @use 'presentation/styles/typography-tokens' as typography;
 
 $territory-card-padding: 30px;
@@ -24,5 +25,21 @@ $territory-phone-offset: 20px;
 
   &__phone {
     margin-top: $territory-phone-offset;
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .territory-card {
+    padding: 20px;
+    border-radius: 24px;
+
+    &__title {
+      font-size: typography.$text-md-size;
+      line-height: typography.$text-md-line-height;
+    }
+
+    &__phone {
+      margin-top: 12px;
+    }
   }
 }

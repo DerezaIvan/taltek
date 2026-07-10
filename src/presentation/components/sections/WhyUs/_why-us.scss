@@ -86,12 +86,6 @@ $why-us-icon-size: 89px;
 @media (max-width: $bp-desktop-md) {
   .why-us {
     padding-block: 40px;
-  }
-}
-
-@media (max-width: $bp-desktop-sm) {
-  .why-us {
-    padding-block: 64px;
 
     &__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -100,6 +94,18 @@ $why-us-icon-size: 89px;
     &__card {
       min-height: 0;
     }
+
+    &__icon {
+      width: 72px;
+      height: 72px;
+      padding: 24px 22px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .why-us {
+    padding-block: 64px;
   }
 }
 
@@ -109,6 +115,29 @@ $why-us-icon-size: 89px;
 
     &__grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .why-us {
+    &__title {
+      margin-bottom: 24px;
+    }
+
+    &__card {
+      padding: 20px;
+    }
+
+    &__icon {
+      width: 56px;
+      height: 56px;
+      padding: 18px 16px;
+      border-radius: 16px;
+    }
+
+    &__card-title {
+      margin-top: 20px;
     }
   }
 }

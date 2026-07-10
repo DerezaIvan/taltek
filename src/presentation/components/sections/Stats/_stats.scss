@@ -121,8 +121,23 @@
 
 @media (max-width: $bp-tablet) {
   .stats {
+    padding-block: 48px;
+
     &__grid {
       grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    &__inner {
+      gap: 32px;
+    }
+
+    &__item-value {
+      padding-top: 12px;
+    }
+
+    &__item-desc {
+      padding-top: 10px;
     }
   }
 }
