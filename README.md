@@ -36,6 +36,14 @@ docker compose --profile cms up --build
 | `PUBLIC_DIRECTUS_URL`      | URL Directus API                             |
 | `DIRECTUS_TOKEN`           | Read-only token для fetch на этапе build     |
 | `DIRECTUS_*`, `POSTGRES_*` | Настройки Directus/Postgres в docker-compose |
+| `PUBLIC_API_URL`           | URL API для отправки заявок                  |
+| `CORS_ORIGIN`              | Разрешённый origin для API                   |
+| `SMTP_HOST`                | SMTP сервер для отправки заявок              |
+| `SMTP_PORT`                | Порт SMTP (по умолч. 587)                    |
+| `SMTP_USER`                | Пользователь SMTP                            |
+| `SMTP_PASS`                | Пароль SMTP                                  |
+| `FROM_EMAIL`               | Отправитель писем                            |
+| `TO_EMAIL`                 | Получатель заявок                            |
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
@@ -78,33 +86,66 @@ SMTP_HOST=... SMTP_USER=... SMTP_PASS=... FROM_EMAIL=... TO_EMAIL=... npm run de
 
 API будет доступен на http://localhost:3001, health-check — http://localhost:3001/health.
 
-## Directus — схема коллекций
+## Directus CMS
 
-Создайте в Directus Admin две коллекции:
+Полная схема коллекций описана в [`directus/schema.md`](directus/schema.md).
 
-### `navigation_items`
+### Быстрый старт
 
-| Поле     | Тип     | Примечание            |
-| -------- | ------- | --------------------- |
-| `label`  | String  | Текст ссылки          |
-| `href`   | String  | Путь, напр. `/about/` |
-| `sort`   | Integer | Порядок               |
-| `status` | String  | `published` / `draft` |
+```bash
+cp .env.example .env
+# заполнить PUBLIC_DIRECTUS_URL, DIRECTUS_TOKEN, DIRECTUS_*, POSTGRES_*
+docker compose --profile cms up --build
+```
 
-### `pages`
+- Сайт: http://localhost:8080
+- Directus admin: http://localhost:8055/admin
 
-| Поле            | Тип    | Примечание                              |
-| --------------- | ------ | --------------------------------------- |
-| `slug`          | String | `home`, `about`, `services`, `contacts` |
-| `title`         | String | SEO title                               |
-| `description`   | Text   | SEO description                         |
-| `hero_title`    | String | опционально                             |
-| `hero_subtitle` | Text   | опционально                             |
-| `status`        | String | `published` / `draft`                   |
+### Создание коллекций
 
-Public read: включите read-доступ для роли Public или используйте static token в `DIRECTUS_TOKEN`.
+Схема коллекций описана в [`directus/schema.md`](directus/schema.md). Чтобы не создавать их вручную, запусти seed-скрипт:
 
-PoC: navigation и SEO главной страницы подтягиваются из CMS при сборке; остальные страницы пока на constants.
+```bash
+node directus/seed-schema.mjs
+```
+
+Скрипт авторизуется в Directus под администратором (берёт `DIRECTUS_ADMIN_EMAIL` и `DIRECTUS_ADMIN_PASSWORD` из `.env`) и создаёт все коллекции с полями. Если коллекции уже есть, он пропустит их.
+
+### Русификация админки
+
+После seed-скрипта запусти:
+
+```bash
+node directus/update-ui.mjs
+```
+
+Этот скрипт добавляет понятные русские названия коллекций и полей, подсказки, иконки и шаблоны отображения. После него в админке вместо `home_hero` будет «Главная — Hero», а у полей появятся описания, что они делают.
+
+После запуска перезагрузи страницу админки.
+
+### Что можно управлять через Directus
+
+- Глобальные настройки: `site_settings`
+- Навигация: `navigation_items`
+- SEO страниц: `pages`
+- Контент главной: `home_hero`, `key_services`, `why_us_items`, `stats_items`, `fleet_models` и др.
+- Контент страниц «О компании», «Услуги», «Контакты», «Политика конфиденциальности»
+- Контактные лица: `contract_contacts_cards`, `operations_dispatchers`, `operations_territories`
+- Заявки из формы: `submissions`
+
+### Права доступа
+
+Для сборки сайта достаточно read-only static token (`DIRECTUS_TOKEN`).
+
+Для публичного доступа (если форма шлёт заявки напрямую в Directus) Public role нуждается в `read` на публикуемые коллекции и `create` на `submissions`.
+
+### Workflow
+
+1. Редактируйте контент в Directus Admin.
+2. Пересобирайте сайт вручную или настройте автоматический rebuild через Directus Flow → GitHub `repository_dispatch`.
+3. Фронтенд забирает данные на этапе сборки и prerender в статику.
+
+Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
 ## CI
 
