@@ -32,30 +32,32 @@ const smtpPass = process.env.SMTP_PASS;
 const fromEmail = process.env.FROM_EMAIL;
 const toEmail = process.env.TO_EMAIL;
 
-if (!smtpHost || !smtpUser || !smtpPass || !fromEmail || !toEmail) {
-  console.error(
-    'Ошибка конфигурации: необходимо задать SMTP_HOST, SMTP_USER, SMTP_PASS, FROM_EMAIL, TO_EMAIL'
+const isSmtpConfigured = smtpHost && smtpUser && smtpPass && fromEmail && toEmail;
+
+let transporter = null;
+if (isSmtpConfigured) {
+  transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpPort === 465,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass,
+    },
+  });
+
+  transporter.verify(error => {
+    if (error) {
+      console.error('Ошибка подключения к SMTP:', error.message);
+    } else {
+      console.log('SMTP подключение успешно');
+    }
+  });
+} else {
+  console.warn(
+    'SMTP не настроен. Заявки отправляться не будут. Задайте SMTP_HOST, SMTP_USER, SMTP_PASS, FROM_EMAIL, TO_EMAIL для полноценной работы.'
   );
-  process.exit(1);
 }
-
-const transporter = nodemailer.createTransport({
-  host: smtpHost,
-  port: smtpPort,
-  secure: smtpPort === 465,
-  auth: {
-    user: smtpUser,
-    pass: smtpPass,
-  },
-});
-
-transporter.verify(error => {
-  if (error) {
-    console.error('Ошибка подключения к SMTP:', error.message);
-  } else {
-    console.log('SMTP подключение успешно');
-  }
-});
 
 function validatePhone(value) {
   const digits = value.replace(/\D/g, '');
@@ -68,6 +70,10 @@ function validateEmail(value) {
 }
 
 app.post('/contact', async (req, res) => {
+  if (!transporter) {
+    return res.status(503).json({ error: 'Отправка заявок временно недоступна: SMTP не настроен' });
+  }
+
   const { name, phone, email, company, wagonType, directionFrom, directionTo, comment } = req.body;
 
   if (!name?.trim() || !phone?.trim()) {

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { asset, resolve } from '$app/paths';
   import { ActionButton, RequestButton } from '$presentation/components/ui';
   import { IconArrowExplore } from '$presentation/components/icons';
@@ -10,7 +11,18 @@
 
   const resolvedTitle = $derived(title?.trim() || DEFAULT_HERO_TITLE);
   const resolvedSubtitle = $derived(subtitle?.trim() || DEFAULT_HERO_SUBTITLE);
+
+  const posterUrl = asset('/images/hero-train-loop-poster.webp');
+  let isMobile = $state(false);
+
+  onMount(() => {
+    isMobile = window.matchMedia('(max-width: 768px)').matches;
+  });
 </script>
+
+<svelte:head>
+  <link rel="preload" as="image" href={posterUrl} fetchpriority="high" />
+</svelte:head>
 
 <style lang="scss">
   @use './_hero.scss';
@@ -18,9 +30,22 @@
 
 <section id="hero" class="hero">
   <div class="hero__media" aria-hidden="true">
-    <video class="hero__video" autoplay muted loop playsinline>
-      <source src={asset('/video/hero-train-loop.webm')} type="video/webm" />
-      <source src={asset('/video/hero-train-loop.mp4')} type="video/mp4" />
+    <video
+      class="hero__video"
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      poster={posterUrl}
+    >
+      {#if isMobile}
+        <source src={asset('/video/hero-train-loop-720p.webm')} type="video/webm" />
+        <source src={asset('/video/hero-train-loop-720p.mp4')} type="video/mp4" />
+      {:else}
+        <source src={asset('/video/hero-train-loop-1080p.webm')} type="video/webm" />
+        <source src={asset('/video/hero-train-loop-1080p.mp4')} type="video/mp4" />
+      {/if}
     </video>
     <div class="hero__overlay"></div>
   </div>

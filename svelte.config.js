@@ -20,6 +20,7 @@ const config = {
       base: process.env.BASE_PATH ?? '',
       relative: false,
     },
+    inlineStyleThreshold: 80000,
     prerender: {
       handleHttpError: 'warn',
       handleMissingId: 'ignore',
