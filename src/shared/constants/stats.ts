@@ -1,4 +1,4 @@
-export const STATS_SECTION_TITLE = 'ТАЛТЭК ТРАНС В ЦИФРАХ';
+export const STATS_SECTION_TITLE = 'ТАЛТЭК ТРАНС\nВ ЦИФРАХ';
 
 export const STATS_BACKGROUND_IMAGE = '/images/section-numbers.svg';
 

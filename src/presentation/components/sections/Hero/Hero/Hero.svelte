@@ -4,7 +4,7 @@
   import { ActionButton, RequestButton } from '$presentation/components/ui';
   import { IconArrowExplore } from '$presentation/components/icons';
   import { FLEET_MODELS_ANCHOR } from '$shared/constants/navigation';
-  import { DEFAULT_HERO_SUBTITLE, DEFAULT_HERO_TITLE } from '$shared/constants/hero';
+  import { DEFAULT_HERO_SUBTITLE, DEFAULT_HERO_TITLE, DEFAULT_HERO_TITLE_MOBILE } from '$shared/constants/hero';
   import type { HeroProps } from '$shared/interfaces';
 
   let { title, subtitle }: HeroProps = $props();
@@ -53,7 +53,12 @@
   <div class="hero__content">
     <div class="container hero__body">
       <h1 class="heading-xl hero__title">
-        {resolvedTitle}
+        {#if !title?.trim()}
+          <span class="hero__title-desktop">{@html DEFAULT_HERO_TITLE.replace(/\n/g, '<br />')}</span>
+          <span class="hero__title-mobile">{@html DEFAULT_HERO_TITLE_MOBILE.replace(/\n/g, '<br />')}</span>
+        {:else}
+          {resolvedTitle}
+        {/if}
       </h1>
 
       <p class="text-md hero__subtitle">

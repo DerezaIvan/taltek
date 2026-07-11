@@ -1,4 +1,5 @@
 export const DEFAULT_HERO_TITLE = 'Мы не ждём лучших времён\nМы создаём их сами';
+export const DEFAULT_HERO_TITLE_MOBILE = 'Мы не ждём\nлучших времён\nМы создаём их сами';
 
 export const DEFAULT_HERO_SUBTITLE =
   'АО «ТалТЭК Транс» — железнодорожный оператор с собственным парком более 16 000 вагонов и 15-летним опытом организации перевозок';

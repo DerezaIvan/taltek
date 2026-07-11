@@ -17,7 +17,17 @@
     max-width: min(100%, 1350px);
     color: #fff;
     font-weight: 500;
+    font-size: clamp(30px, 2.65vw + 20.05px, 72px);
+    line-height: 1.2;
     white-space: pre-line;
+
+    &-desktop {
+      display: inline;
+    }
+
+    &-mobile {
+      display: none;
+    }
   }
 
   &__subtitle {
@@ -72,6 +82,7 @@
     &__body {
       padding-top: 80px;
       padding-bottom: 80px;
+      text-align: left;
     }
 
     &__subtitle {
@@ -92,9 +103,17 @@
       padding-bottom: 80px;
     }
 
-    &__title,
-    &__subtitle {
-      text-align: left;
+    &__title {
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.25;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: inline;
+      }
     }
 
     &__actions {
