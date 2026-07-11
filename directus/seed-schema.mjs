@@ -369,10 +369,7 @@ const collections = [
   collection('privacy_sections', {
     icon: 'policy',
     primaryKey: 'string',
-    fields: [
-      helpers.input('title', { required: true }),
-      helpers.json('blocks'),
-    ],
+    fields: [helpers.input('title', { required: true }), helpers.json('blocks')],
   }),
 
   collection('submissions', {

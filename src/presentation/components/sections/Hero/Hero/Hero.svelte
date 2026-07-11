@@ -4,7 +4,11 @@
   import { ActionButton, RequestButton } from '$presentation/components/ui';
   import { IconArrowExplore } from '$presentation/components/icons';
   import { FLEET_MODELS_ANCHOR } from '$shared/constants/navigation';
-  import { DEFAULT_HERO_SUBTITLE, DEFAULT_HERO_TITLE, DEFAULT_HERO_TITLE_MOBILE } from '$shared/constants/hero';
+  import {
+    DEFAULT_HERO_SUBTITLE,
+    DEFAULT_HERO_TITLE,
+    DEFAULT_HERO_TITLE_MOBILE,
+  } from '$shared/constants/hero';
   import type { HeroProps } from '$shared/interfaces';
 
   let { title, subtitle }: HeroProps = $props();
@@ -20,13 +24,13 @@
   });
 </script>
 
-<svelte:head>
-  <link rel="preload" as="image" href={posterUrl} fetchpriority="high" />
-</svelte:head>
-
 <style lang="scss">
   @use './_hero.scss';
 </style>
+
+<svelte:head>
+  <link rel="preload" as="image" href={posterUrl} fetchpriority="high" />
+</svelte:head>
 
 <section id="hero" class="hero">
   <div class="hero__media" aria-hidden="true">
@@ -54,8 +58,12 @@
     <div class="container hero__body">
       <h1 class="heading-xl hero__title">
         {#if !title?.trim()}
-          <span class="hero__title-desktop">{@html DEFAULT_HERO_TITLE.replace(/\n/g, '<br />')}</span>
-          <span class="hero__title-mobile">{@html DEFAULT_HERO_TITLE_MOBILE.replace(/\n/g, '<br />')}</span>
+          <span class="hero__title-desktop"
+            >{@html DEFAULT_HERO_TITLE.replace(/\n/g, '<br />')}</span
+          >
+          <span class="hero__title-mobile"
+            >{@html DEFAULT_HERO_TITLE_MOBILE.replace(/\n/g, '<br />')}</span
+          >
         {:else}
           {resolvedTitle}
         {/if}

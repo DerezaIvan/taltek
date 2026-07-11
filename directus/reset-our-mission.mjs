@@ -70,7 +70,7 @@ async function main() {
   console.log('Готово. Теперь запусти node directus/seed-schema.mjs');
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error('Ошибка:', error.message);
   process.exit(1);
 });
