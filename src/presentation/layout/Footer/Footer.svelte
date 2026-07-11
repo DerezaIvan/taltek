@@ -70,8 +70,8 @@
           >
         </li>
         <li>
-          <a class="footer__contact-link" href="mailto:infor@taltektrans.pro">
-            infor@taltektrans.pro
+          <a class="footer__contact-link" href="mailto:info@taltektrans.pro">
+            info@taltektrans.pro
           </a>
         </li>
       </ul>

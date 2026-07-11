@@ -18,7 +18,7 @@ $oc-territory-card-min-column: 450px;
   }
 
   &__block {
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: $oc-header-cards-gap;
   }

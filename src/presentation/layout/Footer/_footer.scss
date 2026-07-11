@@ -262,28 +262,28 @@
         'bottom';
       gap: 24px;
       padding-top: 48px;
-      text-align: center;
-      justify-items: center;
+      text-align: left;
+      justify-items: start;
     }
 
     &__brand {
-      align-items: center;
+      align-items: flex-start;
     }
 
     &__legal {
-      align-items: center;
+      align-items: flex-start;
       gap: 16px;
     }
 
     &__nav,
     &__contacts {
-      align-items: center;
+      align-items: flex-start;
       width: 100%;
     }
 
     &__nav-list,
     &__contacts-list {
-      align-items: center;
+      align-items: flex-start;
       gap: 12px;
     }
 

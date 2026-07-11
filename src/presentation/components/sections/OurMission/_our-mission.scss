@@ -4,10 +4,10 @@ $om-image-gap: 16px;
 $om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58, 135, 0.85) 100%);
 
 .our-mission {
+  display: none;
   padding-top: 100px;
 
   &__inner {
-    display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: $om-image-gap;
     width: 100%;
