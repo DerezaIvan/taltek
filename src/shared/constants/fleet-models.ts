@@ -30,7 +30,7 @@ export const FLEET_MODELS_ITEMS: readonly FleetModelItem[] = [
     badge: 'Полувагон',
     title: 'Модель 12-2159',
     description: 'Высокая эффективность тяжеловесных перевозок, в том числе на длинных плечах.',
-    imageSrc: '/images/wagon-fleet.webp',
+    imageSrc: '/images/wagon-fleet-12-2159.webp',
     imageAlt: 'Полувагон модель 12-2159',
     specs: [
       { label: 'Грузоподъёмность', value: 'до 75 т' },
