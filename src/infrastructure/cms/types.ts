@@ -247,6 +247,7 @@ export interface PageContent {
   heroTitle?: string;
   heroSubtitle?: string;
   url: string;
+  ogImage?: string;
 }
 
 export interface LayoutContent {

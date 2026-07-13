@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://taltek.ru/sitemap.xml
+Sitemap: https://taltektrans.pro/sitemap.xml

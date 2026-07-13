@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { SeoHead } from '$presentation/components/SeoHead';
   import {
     FleetModels,
     FleetPark,
@@ -18,12 +19,7 @@
   const titleLines = ['Максимально надёжное и оперативное решение Ваших транспортных задач'];
 </script>
 
-<svelte:head>
-  <title>{seo.title}</title>
-  <meta name="description" content={seo.description} />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href={seo.url} />
-</svelte:head>
+<SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} />
 
 <Main>
   {#snippet pageHero()}

@@ -36,6 +36,7 @@ import { NAV_ITEMS } from '$shared/constants/navigation';
 import { DEFAULT_SEO, getPageSeo, SITE_NAME, type PageSeoKey } from '$shared/constants/seo';
 
 const SITE_URL = DEFAULT_SEO.url.replace(/\/$/, '');
+const OG_IMAGE_URL = DEFAULT_SEO.ogImage;
 
 function publishedFilter(collection: string): string {
   return `/items/${collection}?filter[status][_eq]=published&sort[]=sort`;
@@ -70,6 +71,7 @@ function mapPage(record: DirectusPageRecord, path: string): PageContent {
     heroTitle: record.hero_title ?? undefined,
     heroSubtitle: record.hero_subtitle ?? undefined,
     url: `${SITE_URL}${path}`,
+    ogImage: getAssetUrl(extractFileId(record.og_image)) ?? OG_IMAGE_URL,
   };
 }
 
@@ -98,10 +100,11 @@ export async function getPageContent(slug: PageSeoKey): Promise<PageContent> {
     title: fallback.title,
     description: fallback.description,
     url: fallback.url,
+    ogImage: fallback.ogImage,
   };
 
   const response = await directusFetch<DirectusListResponse<DirectusPageRecord>>(
-    `/items/pages?filter[slug][_eq]=${slug}&filter[status][_eq]=published&limit=1&fields=id,slug,title,description,hero_title,hero_subtitle,status`
+    `/items/pages?filter[slug][_eq]=${slug}&filter[status][_eq]=published&limit=1&fields=id,slug,title,description,og_image,hero_title,hero_subtitle,status`
   );
 
   const record = response?.data?.[0];

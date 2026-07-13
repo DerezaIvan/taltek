@@ -65,7 +65,7 @@ const uiConfig = [
         translations: tr('Название сайта'),
       },
       site_url: {
-        note: 'Основной URL сайта, например https://taltek.ru/',
+        note: 'Основной URL сайта, например https://taltektrans.pro/',
         translations: tr('URL сайта'),
       },
       logo: { note: 'Логотип в шапке и футере', translations: tr('Логотип') },
