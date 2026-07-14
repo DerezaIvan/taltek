@@ -1,6 +1,6 @@
 @use 'presentation/styles/variables' as *;
 @use 'presentation/styles/typography-tokens' as typography;
-@use './contacts-tokens' as *;
+@use 'presentation/components/sections/ContactsContent/contacts-tokens' as *;
 
 .contacts-form {
   flex: 1 1 $contacts-form-width;
