@@ -9,6 +9,16 @@
     NOT_FOUND_IMAGE,
     NOT_FOUND_TITLE,
   } from '$shared/constants/not-found';
+  import type { NotFoundProps } from '$shared/interfaces';
+
+  let {
+    code = NOT_FOUND_CODE,
+    title = NOT_FOUND_TITLE,
+    description = NOT_FOUND_DESCRIPTION,
+    homeLabel = NOT_FOUND_HOME_LABEL,
+    homeHref = resolve('/'),
+    showRequestButton = true,
+  }: NotFoundProps = $props();
 </script>
 
 <style lang="scss">
@@ -23,17 +33,19 @@
 
   <div class="not-found__content">
     <div class="container not-found__body">
-      <p class="not-found__code" aria-hidden="true">{NOT_FOUND_CODE}</p>
+      <p class="not-found__code" aria-hidden="true">{code}</p>
 
-      <h1 id="not-found-title" class="not-found__title">{NOT_FOUND_TITLE}</h1>
+      <h1 id="not-found-title" class="not-found__title">{title}</h1>
 
-      <p class="not-found__description">{NOT_FOUND_DESCRIPTION}</p>
+      <p class="not-found__description">{description}</p>
 
       <div class="not-found__actions">
-        <RequestButton variant="glass" />
+        {#if showRequestButton}
+          <RequestButton variant="glass" />
+        {/if}
 
-        <ActionButton variant="ghost" href={resolve('/')}>
-          {NOT_FOUND_HOME_LABEL}
+        <ActionButton variant="ghost" href={homeHref}>
+          {homeLabel}
           <IconArrowUpRight />
         </ActionButton>
       </div>
