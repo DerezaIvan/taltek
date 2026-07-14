@@ -1,0 +1,126 @@
+@use 'presentation/styles/mixins/hero-media' as *;
+@use 'presentation/styles/variables' as *;
+
+.hero {
+  @include hero-media-layout;
+
+  &__video {
+    @include hero-media-cover;
+  }
+
+  &__body {
+    padding-top: 249px;
+    padding-bottom: 249px;
+  }
+
+  &__title {
+    max-width: min(100%, 1350px);
+    color: #fff;
+    font-weight: 500;
+    font-size: clamp(30px, 2.65vw + 20.05px, 72px);
+    line-height: 1.2;
+    white-space: pre-line;
+
+    &-desktop {
+      display: inline;
+    }
+
+    &-mobile {
+      display: none;
+    }
+  }
+
+  &__subtitle {
+    margin-top: 22px;
+    color: #fff;
+    font-weight: 400;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 35px;
+    margin-top: 50px;
+  }
+}
+
+@media (max-width: $bp-desktop) {
+  .hero {
+    &__body {
+      padding-top: 180px;
+      padding-bottom: 180px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .hero {
+    &__body {
+      padding-top: 140px;
+      padding-bottom: 140px;
+    }
+
+    &__actions {
+      gap: 24px;
+      margin-top: 40px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .hero {
+    &__body {
+      padding-top: 100px;
+      padding-bottom: 100px;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .hero {
+    &__body {
+      padding-top: 80px;
+      padding-bottom: 80px;
+      text-align: left;
+    }
+
+    &__subtitle {
+      margin-top: 16px;
+    }
+
+    &__actions {
+      gap: 16px;
+      margin-top: 32px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .hero {
+    &__body {
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+
+    &__title {
+      font-size: clamp(22px, 6vw, 28px);
+      line-height: 1.25;
+
+      &-desktop {
+        display: none;
+      }
+
+      &-mobile {
+        display: inline;
+      }
+    }
+
+    &__actions {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+      margin-top: 24px;
+    }
+  }
+}

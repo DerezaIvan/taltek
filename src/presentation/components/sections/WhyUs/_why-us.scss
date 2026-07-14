@@ -1,0 +1,144 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$why-us-grid-gap: 25px;
+$why-us-card-padding: 30px;
+$why-us-columns: 3;
+$why-us-card-min-height: 287px;
+$why-us-icon-size: 89px;
+
+.why-us {
+  padding-block: 50px;
+
+  &__title {
+    margin: 0 0 40px;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: typography.$heading-lg-line-height;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat($why-us-columns, minmax(0, 1fr));
+    gap: $why-us-grid-gap;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: $why-us-card-min-height;
+    padding: $why-us-card-padding;
+    border-radius: var(--layout-radius);
+    background: var(--delivery-card-bg);
+  }
+
+  &__icon {
+    display: flex;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: $why-us-icon-size;
+    height: $why-us-icon-size;
+    padding: 29px 27px;
+    border-radius: 20px;
+    background: var(--card-icon-gradient);
+    color: var(--primary-white);
+
+    :global(svg) {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &__card-title {
+    margin: 30px 0 0;
+    overflow-wrap: break-word;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-xl-size;
+    line-height: typography.$text-xl-line-height;
+    letter-spacing: typography.$text-xl-letter-spacing;
+  }
+
+  &__card-desc {
+    margin: 10px 0 0;
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .why-us {
+    padding-block: 40px;
+
+    &__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &__card {
+      min-height: 0;
+    }
+
+    &__icon {
+      width: 72px;
+      height: 72px;
+      padding: 24px 22px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .why-us {
+    padding-block: 64px;
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .why-us {
+    padding-block: 48px;
+
+    &__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .why-us {
+    &__title {
+      margin-bottom: 24px;
+    }
+
+    &__card {
+      padding: 20px;
+      border-radius: 20px;
+    }
+
+    &__icon {
+      width: 48px;
+      height: 48px;
+      padding: 14px 12px;
+      border-radius: 14px;
+    }
+
+    &__card-title {
+      margin-top: 20px;
+    }
+  }
+}

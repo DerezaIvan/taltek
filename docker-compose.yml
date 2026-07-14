@@ -5,8 +5,26 @@ services:
       args:
         PUBLIC_DIRECTUS_URL: ${PUBLIC_DIRECTUS_URL:-}
         DIRECTUS_TOKEN: ${DIRECTUS_TOKEN:-}
+        PUBLIC_API_URL: ${PUBLIC_API_URL:-}
     ports:
       - '8080:80'
+    depends_on:
+      - api
+
+  api:
+    build:
+      context: ./api
+    ports:
+      - '3001:3001'
+    environment:
+      PORT: 3001
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://localhost:8080}
+      SMTP_HOST: ${SMTP_HOST}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER}
+      SMTP_PASS: ${SMTP_PASS}
+      FROM_EMAIL: ${FROM_EMAIL}
+      TO_EMAIL: ${TO_EMAIL}
 
   postgres:
     profiles: [cms]

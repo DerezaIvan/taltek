@@ -1,15 +1,9 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
   import { Footer, Header } from '$presentation/layout';
   import { Hero } from '$presentation/components/sections';
+  import type { MainProps } from '$shared/interfaces';
 
-  interface Props {
-    heroTitle?: string;
-    heroSubtitle?: string;
-    children?: Snippet;
-  }
-
-  let { heroTitle, heroSubtitle, children }: Props = $props();
+  let { heroTitle, heroSubtitle, children, afterHero, pageHero }: MainProps = $props();
 </script>
 
 <style lang="scss">
@@ -17,14 +11,30 @@
 </style>
 
 <main class="main">
-  <Header />
+  {#if pageHero}
+    <div class="main__hero">
+      <Header overlay />
+      {@render pageHero()}
+    </div>
 
-  {#if children}
+    {#if children}
+      {@render children()}
+    {/if}
+  {:else if children}
+    <Header />
     {@render children()}
   {:else}
-    <div class="main__intro">
-      <Hero title={heroTitle} subtitle={heroSubtitle} />
+    <div class="main__hero">
+      <Header overlay />
+      <Hero
+        {...heroTitle?.trim() ? { title: heroTitle } : {}}
+        {...heroSubtitle?.trim() ? { subtitle: heroSubtitle } : {}}
+      />
     </div>
+
+    {#if afterHero}
+      {@render afterHero()}
+    {/if}
   {/if}
 
   <Footer />

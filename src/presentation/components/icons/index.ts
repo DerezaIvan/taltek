@@ -1,1 +1,24 @@
-// Export SVG icon components here.
+export { default as IconCheckmark } from './IconCheckmark.svelte';
+export { default as IconPhone } from './IconPhone.svelte';
+export { default as IconLocationPin } from './IconLocationPin.svelte';
+export { default as IconAt } from './IconAt.svelte';
+export { default as IconWhyOwnFleet } from './IconWhyOwnFleet.svelte';
+export { default as IconWhyGeography } from './IconWhyGeography.svelte';
+export { default as IconWhyAutomation } from './IconWhyAutomation.svelte';
+export { default as IconWhySpeed } from './IconWhySpeed.svelte';
+export { default as IconWhyCompetencies } from './IconWhyCompetencies.svelte';
+export { default as IconWhyTeam } from './IconWhyTeam.svelte';
+export { default as IconMenuBurger } from './IconMenuBurger.svelte';
+export { default as IconMenuClose } from './IconMenuClose.svelte';
+export { default as IconUser } from './IconUser.svelte';
+export { default as IconWagonHopper } from './IconWagonHopper.svelte';
+export { default as IconWagonFlat } from './IconWagonFlat.svelte';
+export { default as IconWagonBox } from './IconWagonBox.svelte';
+export { default as IconArrowUpRight } from './IconArrowUpRight.svelte';
+export { default as IconArrowExplore } from './IconArrowExplore.svelte';
+export { default as IconDeliveryRoute } from './IconDeliveryRoute.svelte';
+export { default as IconDeliveryCrane } from './IconDeliveryCrane.svelte';
+export { default as IconDeliveryDocuments } from './IconDeliveryDocuments.svelte';
+export { default as IconServiceWagonSupply } from './IconServiceWagonSupply.svelte';
+export { default as IconServiceTariff } from './IconServiceTariff.svelte';
+export { default as IconServiceDispatch } from './IconServiceDispatch.svelte';

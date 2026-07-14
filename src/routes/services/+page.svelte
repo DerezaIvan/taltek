@@ -1,20 +1,36 @@
 <script lang="ts">
-  import { Main, PageContent } from '$presentation/components/sections';
-  import { getPageSeo } from '$shared/constants/seo';
+  // TODO: SEO временно отключено
+  // import { SeoHead } from '$presentation/components/SeoHead';
+  import {
+    FleetModels,
+    FleetPark,
+    KeyServices,
+    Main,
+    PageHero,
+    WhyUs,
+    Cta,
+  } from '$presentation/components/sections';
+  import { SERVICES_CTA_SUBTITLE, SERVICES_CTA_TITLE } from '$shared/constants/cta';
+  // import { getPageSeo } from '$shared/constants/seo';
 
-  const seo = getPageSeo('services');
+  // const seo = getPageSeo('services');
+
+  const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'Услуги и подвижной состав' }];
+
+  const titleLines = ['Максимально надёжное и оперативное решение Ваших транспортных задач'];
 </script>
 
-<svelte:head>
-  <title>{seo.title}</title>
-  <meta name="description" content={seo.description} />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href={seo.url} />
-</svelte:head>
+<!-- TODO: SEO временно отключено -->
+<!-- <SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} /> -->
 
 <Main>
-  <PageContent
-    title="Услуги"
-    description="Заготовка страницы «Услуги». Контент будет добавлен позже."
-  />
+  {#snippet pageHero()}
+    <PageHero imageSrc="/images/services-hero.webp" {breadcrumbs} {titleLines} />
+  {/snippet}
+
+  <KeyServices />
+  <WhyUs />
+  <FleetModels />
+  <FleetPark />
+  <Cta title={SERVICES_CTA_TITLE} subtitle={SERVICES_CTA_SUBTITLE} />
 </Main>

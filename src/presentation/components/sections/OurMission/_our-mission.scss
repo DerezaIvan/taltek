@@ -1,0 +1,65 @@
+@use 'presentation/styles/variables' as *;
+
+$om-image-gap: 16px;
+$om-image-overlay: linear-gradient(180deg, rgba(0, 58, 135, 0.55) 0%, rgba(0, 58, 135, 0.85) 100%);
+
+.our-mission {
+  display: none;
+  padding-top: 100px;
+
+  &__inner {
+    grid-template-columns: repeat(4, 1fr);
+    gap: $om-image-gap;
+    width: 100%;
+  }
+
+  &__image {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    border-radius: var(--layout-radius);
+    aspect-ratio: 340 / 405;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: $om-image-overlay;
+      pointer-events: none;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .our-mission {
+    padding-block: 48px;
+
+    &__inner {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .our-mission {
+    padding-top: 32px;
+    padding-inline: 10px;
+
+    &__inner {
+      grid-template-columns: 1fr;
+    }
+
+    &__image {
+      border-radius: 24px;
+    }
+  }
+}

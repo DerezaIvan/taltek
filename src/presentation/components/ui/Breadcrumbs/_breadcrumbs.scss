@@ -1,0 +1,25 @@
+.breadcrumbs {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  &__separator {
+    margin-inline: 8px;
+    color: var(--primary-white);
+  }
+
+  &__link,
+  &__current {
+    color: var(--primary-white);
+  }
+}

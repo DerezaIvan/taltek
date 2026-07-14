@@ -1,0 +1,95 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/mixins/hero-media' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+.page-hero {
+  @include hero-media-layout;
+
+  &__image {
+    @include hero-media-cover;
+  }
+
+  &__body {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  &__breadcrumbs {
+    padding-top: 49px;
+  }
+
+  &__title {
+    display: flex;
+    flex-direction: column;
+    margin: 29px 0 0;
+    color: var(--primary-white);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$page-hero-title-weight;
+    font-size: typography.$heading-xl-size;
+    line-height: typography.$heading-xl-line-height;
+    letter-spacing: typography.$page-hero-title-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__title-line {
+    display: block;
+  }
+
+  &__subtitle {
+    margin: 0;
+    padding-top: 22px;
+    color: var(--primary-white);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-md-size;
+    line-height: 100%;
+    letter-spacing: typography.$text-md-letter-spacing;
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .page-hero {
+    &__body {
+      padding-top: 80px;
+      padding-bottom: 80px;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .page-hero {
+    &__body {
+      padding-top: 64px;
+      padding-bottom: 64px;
+    }
+
+    &__subtitle {
+      font-size: typography.$text-base-size;
+      line-height: typography.$text-base-line-height;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .page-hero {
+    &__body {
+      padding-top: 48px;
+      padding-bottom: 48px;
+    }
+
+    &__breadcrumbs {
+      padding-top: 32px;
+      text-align: left;
+    }
+
+    &__title {
+      margin-top: 20px;
+      text-align: left;
+    }
+
+    &__subtitle {
+      padding-top: 16px;
+      text-align: left;
+    }
+  }
+}
