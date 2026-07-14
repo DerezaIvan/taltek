@@ -1,50 +1,249 @@
 @use 'presentation/styles/variables' as *;
 
 .header {
-  position: sticky;
+  position: fixed;
+  inset-inline: 0;
   top: 0;
   z-index: 10;
-  background: var(--primary-white);
-  border-bottom: 1px solid var(--border-secondary);
-}
+  padding: 24px;
+  background: linear-gradient(90.01deg, rgb(30, 96, 179) 0.01%, rgb(13, 55, 118) 98.72%);
 
-.header__inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 72px;
-  gap: 24px;
-}
-
-.header__logo {
-  font-weight: 700;
-  font-size: 20px;
-  letter-spacing: -0.02em;
-}
-
-.header__nav {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
-.header__link {
-  font-size: 15px;
-  color: var(--colors-text-primary);
-  transition: color 0.2s ease;
-
-  &:hover,
-  &.header__link--active {
-    color: var(--accent-700);
+  &--overlay {
+    background: transparent;
   }
-}
 
-@media (max-width: $bp-tablet) {
-  .header__nav {
+  &--scrolled {
+    background: linear-gradient(90.01deg, rgb(30, 96, 179) 0.01%, rgb(13, 55, 118) 98.72%);
+  }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  &__logo-link {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  &__logo {
+    display: block;
+    height: 32px;
+    width: auto;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 70px;
+    margin-left: auto;
+  }
+
+  &__link {
+    position: relative;
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    color: #fff;
+    white-space: nowrap;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: #fff;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    &:hover::after,
+    &--active::after {
+      opacity: 1;
+    }
+  }
+
+  &__account {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: auto;
+    color: #fff;
+  }
+
+  &__account-icon {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  &__account-label {
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__account-badge {
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.15);
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  &__burger {
+    display: none;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 50px;
+    height: 50px;
+    margin-left: auto;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: #ffffff33;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #fff;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  &__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    border: none;
+    padding: 0;
+    background: rgba(3, 32, 81, 0.35);
+    cursor: pointer;
+  }
+
+  &__menu {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    z-index: 101;
+    padding: 24px;
+    background: linear-gradient(90.01deg, rgb(30, 96, 179) 0.01%, rgb(13, 55, 118) 98.72%);
+  }
+
+  &__menu-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  &__menu-close {
+    display: inline-flex;
+  }
+
+  &__menu-nav {
+    display: flex;
+    flex-direction: column;
     gap: 16px;
   }
 
-  .header__link {
-    font-size: 14px;
+  &__menu-link {
+    font-family: var(--font-family-ubuntu);
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 26px;
+    letter-spacing: 0.46px;
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+
+    &--active {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  }
+
+  &__menu-account {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+  }
+
+  @media (max-width: $bp-desktop) {
+    &__nav {
+      gap: 48px;
+    }
+  }
+
+  @media (max-width: $bp-desktop-nav) {
+    &__inner {
+      gap: 10px;
+      padding: 0;
+    }
+
+    &__nav,
+    &__account {
+      display: none;
+    }
+
+    &__burger {
+      display: inline-flex;
+    }
+  }
+
+  @media (max-width: $bp-mobile-lg) {
+    padding: 10px;
+
+    &__logo {
+      height: 28px;
+    }
+
+    &__burger {
+      width: 44px;
+      height: 44px;
+    }
+
+    &__menu {
+      padding: 10px;
+    }
+
+    &__menu-link {
+      font-size: 14px;
+      line-height: 22px;
+    }
+
+    &__menu-account {
+      & .header__account-label {
+        font-size: 14px;
+        line-height: 22px;
+      }
+    }
+  }
+}
+
+:global {
+  .header__menu,
+  .header__backdrop {
+    font-family: var(--font-family-ubuntu);
   }
 }

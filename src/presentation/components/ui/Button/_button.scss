@@ -12,7 +12,7 @@
     border-radius: 24px;
     border-style: solid;
     border-width: 1px;
-    font-family: var(--font-family-sans);
+    font-family: var(--font-family-ubuntu);
     font-weight: 500;
     font-size: 15px;
     line-height: 26px;
@@ -27,55 +27,55 @@
     &:disabled {
       cursor: not-allowed;
     }
-  }
 
-  .button--sm {
-    padding: 8px 12px;
-  }
-
-  .button--lg {
-    padding: 12px 24px;
-  }
-
-  .button--secondary {
-    background: var(--primary-white);
-    border-color: var(--border-secondary);
-    color: var(--colors-text-primary);
-
-    &:hover:not(:disabled) {
-      border-color: var(--colors-border-hover);
+    &--sm {
+      padding: 8px 12px;
     }
 
-    &:active:not(:disabled) {
-      border-color: var(--colors-border-accent-primary);
+    &--lg {
+      padding: 12px 24px;
     }
 
-    &:disabled {
-      background: var(--button-disabled-bg);
-      border-color: transparent;
-      color: var(--colors-text-disabled);
-    }
-  }
+    &--secondary {
+      background: var(--primary-white);
+      border-color: var(--border-secondary);
+      color: var(--colors-text-primary);
 
-  .button--primary {
-    background: var(--accent-700);
-    border-color: var(--accent-700);
-    color: var(--primary-white);
+      &:hover:not(:disabled) {
+        border-color: var(--colors-border-hover);
+      }
 
-    &:hover:not(:disabled) {
-      background: var(--button-primary-hover);
-      border-color: var(--button-primary-hover);
-    }
+      &:active:not(:disabled) {
+        border-color: var(--colors-border-accent-primary);
+      }
 
-    &:active:not(:disabled) {
-      background: var(--button-primary-active);
-      border-color: var(--button-primary-active);
+      &:disabled {
+        background: var(--button-disabled-bg);
+        border-color: transparent;
+        color: var(--colors-text-disabled);
+      }
     }
 
-    &:disabled {
-      background: var(--button-disabled-bg);
-      border-color: transparent;
-      color: var(--colors-text-disabled);
+    &--primary {
+      background: var(--accent-700);
+      border-color: var(--accent-700);
+      color: var(--primary-white);
+
+      &:hover:not(:disabled) {
+        background: var(--button-primary-hover);
+        border-color: var(--button-primary-hover);
+      }
+
+      &:active:not(:disabled) {
+        background: var(--button-primary-active);
+        border-color: var(--button-primary-active);
+      }
+
+      &:disabled {
+        background: var(--button-disabled-bg);
+        border-color: transparent;
+        color: var(--colors-text-disabled);
+      }
     }
   }
 }

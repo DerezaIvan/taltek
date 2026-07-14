@@ -1,0 +1,151 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+@use './contacts-tokens' as *;
+
+.contacts-info {
+  display: flex;
+  flex: 0 0 $contacts-sidebar-width;
+  flex-direction: column;
+  gap: 20px;
+  width: $contacts-sidebar-width;
+  max-width: 100%;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    gap: $contacts-card-padding;
+    padding: $contacts-card-padding;
+    border-radius: $contacts-card-radius;
+    background: var(--delivery-card-bg);
+
+    &--hotline {
+      min-height: 149px;
+    }
+  }
+
+  &__title {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-xl-weight;
+    font-size: typography.$text-xl-size;
+    line-height: typography.$text-xl-line-height;
+  }
+
+  &__row {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: $contacts-icon-size;
+    height: $contacts-icon-size;
+    border-radius: 20px;
+    background: var(--delivery-card-num-gradient);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__phone {
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-md-weight;
+    font-size: typography.$text-xl-size;
+    line-height: 21px;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  &__subtitle {
+    margin: 0;
+    padding-top: 6px;
+    color: var(--brand-navy-60);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: 12px;
+    line-height: 100%;
+  }
+
+  &__text {
+    margin: 0;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-md-weight;
+    font-size: 14px;
+    line-height: typography.$text-base-line-height;
+  }
+
+  &__emails {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  &__email {
+    color: var(--brand-navy);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-md-weight;
+    font-size: 14px;
+    line-height: typography.$text-base-line-height;
+    text-decoration: none;
+    word-break: break-word;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .contacts-info {
+    flex: 0 1 32%;
+    width: auto;
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .contacts-info {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .contacts-info {
+    gap: 16px;
+
+    &__card {
+      gap: 16px;
+      padding: 16px;
+      border-radius: 20px;
+
+      &--hotline {
+        min-height: 0;
+      }
+    }
+
+    &__icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+    }
+
+    &__phone {
+      font-size: typography.$text-md-size;
+      line-height: typography.$text-md-line-height;
+    }
+  }
+}

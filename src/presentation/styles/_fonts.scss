@@ -1,1 +1,39 @@
-// Add @font-face rules here when custom fonts are ready.
+@font-face {
+  font-display: swap;
+  font-family: UNCAGE;
+  src:
+    url('/fonts/UNCAGE-Medium.woff2') format('woff2'),
+    url('/fonts/UNCAGE-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: UNCAGE;
+  src:
+    url('/fonts/UNCAGE-Bold.woff2') format('woff2'),
+    url('/fonts/UNCAGE-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Ubuntu;
+  src:
+    url('/fonts/Ubuntu-Regular.woff2') format('woff2'),
+    url('/fonts/Ubuntu-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-display: swap;
+  font-family: Ubuntu;
+  src:
+    url('/fonts/Ubuntu-Medium.woff2') format('woff2'),
+    url('/fonts/Ubuntu-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}

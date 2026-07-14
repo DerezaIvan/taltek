@@ -1,0 +1,44 @@
+@use 'presentation/styles/variables' as *;
+@use './contacts-tokens' as *;
+
+.contacts-content {
+  padding-top: 70px;
+  padding-bottom: 100px;
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    gap: $contacts-layout-gap;
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .contacts-content {
+    &__inner {
+      gap: 30px;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .contacts-content {
+    &__inner {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .contacts-content {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .contacts-content {
+    &__inner {
+      gap: 24px;
+    }
+  }
+}

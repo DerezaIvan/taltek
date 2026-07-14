@@ -1,9 +1,22 @@
+@use 'presentation/styles/variables' as *;
+
 .main {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  max-width: var(--layout-width);
   min-height: 100vh;
+  margin-inline: auto;
+  border-radius: var(--layout-radius);
+  overflow: hidden;
+
+  &__hero {
+    position: relative;
+  }
 }
 
-.main__intro {
-  background: linear-gradient(180deg, #ffffff 0%, var(--page-background) 100%);
+@media (max-width: $bp-mobile-lg) {
+  .main {
+    border-radius: 0;
+  }
 }

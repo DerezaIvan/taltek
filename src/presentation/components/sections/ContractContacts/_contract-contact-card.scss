@@ -1,0 +1,151 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$cc-card-gap: 25px;
+$cc-card-padding: 30px;
+$cc-card-radius: 30px;
+$cc-card-height: 202px;
+$cc-photo-width: 130px;
+$cc-photo-height: 142px;
+$cc-photo-radius: 20px;
+$cc-role-offset: 10px;
+
+.contract-contact-card {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: $cc-card-gap;
+  min-height: $cc-card-height;
+  padding: $cc-card-padding;
+  border-radius: $cc-card-radius;
+  background: var(--delivery-card-bg);
+
+  &__photo {
+    flex-shrink: 0;
+    display: block;
+    width: $cc-photo-width;
+    height: $cc-photo-height;
+    border-radius: $cc-photo-radius;
+    object-fit: cover;
+    object-position: center top;
+    background: var(--delivery-card-bg);
+  }
+
+  &__body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__name {
+    margin: 0;
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-xl-size;
+    font-weight: typography.$text-xl-weight;
+    line-height: typography.$text-xl-line-height;
+    letter-spacing: typography.$text-xl-letter-spacing;
+    color: var(--brand-navy);
+  }
+
+  &__role {
+    margin: $cc-role-offset 0 0;
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-sm-size;
+    font-weight: typography.$text-sm-weight;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+    color: var(--brand-navy-80);
+  }
+
+  &__contacts {
+    margin-top: 0;
+  }
+
+  &__contact-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  &__contact-label {
+    margin: 0;
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-sm-size;
+    font-weight: typography.$text-sm-weight;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+    color: var(--brand-navy);
+  }
+
+  &__contact-value {
+    margin: 0;
+    text-align: right;
+  }
+
+  &__contact-link {
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-sm-size;
+    font-weight: 700;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+    color: var(--brand-navy);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .contract-contact-card {
+    gap: 16px;
+    min-height: 0;
+    padding: 20px;
+
+    &__photo {
+      width: 100px;
+      height: 110px;
+    }
+
+    &__name {
+      font-size: typography.$text-md-size;
+      line-height: typography.$text-md-line-height;
+    }
+
+    &__contact-row {
+      gap: 12px;
+      margin-top: 8px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .contract-contact-card {
+    flex-direction: column;
+    align-items: normal;
+    gap: 16px;
+    padding: 20px;
+    border-radius: 24px;
+
+    &__photo {
+      width: 120px;
+      height: 130px;
+      border-radius: 16px;
+    }
+
+    &__contact-row {
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    &__contact-label {
+      font-size: 12px;
+    }
+
+    &__contact-link {
+      font-size: 13px;
+    }
+  }
+}

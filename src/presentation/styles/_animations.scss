@@ -1,6 +1,56 @@
 $anim-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 $anim-duration: 0.65s;
 
+.page-enter {
+  animation: page-fade-in 0.65s cubic-bezier(0.33, 0, 0.67, 1);
+}
+
+@keyframes page-fade-in {
+  from {
+    opacity: 0.55;
+    transform: translate3d(0, 8px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes page-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-crossfade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@supports (view-transition-name: none) {
+  .page-enter {
+    animation: none;
+  }
+}
+
+::view-transition-old(root) {
+  animation: page-fade-out 0.35s cubic-bezier(0.33, 0, 0.67, 1) both;
+}
+
+::view-transition-new(root) {
+  animation: page-crossfade-in 0.55s cubic-bezier(0.33, 0, 0.67, 1) both;
+}
+
 [data-anim] {
   transition:
     opacity $anim-duration $anim-ease,
@@ -53,6 +103,15 @@ $anim-duration: 0.65s;
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .page-enter {
+    animation: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
   [data-anim] {
     opacity: 1 !important;
     transform: none !important;

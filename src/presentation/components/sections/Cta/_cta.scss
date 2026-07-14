@@ -1,0 +1,87 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+.cta {
+  padding-block: 100px;
+  color: var(--brand-navy);
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 35px;
+  }
+
+  &__text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__title {
+    margin: 0;
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__subtitle {
+    margin: 0;
+    font-family: typography.$font-family-ubuntu;
+    font-size: typography.$text-md-size;
+    font-weight: typography.$text-md-weight;
+    letter-spacing: typography.$text-md-letter-spacing;
+  }
+
+  &__action {
+    width: 100%;
+    max-width: 355px;
+
+    :global(.action-button--solid) {
+      width: 100%;
+      max-width: none;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-md) {
+  .cta {
+    padding-block: 80px;
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .cta {
+    padding-block: 64px;
+
+    &__inner {
+      gap: 32px;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .cta {
+    padding-block: 48px;
+
+    &__text {
+      gap: 12px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .cta {
+    &__inner {
+      align-items: stretch;
+      gap: 24px;
+    }
+
+    &__subtitle {
+      font-size: typography.$text-base-size;
+      line-height: typography.$text-base-line-height;
+    }
+  }
+}

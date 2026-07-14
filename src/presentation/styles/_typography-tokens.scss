@@ -1,0 +1,44 @@
+$font-family-uncage: 'UNCAGE', sans-serif;
+$font-family-ubuntu: 'Ubuntu', sans-serif;
+
+$heading-xl-size: clamp(31px, 2.65vw + 21.05px, 72px);
+$heading-xl-line-height: clamp(43px, 2.72vw + 32.81px, 85px);
+$heading-xl-weight: 700;
+$heading-xl-letter-spacing: 1px;
+
+$heading-lg-size: clamp(26px, 1.165vw + 21.63px, 46px);
+$heading-lg-line-height: clamp(36px, 2.006vw + 28.48px, 67px);
+$heading-lg-weight: 500;
+$heading-lg-letter-spacing: 1px;
+
+$page-hero-title-size: $heading-xl-size;
+$page-hero-title-line-height: $heading-xl-line-height;
+$page-hero-title-weight: 500;
+$page-hero-title-letter-spacing: 1px;
+
+$text-xl-size: clamp(18px, 0.388vw + 16.54px, 24px);
+$text-xl-line-height: 24px;
+$text-xl-weight: 500;
+$text-xl-letter-spacing: 0;
+
+$text-card-title-size: 21px;
+$text-card-title-line-height: 100%;
+$text-card-title-weight: 500;
+
+$text-md-size: clamp(16px, 0.129vw + 15.52px, 18px);
+$text-md-line-height: clamp(24px, 0.323vw + 22.79px, 29px);
+$text-md-weight: 400;
+$text-md-letter-spacing: 0;
+
+$text-base-size: 16px;
+$text-base-line-height: 21px;
+$text-base-weight: 400;
+$text-base-letter-spacing: 0;
+
+$text-sm-size: 14px;
+$text-sm-line-height: 21px;
+$text-sm-weight: 400;
+$text-sm-letter-spacing: 0;
+
+$delivery-card-num-size: 128px;
+$delivery-card-num-offset: 0.25em;

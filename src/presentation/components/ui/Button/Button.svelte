@@ -1,15 +1,5 @@
 <script lang="ts">
-  import type { Snippet } from 'svelte';
-  import type { HTMLButtonAttributes } from 'svelte/elements';
-
-  type Variant = 'secondary' | 'primary';
-  type Size = 'sm' | 'lg';
-
-  type Props = {
-    variant?: Variant;
-    size?: Size;
-    children?: Snippet;
-  } & HTMLButtonAttributes;
+  import type { ButtonProps } from '$shared/interfaces';
 
   let {
     variant = 'secondary',
@@ -18,7 +8,7 @@
     disabled,
     children,
     ...rest
-  }: Props = $props();
+  }: ButtonProps = $props();
 </script>
 
 <style lang="scss">

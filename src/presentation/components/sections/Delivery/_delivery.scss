@@ -1,0 +1,250 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$delivery-gap: 30px;
+$delivery-cell-height: 170px;
+$delivery-adaptive-gap: 20px;
+
+.delivery {
+  padding-block: 100px;
+
+  &__title {
+    max-width: 1200px;
+    margin-bottom: 40px;
+    color: var(--brand-navy);
+    font-family: typography.$font-family-uncage;
+    font-weight: typography.$heading-lg-weight;
+    font-size: typography.$heading-lg-size;
+    line-height: 100%;
+    letter-spacing: typography.$heading-lg-letter-spacing;
+    text-transform: uppercase;
+  }
+
+  &__top {
+    display: flex;
+    gap: $delivery-gap;
+    align-items: flex-start;
+  }
+
+  &__top-rows {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-gap;
+  }
+
+  &__row {
+    display: flex;
+    gap: $delivery-gap;
+    align-items: flex-start;
+    width: fit-content;
+  }
+
+  &__bottom {
+    margin-top: $delivery-gap;
+  }
+
+  &__adaptive--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: $delivery-gap;
+    align-items: start;
+  }
+
+  &__adaptive--stack {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-adaptive-gap;
+  }
+
+  &__media {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-adaptive-gap;
+    min-width: 0;
+  }
+
+  &__cards {
+    display: flex;
+    flex-direction: column;
+    gap: $delivery-adaptive-gap;
+    min-width: 0;
+  }
+
+  &__card {
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    align-self: start;
+    min-width: 0;
+    padding: 35px 30px;
+    border-radius: 30px;
+    background: var(--delivery-card-bg);
+    overflow: hidden;
+  }
+
+  &__card-title {
+    position: relative;
+    z-index: 1;
+    color: var(--brand-navy);
+    font-family: var(--font-family-ubuntu);
+    font-size: typography.$text-card-title-size;
+    font-weight: typography.$text-card-title-weight;
+    line-height: typography.$text-card-title-line-height;
+    overflow-wrap: break-word;
+  }
+
+  &__card-desc {
+    position: relative;
+    z-index: 1;
+    margin-top: 10px;
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-sm-weight;
+    font-size: typography.$text-sm-size;
+    line-height: typography.$text-sm-line-height;
+    letter-spacing: typography.$text-sm-letter-spacing;
+  }
+
+  &__card-num {
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    z-index: 0;
+    font-family: typography.$font-family-uncage;
+    font-weight: 700;
+    font-size: typography.$delivery-card-num-size;
+    line-height: 100%;
+    letter-spacing: 0;
+    text-align: right;
+    background: var(--delivery-card-num-gradient);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    pointer-events: none;
+    user-select: none;
+    transform: translateY(typography.$delivery-card-num-offset);
+  }
+
+  &__icon {
+    box-sizing: border-box;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    align-self: start;
+    padding: 55px;
+    border-radius: 30px;
+    background: linear-gradient(90.01deg, #{$brand-blue} 0.01%, #{$brand-blue-dark} 98.72%);
+
+    :global(svg) {
+      display: block;
+      flex-shrink: 0;
+    }
+  }
+
+  &__image {
+    box-sizing: border-box;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    border-radius: 30px;
+
+    &--side {
+      aspect-ratio: 410 / 370;
+    }
+
+    &--adaptive {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-nav) {
+  .delivery {
+    padding-block: 80px;
+
+    &__title {
+      margin-bottom: 32px;
+    }
+
+    &__card {
+      width: 100%;
+      min-height: $delivery-cell-height;
+    }
+  }
+}
+
+@media (max-width: $bp-desktop-sm) {
+  .delivery {
+    padding-block: 48px;
+
+    &__title {
+      margin-bottom: 24px;
+    }
+  }
+}
+
+@media (max-width: $bp-tablet) {
+  .delivery {
+    padding-block: 48px;
+
+    &__title {
+      margin-bottom: 20px;
+    }
+
+    &__card {
+      padding: 24px 20px;
+      min-height: 0;
+    }
+
+    &__card-num {
+      font-size: 96px;
+    }
+
+    &__icon {
+      padding: 40px;
+      border-radius: 24px;
+    }
+  }
+}
+
+@media (max-width: $bp-mobile-lg) {
+  .delivery {
+    padding-block: 40px;
+
+    &__title {
+      margin-bottom: 16px;
+    }
+
+    &__adaptive--stack {
+      gap: 16px;
+    }
+
+    &__card {
+      padding: 20px 16px;
+      border-radius: 24px;
+    }
+
+    &__card-num {
+      font-size: 72px;
+    }
+
+    &__icon {
+      padding: 32px;
+    }
+
+    &__image {
+      border-radius: 24px;
+
+      &--adaptive {
+        aspect-ratio: 16 / 9;
+      }
+    }
+  }
+}
