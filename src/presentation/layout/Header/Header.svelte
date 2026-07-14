@@ -10,6 +10,20 @@
 
   let { overlay = false }: HeaderProps = $props();
 
+  let scrolled = $state(false);
+
+  $effect(() => {
+    const handleScroll = () => {
+      scrolled = window.scrollY > 10;
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  });
   let menuOpen = $state(false);
   let burgerButton = $state<HTMLButtonElement | null>(null);
   let menuElement = $state<HTMLDivElement | null>(null);
@@ -90,7 +104,7 @@
   @use './_header.scss';
 </style>
 
-<header class="header" class:header--overlay={overlay}>
+<header class="header" class:header--overlay={overlay} class:header--scrolled={scrolled}>
   <div class="container-wide header__inner">
     <a class="header__logo-link" href={resolve('/')} aria-label="На главную">
       <img class="header__logo" src={asset('/images/logo.svg')} alt="ТалТЭК Транс" />

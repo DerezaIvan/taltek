@@ -32,6 +32,12 @@ const smtpPass = process.env.SMTP_PASS;
 const fromEmail = process.env.FROM_EMAIL;
 const toEmail = process.env.TO_EMAIL;
 
+const WAGON_TYPE_EMAILS = {
+  gondola: 'pv@taltektrans.pro',
+  covered: 'kv@taltektrans.pro',
+  grain: 'e.kokoeva@taltektrans.pro',
+};
+
 const isSmtpConfigured = smtpHost && smtpUser && smtpPass && fromEmail && toEmail;
 
 let transporter = null;
@@ -101,6 +107,8 @@ app.post('/contact', async (req, res) => {
     wagonType ||
     'Не указан';
 
+  const recipient = WAGON_TYPE_EMAILS[wagonType] || toEmail;
+
   const subject = `Новая заявка с сайта от ${name.trim()}`;
 
   const text = [
@@ -137,7 +145,7 @@ app.post('/contact', async (req, res) => {
   try {
     await transporter.sendMail({
       from: `"Сайт Taltek" <${fromEmail}>`,
-      to: toEmail,
+      to: recipient,
       subject,
       text,
       html,

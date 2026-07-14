@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { SeoHead } from '$presentation/components/SeoHead';
   import {
     ContactsContent,
     ContractContacts,
@@ -9,16 +8,23 @@
   } from '$presentation/components/sections';
   import { CONTACTS_SUBTITLE, CONTACTS_TITLE } from '$shared/constants/contacts';
   import { PAGE_HERO_IMAGE, PAGE_HERO_IMAGE_POSITION } from '$shared/constants/page-hero';
-  import { getPageSeo } from '$shared/constants/seo';
+  // TODO: SEO временно отключено
+  // import { getPageSeo } from '$shared/constants/seo';
 
-  const seo = getPageSeo('contacts');
+  // const seo = getPageSeo('contacts');
 
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: CONTACTS_TITLE }];
 
   const titleLines = [CONTACTS_TITLE];
 </script>
 
-<SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} />
+<!-- TODO: SEO временно отключено -->
+<!-- <svelte:head>
+  <title>{seo.title}</title>
+  <meta name="description" content={seo.description} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={seo.url} />
+</svelte:head> -->
 
 <Main>
   {#snippet pageHero()}

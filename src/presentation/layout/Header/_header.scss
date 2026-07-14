@@ -1,16 +1,19 @@
 @use 'presentation/styles/variables' as *;
 
 .header {
-  position: relative;
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
   z-index: 10;
   padding: 24px;
   background: linear-gradient(90.01deg, rgb(30, 96, 179) 0.01%, rgb(13, 55, 118) 98.72%);
 
   &--overlay {
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
     background: transparent;
+  }
+
+  &--scrolled {
+    background: linear-gradient(90.01deg, rgb(30, 96, 179) 0.01%, rgb(13, 55, 118) 98.72%);
   }
 
   &__inner {

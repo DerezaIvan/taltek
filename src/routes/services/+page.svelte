@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { SeoHead } from '$presentation/components/SeoHead';
+  // TODO: SEO временно отключено
+  // import { SeoHead } from '$presentation/components/SeoHead';
   import {
     FleetModels,
     FleetPark,
@@ -10,16 +11,17 @@
     Cta,
   } from '$presentation/components/sections';
   import { SERVICES_CTA_SUBTITLE, SERVICES_CTA_TITLE } from '$shared/constants/cta';
-  import { getPageSeo } from '$shared/constants/seo';
+  // import { getPageSeo } from '$shared/constants/seo';
 
-  const seo = getPageSeo('services');
+  // const seo = getPageSeo('services');
 
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'Услуги и подвижной состав' }];
 
   const titleLines = ['Максимально надёжное и оперативное решение Ваших транспортных задач'];
 </script>
 
-<SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} />
+<!-- TODO: SEO временно отключено -->
+<!-- <SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} /> -->
 
 <Main>
   {#snippet pageHero()}

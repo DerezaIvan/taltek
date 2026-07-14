@@ -20,8 +20,7 @@
       src={asset('/images/footer-bckg.webp')}
       alt=""
       loading="lazy"
-      decoding="async"
-    />
+      decoding="async" />
     <div class="footer__overlay"></div>
   </div>
 
@@ -48,8 +47,7 @@
               <a
                 class="footer__nav-link"
                 class:footer__nav-link--active={isActiveRoute(item.href, page.url.pathname)}
-                href={resolve(item.href)}
-              >
+                href={resolve(item.href)}>
                 {item.label}
               </a>
             {/if}
@@ -62,11 +60,19 @@
       <p class="footer__section-title">Контакты</p>
       <ul class="footer__contacts-list">
         <li>
-          <a class="footer__contact-link" href="tel:+74959001095">+7 (495) 900 10 95</a>
+          <a class="footer__contact-link" href="tel:+78126021475">
+            тел. +7 (812) 602-14-75
+          </a>
+        </li>
+        <li>
+          <a class="footer__contact-link" href="tel:+78126021476">
+            факс +7 (812) 602-14-76
+          </a>
         </li>
         <li>
           <span class="footer__contact-text"
-            >Главный офис: Россия, г. Москва, Дукат Плейс 3, Гашека 6, офис 1210</span
+            >Юридический адрес: 196105, Россия, г. Санкт-Петербург, вн.тер. г. Муниципальный округ
+            Московская Застава, пр-кт Московский, д. 158, лит Б, помещ. 71.</span
           >
         </li>
         <li>

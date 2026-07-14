@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { SeoHead } from '$presentation/components/SeoHead';
+  // TODO: SEO временно отключено
+  // import { SeoHead } from '$presentation/components/SeoHead';
   import {
     AboutIntro,
     Cta,
@@ -10,16 +11,17 @@
     WhyUs,
   } from '$presentation/components/sections';
   import { ABOUT_CTA_SUBTITLE, ABOUT_CTA_TITLE } from '$shared/constants/cta';
-  import { getPageSeo } from '$shared/constants/seo';
+  // import { getPageSeo } from '$shared/constants/seo';
 
-  const seo = getPageSeo('about');
+  // const seo = getPageSeo('about');
 
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О компании' }];
 
   const titleLines = ['[ЭКО]ЛОГИЧНЫЙ', 'ВЫБОР ДЛЯ ВАШИХ', 'ГРУЗОВ'];
 </script>
 
-<SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} />
+<!-- TODO: SEO временно отключено -->
+<!-- <SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} /> -->
 
 <Main>
   {#snippet pageHero()}
