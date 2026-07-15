@@ -2,9 +2,12 @@ import cors from 'cors';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
+import fs from 'fs/promises';
+import path from 'path';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const LEADS_DIR = process.env.LEADS_DIR || '/app/data';
 
 const allowedOrigin = process.env.CORS_ORIGIN || '*';
 app.use(
@@ -76,10 +79,6 @@ function validateEmail(value) {
 }
 
 app.post('/contact', async (req, res) => {
-  if (!transporter) {
-    return res.status(503).json({ error: 'Отправка заявок временно недоступна: SMTP не настроен' });
-  }
-
   const { name, phone, email, company, wagonType, directionFrom, directionTo, comment } = req.body;
 
   if (!name?.trim() || !phone?.trim()) {
@@ -107,57 +106,98 @@ app.post('/contact', async (req, res) => {
     wagonType ||
     'Не указан';
 
-  const recipient = WAGON_TYPE_EMAILS[wagonType] || toEmail;
+  const lead = {
+    createdAt: new Date().toISOString(),
+    name: name.trim(),
+    phone: phone.trim(),
+    email: email?.trim() || '',
+    company: company?.trim() || '',
+    wagonType: wagonTypeLabel,
+    directionFrom: directionFrom?.trim() || '',
+    directionTo: directionTo?.trim() || '',
+    comment: comment?.trim() || '',
+  };
 
-  const subject = `Новая заявка с сайта от ${name.trim()}`;
+  let emailSent = false;
+  let emailError = null;
 
-  const text = [
-    'Имя:',
-    name.trim(),
-    '',
-    'Телефон:',
-    phone.trim(),
-    '',
-    email ? `Email: ${email.trim()}` : null,
-    company ? `Компания: ${company.trim()}` : null,
-    `Тип вагона: ${wagonTypeLabel}`,
-    directionFrom || directionTo
-      ? `Направление: ${directionFrom.trim() || '—'} → ${directionTo.trim() || '—'}`
-      : null,
-    comment ? `Комментарий: ${comment.trim()}` : null,
-  ]
-    .filter(Boolean)
-    .join('\n');
+  if (transporter) {
+    const recipient = WAGON_TYPE_EMAILS[wagonType] || toEmail;
+    const subject = `Новая заявка с сайта от ${lead.name}`;
 
-  const html = `
-    <h2>Новая заявка с сайта Taltek</h2>
-    <table border="0" cellpadding="6" cellspacing="0" style="font-family: sans-serif;">
-      <tr><td><strong>Имя</strong></td><td>${escapeHtml(name.trim())}</td></tr>
-      <tr><td><strong>Телефон</strong></td><td>${escapeHtml(phone.trim())}</td></tr>
-      ${email ? `<tr><td><strong>Email</strong></td><td>${escapeHtml(email.trim())}</td></tr>` : ''}
-      ${company ? `<tr><td><strong>Компания</strong></td><td>${escapeHtml(company.trim())}</td></tr>` : ''}
-      <tr><td><strong>Тип вагона</strong></td><td>${escapeHtml(wagonTypeLabel)}</td></tr>
-      ${directionFrom || directionTo ? `<tr><td><strong>Направление</strong></td><td>${escapeHtml(directionFrom.trim() || '—')} → ${escapeHtml(directionTo.trim() || '—')}</td></tr>` : ''}
-      ${comment ? `<tr><td><strong>Комментарий</strong></td><td>${escapeHtml(comment.trim())}</td></tr>` : ''}
-    </table>
-  `;
+    const text = [
+      'Имя:',
+      lead.name,
+      '',
+      'Телефон:',
+      lead.phone,
+      '',
+      lead.email ? `Email: ${lead.email}` : null,
+      lead.company ? `Компания: ${lead.company}` : null,
+      `Тип вагона: ${lead.wagonType}`,
+      lead.directionFrom || lead.directionTo
+        ? `Направление: ${lead.directionFrom || '—'} → ${lead.directionTo || '—'}`
+        : null,
+      lead.comment ? `Комментарий: ${lead.comment}` : null,
+    ]
+      .filter(Boolean)
+      .join('\n');
+
+    const html = `
+      <h2>Новая заявка с сайта Taltek</h2>
+      <table border="0" cellpadding="6" cellspacing="0" style="font-family: sans-serif;">
+        <tr><td><strong>Имя</strong></td><td>${escapeHtml(lead.name)}</td></tr>
+        <tr><td><strong>Телефон</strong></td><td>${escapeHtml(lead.phone)}</td></tr>
+        ${lead.email ? `<tr><td><strong>Email</strong></td><td>${escapeHtml(lead.email)}</td></tr>` : ''}
+        ${lead.company ? `<tr><td><strong>Компания</strong></td><td>${escapeHtml(lead.company)}</td></tr>` : ''}
+        <tr><td><strong>Тип вагона</strong></td><td>${escapeHtml(lead.wagonType)}</td></tr>
+        ${lead.directionFrom || lead.directionTo ? `<tr><td><strong>Направление</strong></td><td>${escapeHtml(lead.directionFrom || '—')} → ${escapeHtml(lead.directionTo || '—')}</td></tr>` : ''}
+        ${lead.comment ? `<tr><td><strong>Комментарий</strong></td><td>${escapeHtml(lead.comment)}</td></tr>` : ''}
+      </table>
+    `;
+
+    try {
+      await transporter.sendMail({
+        from: `"Сайт Taltek" <${fromEmail}>`,
+        to: recipient,
+        subject,
+        text,
+        html,
+        replyTo: lead.email || undefined,
+      });
+      emailSent = true;
+    } catch (error) {
+      emailError = error.message;
+      console.error('Ошибка отправки письма:', error);
+    }
+  }
 
   try {
-    await transporter.sendMail({
-      from: `"Сайт Taltek" <${fromEmail}>`,
-      to: recipient,
-      subject,
-      text,
-      html,
-      replyTo: email?.trim() || undefined,
-    });
-
-    res.json({ success: true });
+    await saveLeadToFile(lead);
   } catch (error) {
-    console.error('Ошибка отправки письма:', error);
-    res.status(500).json({ error: 'Не удалось отправить заявку. Попробуйте позже.' });
+    console.error('Ошибка сохранения заявки:', error);
+    return res.status(500).json({ error: 'Не удалось сохранить заявку. Попробуйте позже.' });
   }
+
+  if (!emailSent) {
+    return res.json({
+      success: true,
+      notice: transporter
+        ? 'Заявка сохранена, но письмо не удалось отправить.'
+        : 'Заявка сохранена. Отправка письма временно недоступна.',
+    });
+  }
+
+  res.json({ success: true });
 });
+
+async function saveLeadToFile(lead) {
+  await fs.mkdir(LEADS_DIR, { recursive: true });
+  const filename = `${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
+  const filepath = path.join(LEADS_DIR, filename);
+  await fs.writeFile(filepath, JSON.stringify(lead, null, 2), 'utf-8');
+  console.log('Заявка сохранена:', filepath);
+}
 
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok' });

@@ -29,7 +29,7 @@ export const CONTACTS_FORM_FIELDS = {
   wagonType: {
     label: 'Тип подвижного состава',
     placeholder: 'Выберите тип вагона',
-    required: false,
+    required: true,
   },
   direction: {
     label: 'Направление',
