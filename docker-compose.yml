@@ -25,6 +25,8 @@ services:
       SMTP_PASS: ${SMTP_PASS}
       FROM_EMAIL: ${FROM_EMAIL}
       TO_EMAIL: ${TO_EMAIL}
+    volumes:
+      - ./data:/app/data
 
   postgres:
     profiles: [cms]

@@ -46,6 +46,10 @@
     font-size: typography.$text-base-size;
     line-height: 32px;
     letter-spacing: typography.$text-base-letter-spacing;
+
+    &--required {
+      font-weight: 500;
+    }
   }
 
   &__required {
