@@ -313,7 +313,7 @@ const content = {
       sort: 3,
       status: 'published',
     },
-    { id: 'deal-speed', title: 'Высокая скорость заключения сделки', sort: 4, status: 'published' },
+    { id: 'deal-speed', title: 'Оперативность сделки', sort: 4, status: 'published' },
     {
       id: 'fleet-selection',
       title: 'Высокая скорость подбора подвижного состава',

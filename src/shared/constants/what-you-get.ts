@@ -6,7 +6,7 @@ export const WHAT_YOU_GET_ITEMS = [
   { id: 'reliability', title: 'Надёжность перевозки' },
   { id: 'route-planning', title: 'Эффективное планирование маршрутов' },
   { id: 'support', title: 'Квалифицированная техническая поддержка' },
-  { id: 'deal-speed', title: 'Высокая скорость заключения сделки' },
+  { id: 'deal-speed', title: 'Оперативность сделки' },
   { id: 'fleet-selection', title: 'Высокая скорость подбора подвижного состава' },
   { id: 'rates', title: 'Оптимальный расчёт ставок' },
 ] as const;
