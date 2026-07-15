@@ -1,5 +1,5 @@
 @use 'presentation/styles/variables' as *;
-@use './contacts-tokens' as *;
+@use 'presentation/components/sections/ContactsContent/contacts-tokens' as *;
 
 .contacts-content {
   padding-top: 70px;

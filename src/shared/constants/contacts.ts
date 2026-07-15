@@ -51,9 +51,9 @@ export const CONTACTS_WAGON_TYPES = [
 ] as const;
 
 export const CONTACTS_CONSENT = {
-  prefix: 'Согласен на обработку персональных данных и с',
-  linkLabel: 'политикой конфиденциальности',
-  suffix: '.',
+  prefix: 'Я ознакомлен (а) с ',
+  linkLabel: 'Политикой конфиденциальности',
+  suffix: ' и даю согласие на обработку моих персональных данных',
 } as const;
 
 export const CONTACTS_HOTLINE = {
