@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { TerritoryCardData } from '$shared/constants/operations-contacts';
-  import PhoneContactRow from './PhoneContactRow.svelte';
+  import { PhoneContactRow } from '$presentation/components/sections/OperationsContacts';
 
   let { card }: { card: TerritoryCardData } = $props();
 </script>

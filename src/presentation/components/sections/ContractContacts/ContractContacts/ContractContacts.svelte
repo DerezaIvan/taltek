@@ -7,7 +7,7 @@
     CONTRACT_CONTACTS_CARDS,
     CONTRACT_CONTACTS_TITLE,
   } from '$shared/constants/contract-contacts';
-  import ContractContactCard from './ContractContactCard.svelte';
+  import { ContractContactCard } from '$presentation/components/sections/ContractContacts';
 </script>
 
 <style lang="scss">

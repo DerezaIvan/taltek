@@ -24,7 +24,7 @@ export const STATS_ITEMS = [
   {
     id: 'experience',
     label: 'Опыт работы',
-    value: '15+ ЛЕТ',
+    value: '16 ЛЕТ',
     description: 'на рынке железнодорожной логистики',
   },
   {

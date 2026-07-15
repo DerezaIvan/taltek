@@ -6,8 +6,7 @@
     TERRITORIES_TITLE,
     TERRITORY_CARDS,
   } from '$shared/constants/operations-contacts';
-  import DispatcherCard from './DispatcherCard.svelte';
-  import TerritoryCard from './TerritoryCard.svelte';
+  import { DispatcherCard, TerritoryCard } from '$presentation/components/sections/OperationsContacts';
 </script>
 
 <style lang="scss">

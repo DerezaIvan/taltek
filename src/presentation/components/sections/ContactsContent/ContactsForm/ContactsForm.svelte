@@ -22,7 +22,41 @@
   }
 
   let name = $state('');
-  let phone = $state('');
+  let phone = $state('+7');
+
+  function formatPhone(value: string): string {
+    let digits = value.replace(/\D/g, '');
+
+    if (!digits.startsWith('7')) {
+      digits = '7' + digits;
+    }
+
+    digits = digits.slice(0, 11);
+
+    const area = digits.slice(1, 4);
+    const part1 = digits.slice(4, 7);
+    const part2 = digits.slice(7, 9);
+    const part3 = digits.slice(9, 11);
+
+    let result = '+7';
+    if (area) result += ` (${area})`;
+    if (part1) result += ` ${part1}`;
+    if (part2) result += `-${part2}`;
+    if (part3) result += `-${part3}`;
+
+    return result;
+  }
+
+  function handlePhoneInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    phone = formatPhone(input.value);
+  }
+
+  function handlePhoneFocus() {
+    if (phone === '+7') {
+      phone = '+7';
+    }
+  }
   let email = $state('');
   let company = $state('');
   let wagonType = $state('');
@@ -48,8 +82,8 @@
 
   function validatePhone(value: string): string | undefined {
     const digits = value.replace(/\D/g, '');
-    if (!digits) return 'Укажите телефон';
-    if (digits.length < 10) return 'Введите корректный номер телефона';
+    if (!digits || digits === '7') return 'Укажите телефон';
+    if (digits.length < 11) return 'Введите корректный номер телефона';
     return undefined;
   }
 
@@ -181,7 +215,9 @@
         name="phone"
         autocomplete="tel"
         placeholder={CONTACTS_FORM_FIELDS.phone.placeholder}
-        bind:value={phone}
+        value={phone}
+        oninput={handlePhoneInput}
+        onfocus={handlePhoneFocus}
         onblur={() => (touched.phone = true)}
         aria-invalid={touched.phone && errors.phone ? 'true' : 'false'}
         aria-describedby={touched.phone && errors.phone ? 'contacts-phone-error' : undefined}
