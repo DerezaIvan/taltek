@@ -8,3 +8,4 @@ export type { MainProps } from './main';
 export type { PageContentProps } from './page-content';
 export type { PageHeroProps } from './page-hero';
 export type { CtaProps } from './cta';
+export type { NotFoundProps } from './not-found';
