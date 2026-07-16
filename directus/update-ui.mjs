@@ -51,6 +51,21 @@ function tr(text) {
   return [{ ...RU, translation: text }];
 }
 
+const SYSTEM_FIELD_DEFAULTS = {
+  id: {
+    note: 'Уникальный код записи',
+    translations: tr('Код'),
+  },
+  status: {
+    note: 'published — опубликовано, draft — черновик',
+    translations: tr('Статус'),
+  },
+  sort: {
+    note: 'Порядок сортировки (меньше = выше)',
+    translations: tr('Порядок'),
+  },
+};
+
 const uiConfig = [
   {
     collection: 'site_settings',
@@ -501,10 +516,42 @@ async function updateField(token, collection, fieldName, meta) {
   }
 }
 
+async function updateSettings(token) {
+  try {
+    await request('/settings', {
+      method: 'PATCH',
+      headers: { Authorization: `Bearer ${token}` },
+      body: JSON.stringify({
+        project_name: 'ТалТЭК Транс',
+        default_language: 'ru-RU',
+      }),
+    });
+    console.log('✅ Настройки проекта обновлены (русский язык по умолчанию)');
+  } catch (error) {
+    console.error('❌ Ошибка обновления настроек проекта:', error.message);
+  }
+}
+
+async function updateCurrentUserLanguage(token) {
+  try {
+    await request('/users/me', {
+      method: 'PATCH',
+      headers: { Authorization: `Bearer ${token}` },
+      body: JSON.stringify({ language: 'ru-RU' }),
+    });
+    console.log('✅ Язык текущего пользователя обновлён на русский');
+  } catch (error) {
+    console.error('❌ Ошибка обновления языка пользователя:', error.message);
+  }
+}
+
 async function main() {
   console.log(`Подключение к ${DIRECTUS_URL}...`);
   const token = await login();
   console.log('Авторизация успешна\n');
+
+  await updateSettings(token);
+  await updateCurrentUserLanguage(token);
 
   for (const config of uiConfig) {
     await updateCollection(token, config);
@@ -512,6 +559,10 @@ async function main() {
       for (const [fieldName, meta] of Object.entries(config.fields)) {
         await updateField(token, config.collection, fieldName, meta);
       }
+    }
+    // Apply Russian labels to system fields if they exist in the collection
+    for (const [fieldName, meta] of Object.entries(SYSTEM_FIELD_DEFAULTS)) {
+      await updateField(token, config.collection, fieldName, meta);
     }
   }
 

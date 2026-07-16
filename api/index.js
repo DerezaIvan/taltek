@@ -9,6 +9,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const LEADS_DIR = process.env.LEADS_DIR || '/app/data';
 
+const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL?.replace(/\/$/, '') || '';
+const DIRECTUS_API_TOKEN = process.env.DIRECTUS_API_TOKEN || '';
+const isDirectusConfigured = DIRECTUS_URL && DIRECTUS_API_TOKEN;
+
 const allowedOrigin = process.env.CORS_ORIGIN || '*';
 app.use(
   cors({
@@ -66,6 +70,12 @@ if (isSmtpConfigured) {
   console.warn(
     'SMTP не настроен. Заявки отправляться не будут. Задайте SMTP_HOST, SMTP_USER, SMTP_PASS, FROM_EMAIL, TO_EMAIL для полноценной работы.'
   );
+}
+
+if (isDirectusConfigured) {
+  console.log('Directus интеграция включена:', DIRECTUS_URL);
+} else {
+  console.warn('Directus не настроен. Заявки будут сохраняться только в файлы.');
 }
 
 function validatePhone(value) {
@@ -172,35 +182,80 @@ app.post('/contact', async (req, res) => {
     }
   }
 
+  let directusSaved = false;
+  let directusError = null;
+
+  if (isDirectusConfigured) {
+    try {
+      await saveLeadToDirectus(lead);
+      directusSaved = true;
+    } catch (error) {
+      directusError = error.message;
+      console.error('Ошибка сохранения в Directus:', error);
+    }
+  }
+
   try {
     await saveLeadToFile(lead);
   } catch (error) {
-    console.error('Ошибка сохранения заявки:', error);
+    console.error('Ошибка сохранения заявки в файл:', error);
     return res.status(500).json({ error: 'Не удалось сохранить заявку. Попробуйте позже.' });
   }
 
+  const notices = [];
   if (!emailSent) {
-    return res.json({
-      success: true,
-      notice: transporter
-        ? 'Заявка сохранена, но письмо не удалось отправить.'
-        : 'Заявка сохранена. Отправка письма временно недоступна.',
-    });
+    notices.push(transporter ? 'Заявка сохранена, но письмо не удалось отправить.' : 'Заявка сохранена. Отправка письма временно недоступна.');
+  }
+  if (isDirectusConfigured && !directusSaved) {
+    notices.push('Directus временно недоступен, заявка сохранена в файл.');
   }
 
-  res.json({ success: true });
+  res.json({
+    success: true,
+    savedToDirectus: directusSaved,
+    emailSent,
+    notice: notices.length > 0 ? notices.join(' ') : undefined,
+  });
 });
+
+async function saveLeadToDirectus(lead) {
+  const response = await fetch(`${DIRECTUS_URL}/items/submissions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${DIRECTUS_API_TOKEN}`,
+    },
+    body: JSON.stringify({
+      name: lead.name,
+      phone: lead.phone,
+      email: lead.email,
+      company: lead.company,
+      wagon_type: lead.wagonType,
+      direction_from: lead.directionFrom,
+      direction_to: lead.directionTo,
+      comment: lead.comment,
+      status: 'new',
+    }),
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Directus error ${response.status}: ${body}`);
+  }
+
+  console.log('Заявка сохранена в Directus');
+}
 
 async function saveLeadToFile(lead) {
   await fs.mkdir(LEADS_DIR, { recursive: true });
   const filename = `${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
   const filepath = path.join(LEADS_DIR, filename);
   await fs.writeFile(filepath, JSON.stringify(lead, null, 2), 'utf-8');
-  console.log('Заявка сохранена:', filepath);
+  console.log('Заявка сохранена в файл:', filepath);
 }
 
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok' });
+  res.json({ status: 'ok', directus: isDirectusConfigured });
 });
 
 app.use((_req, res) => {
