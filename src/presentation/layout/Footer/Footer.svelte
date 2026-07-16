@@ -83,13 +83,13 @@
       </ul>
     </div>
 
-    <div class="container-wide footer__cta">
-      <RequestButton variant="glass" />
-    </div>
-
     <div class="container-wide footer__legal">
-      <a class="footer__privacy" href={resolve('/privacy/')}>Политика конфиденциальности</a>
-      <p class="footer__copyright text-sm">© {year} АО «ТалТЭК Транс»</p>
+      <div class="footer__legal-text">
+        <a class="footer__privacy" href={resolve('/privacy/')}>Политика конфиденциальности</a>
+        <p class="footer__copyright text-sm">© {year} АО «ТалТЭК Транс»</p>
+      </div>
+
+      <RequestButton variant="glass" />
     </div>
 
     <div class="container-wide footer__bottom">
