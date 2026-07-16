@@ -9,7 +9,7 @@ $oc-dispatcher-card-min-column: 654px;
 $oc-territory-card-min-column: 450px;
 
 .operations-contacts {
-  // padding-block: $oc-section-padding;
+  padding-block: $oc-section-padding;
 
   &__inner {
     display: flex;
@@ -18,9 +18,13 @@ $oc-territory-card-min-column: 450px;
   }
 
   &__block {
-    display: none;
+    display: flex;
     flex-direction: column;
     gap: $oc-header-cards-gap;
+
+    &--territories {
+      display: none;
+    }
   }
 
   &__header {

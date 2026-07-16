@@ -36,7 +36,7 @@
       </ul>
     </div>
 
-    <div class="operations-contacts__block" aria-labelledby="territories-title">
+    <div class="operations-contacts__block operations-contacts__block--territories" aria-labelledby="territories-title">
       <h2 id="territories-title" class="operations-contacts__title">
         {TERRITORIES_TITLE}
       </h2>
