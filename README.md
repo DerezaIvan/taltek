@@ -1,6 +1,17 @@
 # Taltek Landing
 
-SvelteKit 5 лендинг со static export, Docker и опциональной Headless CMS (Directus).
+SvelteKit 5 лендинг со static export, Docker, SSL и опциональной Headless CMS (Directus).
+
+## Содержание
+
+- [Быстрый старт](#быстрый-старт)
+- [Docker](#docker)
+- [Переменные окружения](#переменные-окружения)
+- [SSL / HTTPS](#ssl--https)
+- [Отправка заявок из контактной формы](#отправка-заявок-из-контактной-формы)
+- [Directus CMS](#directus-cms)
+- [CI и GitHub Pages](#ci-и-github-pages)
+- [GitHub](#github)
 
 ## Быстрый старт
 
@@ -11,7 +22,7 @@ npm start
 
 ## Docker
 
-Только фронтенд (nginx, порт 8080):
+Только фронтенд (nginx, порты 80 и 443):
 
 ```bash
 docker compose up --build frontend
@@ -21,41 +32,62 @@ docker compose up --build frontend
 
 ```bash
 cp .env.example .env
+# заполнить PUBLIC_DIRECTUS_URL, DIRECTUS_TOKEN, DIRECTUS_*, POSTGRES_*
 docker compose --profile cms up --build
 ```
 
 - Сайт: http://localhost:8080
-- Directus admin: http://localhost:8055
+- Directus admin: http://localhost:8055/admin
 
 ## Переменные окружения
 
 Скопируйте `.env.example` в `.env`.
 
-| Переменная                 | Описание                                     |
-| -------------------------- | -------------------------------------------- |
-| `PUBLIC_DIRECTUS_URL`      | URL Directus API                             |
-| `DIRECTUS_TOKEN`           | Read-only token для fetch на этапе build     |
+| Переменная | Описание |
+|------------|----------|
+| `PUBLIC_DIRECTUS_URL` | URL Directus API |
+| `DIRECTUS_TOKEN` | Read-only token для сборки фронтенда |
+| `DIRECTUS_API_TOKEN` | Static token для сохранения заявок в Directus |
+| `PUBLIC_API_URL` | URL API для отправки заявок |
+| `CORS_ORIGIN` | Разрешённый origin для API |
+| `SMTP_HOST` | SMTP сервер для отправки заявок |
+| `SMTP_PORT` | Порт SMTP (по умолч. 587) |
+| `SMTP_USER` | Пользователь SMTP |
+| `SMTP_PASS` | Пароль SMTP |
+| `FROM_EMAIL` | Отправитель писем |
+| `TO_EMAIL` | Получатель заявок |
 | `DIRECTUS_*`, `POSTGRES_*` | Настройки Directus/Postgres в docker-compose |
-| `PUBLIC_API_URL`           | URL API для отправки заявок                  |
-| `CORS_ORIGIN`              | Разрешённый origin для API                   |
-| `SMTP_HOST`                | SMTP сервер для отправки заявок              |
-| `SMTP_PORT`                | Порт SMTP (по умолч. 587)                    |
-| `SMTP_USER`                | Пользователь SMTP                            |
-| `SMTP_PASS`                | Пароль SMTP                                  |
-| `FROM_EMAIL`               | Отправитель писем                            |
-| `TO_EMAIL`                 | Получатель заявок                            |
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
+## SSL / HTTPS
+
+Сайт работает по HTTPS. HTTP-запросы автоматически редиректятся на HTTPS. SSL-сертификат и приватный ключ монтируются в контейнер `frontend` из папки `ssl/`.
+
+Для обновления сертификата замените файлы в `ssl/` и перезапустите контейнер:
+
+```bash
+cd /root/taltek && docker compose restart frontend
+```
+
+Сертификат действителен до даты, указанной в файле сертификата. Перед окончанием срока загрузите новый сертификат и ключ в `ssl/`.
+
 ## Отправка заявок из контактной формы
 
-Заявки отправляются через собственный минимальный Node.js API (`api/`), который работает в Docker Compose рядом с фронтендом. Письма уходят на настроенный SMTP без использования сторонних форм-сервисов.
+Заявки отправляются через собственный минимальный Node.js API (`api/`), который работает в Docker Compose рядом с фронтендом. API:
+
+1. Валидирует данные.
+2. Отправляет письмо на настроенный SMTP.
+3. Сохраняет заявку в Directus (коллекция `submissions`).
+4. Если Directus недоступен — сохраняет заявку в файлы (`api/data/`) как fallback.
 
 ### Архитектура
 
-- Фронтенд (SvelteKit static) → `POST /api/contact` → Nginx → `api` сервис → SMTP → email заказчика.
-- Валидация есть и на фронтенде, и на бэкенде.
-- Rate limit: не более 10 запросов за 15 минут с одного IP.
+```
+Фронтенд → POST /api/contact → Nginx → API → Directus / SMTP / файлы
+```
+
+Rate limit: не более 10 запросов за 15 минут с одного IP.
 
 ### Настройка
 
@@ -70,7 +102,7 @@ docker compose --profile cms up --build
    ```
 2. Указать `PUBLIC_API_URL`:
    - локально: `http://localhost:8080/api`
-   - прод: `https://yourdomain.com/api`
+   - прод: `https://taltektrans.pro/api`
 3. Запустить:
    ```bash
    docker compose up --build frontend
@@ -81,14 +113,14 @@ docker compose --profile cms up --build
 ```bash
 cd api
 npm install
-SMTP_HOST=... SMTP_USER=... SMTP_PASS=... FROM_EMAIL=... TO_EMAIL=... npm run dev
+DIRECTUS_API_TOKEN=... SMTP_HOST=... SMTP_USER=... SMTP_PASS=... FROM_EMAIL=... TO_EMAIL=... npm run dev
 ```
 
 API будет доступен на http://localhost:3001, health-check — http://localhost:3001/health.
 
 ## Directus CMS
 
-Полная схема коллекций описана в [`directus/schema.md`](directus/schema.md).
+Полная схема коллекций описана в [`directus/schema.md`](directus/schema.md). Краткая инструкция для заказчика — в [`DIRECTUS_GUIDE.md`](DIRECTUS_GUIDE.md).
 
 ### Быстрый старт
 
@@ -119,7 +151,10 @@ node directus/seed-schema.mjs
 node directus/update-ui.mjs
 ```
 
-Этот скрипт добавляет понятные русские названия коллекций и полей, подсказки, иконки и шаблоны отображения. После него в админке вместо `home_hero` будет «Главная — Hero», а у полей появятся описания, что они делают.
+Этот скрипт:
+- устанавливает русский язык проекта и текущего администратора;
+- добавляет понятные русские названия коллекций и полей;
+- добавляет подсказки, иконки и шаблоны отображения.
 
 После запуска перезагрузи страницу админки.
 
@@ -135,9 +170,8 @@ node directus/update-ui.mjs
 
 ### Права доступа
 
-Для сборки сайта достаточно read-only static token (`DIRECTUS_TOKEN`).
-
-Для публичного доступа (если форма шлёт заявки напрямую в Directus) Public role нуждается в `read` на публикуемые коллекции и `create` на `submissions`.
+- Для сборки сайта достаточно read-only static token (`DIRECTUS_TOKEN`).
+- Для сохранения заявок API использует отдельный static token (`DIRECTUS_API_TOKEN`) с правом `create` только на `submissions`.
 
 ### Workflow
 
@@ -147,11 +181,9 @@ node directus/update-ui.mjs
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
-## CI
+## CI и GitHub Pages
 
 GitHub Actions (`.github/workflows/ci.yml`): `npm run check`, `npm run build`, `docker build` на push/PR в `main` и `develop`.
-
-## GitHub Pages (preview из develop)
 
 При push в ветку `develop` workflow `.github/workflows/deploy-pages.yml` собирает сайт с `BASE_PATH=/taltek` и публикует на GitHub Pages.
 
@@ -172,15 +204,6 @@ GitHub Actions (`.github/workflows/ci.yml`): `npm run check`, `npm run build`, `
 BASE_PATH=/taltek npm run build:pages
 BASE_PATH=/taltek npm run preview
 ```
-
-```
-src/infrastructure/cms/
-  directus-client.ts  # fetch REST
-  content.ts          # getLayoutContent, getPageContent + fallback
-  types.ts
-```
-
-Контент подгружается в `+layout.server.ts` и `+page.server.ts` на этапе prerender.
 
 ## GitHub
 
