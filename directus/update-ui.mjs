@@ -423,9 +423,13 @@ const uiConfig = [
     fields: {
       id: { note: 'Код направления', translations: tr('Код') },
       title: { note: 'Название направления', translations: tr('Направление') },
-      phone: { note: 'Телефон', translations: tr('Телефон') },
-      phone_href: { note: 'Ссылка tel:', translations: tr('Ссылка на звонок') },
-      badge: { note: 'Режим работы', translations: tr('Режим работы') },
+      phone: { note: 'Основной телефон', translations: tr('Телефон') },
+      phone_href: { note: 'Ссылка tel: для основного телефона', translations: tr('Ссылка на звонок') },
+      badge: { note: 'Режим работы для основного телефона', translations: tr('Режим работы') },
+      phone2: { note: 'Дополнительный телефон (если есть)', translations: tr('Доп. телефон') },
+      phone_href2: { note: 'Ссылка tel: для дополнительного телефона', translations: tr('Ссылка на доп. звонок') },
+      badge2: { note: 'Режим работы для дополнительного телефона', translations: tr('Режим работы доп.') },
+      email: { note: 'Email диспетчера', translations: tr('Email') },
     },
   },
   {

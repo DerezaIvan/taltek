@@ -8,23 +8,13 @@
   } from '$presentation/components/sections';
   import { CONTACTS_SUBTITLE, CONTACTS_TITLE } from '$shared/constants/contacts';
   import { PAGE_HERO_IMAGE, PAGE_HERO_IMAGE_POSITION } from '$shared/constants/page-hero';
-  // TODO: SEO временно отключено
-  // import { getPageSeo } from '$shared/constants/seo';
 
-  // const seo = getPageSeo('contacts');
+  const { data } = $props();
 
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: CONTACTS_TITLE }];
 
   const titleLines = [CONTACTS_TITLE];
 </script>
-
-<!-- TODO: SEO временно отключено -->
-<!-- <svelte:head>
-  <title>{seo.title}</title>
-  <meta name="description" content={seo.description} />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href={seo.url} />
-</svelte:head> -->
 
 <Main>
   {#snippet pageHero()}
@@ -39,5 +29,5 @@
 
   <ContactsContent />
   <ContractContacts />
-  <OperationsContacts />
+  <OperationsContacts content={data.contacts} />
 </Main>
