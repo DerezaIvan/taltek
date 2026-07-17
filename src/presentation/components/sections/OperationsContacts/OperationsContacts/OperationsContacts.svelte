@@ -18,8 +18,12 @@
   const territoriesTitle = $derived(
     content?.operationsSection?.territoriesTitle ?? TERRITORIES_TITLE
   );
-  const dispatchers = $derived(content?.dispatchers ?? DISPATCHER_CARDS);
-  const territories = $derived(content?.territories ?? TERRITORY_CARDS);
+  const dispatchers = $derived(
+    content?.dispatchers && content.dispatchers.length > 0 ? content.dispatchers : DISPATCHER_CARDS
+  );
+  const territories = $derived(
+    content?.territories && content.territories.length > 0 ? content.territories : TERRITORY_CARDS
+  );
 
   const dispatchersSubtitleLines = $derived(dispatchersSubtitle.split('\n'));
 </script>
