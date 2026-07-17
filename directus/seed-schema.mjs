@@ -346,7 +346,11 @@ const collections = [
       helpers.input('title', { required: true }),
       helpers.input('phone', { required: true }),
       helpers.input('phone_href', { required: true }),
-      helpers.input('badge', { required: true }),
+      helpers.input('badge'),
+      helpers.input('phone2'),
+      helpers.input('phone_href2'),
+      helpers.input('badge2'),
+      helpers.input('email'),
     ],
   }),
 

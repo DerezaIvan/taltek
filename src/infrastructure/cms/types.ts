@@ -1,3 +1,5 @@
+import type { DispatcherCardData, TerritoryCardData } from '$shared/constants/operations-contacts';
+
 export interface DirectusFile {
   id: string;
   filename_download?: string;
@@ -188,7 +190,11 @@ export interface DirectusOperationsDispatcherRecord {
   title: string;
   phone: string;
   phone_href: string;
-  badge: string;
+  badge?: string | null;
+  phone2?: string | null;
+  phone_href2?: string | null;
+  badge2?: string | null;
+  email?: string | null;
   sort: number;
   status?: string;
 }
@@ -332,8 +338,8 @@ export interface ContactsPageContent {
     dispatchersSubtitle: string;
     territoriesTitle: string;
   };
-  dispatchers?: DirectusOperationsDispatcherRecord[];
-  territories?: DirectusOperationsTerritoryRecord[];
+  dispatchers?: DispatcherCardData[];
+  territories?: TerritoryCardData[];
 }
 
 export interface PrivacyPageContent {

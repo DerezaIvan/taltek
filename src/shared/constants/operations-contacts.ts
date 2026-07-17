@@ -81,4 +81,9 @@ export const TERRITORY_CARDS = [
   },
 ] as const;
 
-export type TerritoryCardData = (typeof TERRITORY_CARDS)[number];
+export type TerritoryCardData = {
+  id: string;
+  city: string;
+  phone: string;
+  phoneHref: string;
+};

@@ -34,6 +34,7 @@ import type {
 } from './types';
 import { NAV_ITEMS } from '$shared/constants/navigation';
 import { DEFAULT_SEO, getPageSeo, SITE_NAME, type PageSeoKey } from '$shared/constants/seo';
+import type { DispatcherCardData, TerritoryCardData } from '$shared/constants/operations-contacts';
 
 const SITE_URL = DEFAULT_SEO.url.replace(/\/$/, '');
 const OG_IMAGE_URL = DEFAULT_SEO.ogImage;
@@ -340,11 +341,34 @@ export async function getContactsPageContent(): Promise<ContactsPageContent> {
       ),
       fetchList<DirectusOperationsDispatcherRecord>(
         'operations_dispatchers',
-        'id,title,phone,phone_href,badge,sort,status'
+        'id,title,phone,phone_href,badge,phone2,phone_href2,badge2,email,sort,status'
+      ).then(items =>
+        items.map(
+          (item): DispatcherCardData => ({
+            id: item.id,
+            title: item.title,
+            phone: item.phone,
+            phoneHref: item.phone_href,
+            badge: item.badge ?? undefined,
+            phone2: item.phone2 ?? undefined,
+            phoneHref2: item.phone_href2 ?? undefined,
+            badge2: item.badge2 ?? undefined,
+            email: item.email ?? undefined,
+          })
+        )
       ),
       fetchList<DirectusOperationsTerritoryRecord>(
         'operations_territories',
         'id,city,phone,phone_href,sort,status'
+      ).then(items =>
+        items.map(
+          (item): TerritoryCardData => ({
+            id: item.id,
+            city: item.city,
+            phone: item.phone,
+            phoneHref: item.phone_href,
+          })
+        )
       ),
     ]);
 
