@@ -25,7 +25,10 @@ $dispatcher-phone-offset: 20px;
     letter-spacing: typography.$text-xl-letter-spacing;
   }
 
-  &__phone {
+  &__contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     margin-top: $dispatcher-phone-offset;
   }
 }
@@ -41,8 +44,9 @@ $dispatcher-phone-offset: 20px;
       line-height: typography.$text-md-line-height;
     }
 
-    &__phone {
+    &__contacts {
       margin-top: 12px;
+      gap: 10px;
     }
   }
 }
