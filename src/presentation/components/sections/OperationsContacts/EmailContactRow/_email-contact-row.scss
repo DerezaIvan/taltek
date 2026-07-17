@@ -1,0 +1,36 @@
+@use 'presentation/styles/variables' as *;
+@use 'presentation/styles/typography-tokens' as typography;
+
+$email-row-icon-size: 31px;
+$email-row-gap: 10px;
+
+.email-contact-row {
+  display: flex;
+  align-items: center;
+  gap: $email-row-gap;
+
+  &__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: $email-row-icon-size;
+    height: $email-row-icon-size;
+    border-radius: 20px;
+    background: var(--delivery-card-num-gradient);
+  }
+
+  &__email {
+    color: var(--brand-navy-80);
+    font-family: typography.$font-family-ubuntu;
+    font-weight: typography.$text-base-weight;
+    font-size: typography.$text-xl-size;
+    line-height: 21px;
+    letter-spacing: typography.$text-xl-letter-spacing;
+    text-decoration: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
