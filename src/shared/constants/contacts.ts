@@ -57,7 +57,7 @@ export const CONTACTS_CONSENT = {
 } as const;
 
 export const CONTACTS_HOTLINE = {
-  title: 'Единный номер',
+  title: 'Единый номер',
   phone: '8 800 533 9 888',
   phoneHref: 'tel:+78005339888',
   subtitle: 'Главный офис · Москва',
