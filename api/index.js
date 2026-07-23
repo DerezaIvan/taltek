@@ -257,13 +257,24 @@ async function saveLeadToFile(lead) {
 
 const REBUILD_TOKEN = process.env.REBUILD_TOKEN || '';
 const REBUILD_CWD = process.env.REBUILD_CWD || '/compose';
+const REBUILD_NOTIFY_EMAILS = (process.env.REBUILD_NOTIFY_EMAILS || '')
+  .split(',')
+  .map(e => e.trim())
+  .filter(Boolean);
 
 let rebuildRunning = false;
 let rebuildPending = false;
 let lastRebuild = null;
+let rebuildLogTail = [];
+
+function appendRebuildLog(line) {
+  rebuildLogTail.push(line);
+  if (rebuildLogTail.length > 50) rebuildLogTail.shift();
+}
 
 function runRebuild() {
   rebuildRunning = true;
+  rebuildLogTail = [];
   lastRebuild = { startedAt: new Date().toISOString(), finishedAt: null, exitCode: null };
 
   console.log('Запуск пересборки фронтенда: docker compose up -d --build --no-deps frontend');
@@ -272,8 +283,16 @@ function runRebuild() {
     env: { ...process.env, CONTENT_CACHEBUST: String(Date.now()) },
   });
 
-  child.stdout.on('data', data => console.log('[rebuild]', data.toString().trimEnd()));
-  child.stderr.on('data', data => console.error('[rebuild]', data.toString().trimEnd()));
+  child.stdout.on('data', data => {
+    const line = data.toString().trimEnd();
+    console.log('[rebuild]', line);
+    appendRebuildLog(line);
+  });
+  child.stderr.on('data', data => {
+    const line = data.toString().trimEnd();
+    console.error('[rebuild]', line);
+    appendRebuildLog(line);
+  });
 
   child.on('error', error => {
     console.error('Не удалось запустить пересборку:', error.message);
@@ -286,12 +305,48 @@ function runRebuild() {
   });
 }
 
+async function sendRebuildNotification() {
+  if (!transporter || REBUILD_NOTIFY_EMAILS.length === 0 || !lastRebuild) return;
+
+  const success = lastRebuild.exitCode === 0;
+  const subject = success
+    ? 'Сайт taltektrans.pro успешно обновлён'
+    : 'Ошибка обновления сайта taltektrans.pro';
+
+  const lines = [
+    success
+      ? 'Пересборка сайта после изменений в CMS завершилась успешно.'
+      : 'Пересборка сайта после изменений в CMS завершилась с ошибкой. Изменения НЕ опубликованы, сайт работает в прежней версии.',
+    '',
+    `Начало: ${lastRebuild.startedAt}`,
+    `Окончание: ${lastRebuild.finishedAt}`,
+    `Код завершения: ${lastRebuild.exitCode}`,
+  ];
+
+  if (!success && rebuildLogTail.length > 0) {
+    lines.push('', 'Последние строки лога сборки:', '', rebuildLogTail.join('\n'));
+  }
+
+  try {
+    await transporter.sendMail({
+      from: `"Сайт Taltek" <${fromEmail}>`,
+      to: REBUILD_NOTIFY_EMAILS.join(', '),
+      subject,
+      text: lines.join('\n'),
+    });
+    console.log('Уведомление о пересборке отправлено:', REBUILD_NOTIFY_EMAILS.join(', '));
+  } catch (error) {
+    console.error('Не удалось отправить уведомление о пересборке:', error.message);
+  }
+}
+
 function finishRebuild(exitCode) {
   rebuildRunning = false;
   if (lastRebuild) {
     lastRebuild.finishedAt = new Date().toISOString();
     lastRebuild.exitCode = exitCode;
   }
+  sendRebuildNotification();
   if (rebuildPending) {
     rebuildPending = false;
     console.log('Запуск отложенной пересборки');
