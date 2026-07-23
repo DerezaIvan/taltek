@@ -1,4 +1,5 @@
-export { directusFetch, getAssetUrl, isDirectusConfigured } from './directus-client';
+export { directusFetch, isDirectusConfigured } from './directus-client';
+export { getAssetUrl } from './assets';
 export {
   getLayoutContent,
   getPageContent,

@@ -11,12 +11,12 @@
   } from '$shared/constants/hero';
   import type { HeroProps } from '$shared/interfaces';
 
-  let { title, subtitle }: HeroProps = $props();
+  let { title, subtitle, background }: HeroProps = $props();
 
   const resolvedTitle = $derived(title?.trim() || DEFAULT_HERO_TITLE);
   const resolvedSubtitle = $derived(subtitle?.trim() || DEFAULT_HERO_SUBTITLE);
 
-  const posterUrl = asset('/images/hero-train-loop-poster.webp');
+  const posterUrl = $derived(background?.trim() || asset('/images/hero-train-loop-poster.webp'));
   let isMobile = $state(false);
 
   onMount(() => {

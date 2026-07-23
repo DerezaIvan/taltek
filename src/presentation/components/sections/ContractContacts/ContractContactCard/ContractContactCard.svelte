@@ -1,6 +1,17 @@
 <script lang="ts">
   import { asset } from '$app/paths';
-  import type { ContractContactCardData } from '$shared/constants/contract-contacts';
+
+  interface ContractContactCardData {
+    id: string;
+    name: string;
+    roleLines: readonly string[];
+    phone: string;
+    phoneHref: string;
+    email: string;
+    emailHref: string;
+    photoSrc: string;
+    photoAlt: string;
+  }
 
   let { card }: { card: ContractContactCardData } = $props();
 </script>

@@ -1,6 +1,7 @@
 import type { LayoutServerLoad } from './$types';
-import { getLayoutContent } from '$infrastructure/cms';
+import { getLayoutContent, getSiteSettings } from '$infrastructure/cms';
 
 export const load: LayoutServerLoad = async () => {
-  return getLayoutContent();
+  const [layout, settings] = await Promise.all([getLayoutContent(), getSiteSettings()]);
+  return { ...layout, settings };
 };

@@ -6,6 +6,11 @@
     WHAT_YOU_GET_ITEMS,
     WHAT_YOU_GET_TITLE,
   } from '$shared/constants/what-you-get';
+  import type { DirectusWhatYouGetItemRecord } from '$infrastructure/cms/types';
+
+  const { items = null }: { items?: DirectusWhatYouGetItemRecord[] | null } = $props();
+
+  const cards = $derived(items && items.length > 0 ? items : WHAT_YOU_GET_ITEMS);
 </script>
 
 <style lang="scss">
@@ -32,7 +37,7 @@
     </h2>
 
     <ul class="what-you-get__grid">
-      {#each WHAT_YOU_GET_ITEMS as item (item.id)}
+      {#each cards as item (item.id)}
         <li class="what-you-get__card">
           <div class="what-you-get__icon" aria-hidden="true">
             <IconCheckmark />

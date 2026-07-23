@@ -7,6 +7,21 @@
     ABOUT_INTRO_PARAGRAPHS,
     ABOUT_INTRO_TITLE,
   } from '$shared/constants/about-intro';
+  import { getAssetUrl } from '$infrastructure/cms/assets';
+  import type { DirectusAboutIntroRecord } from '$infrastructure/cms/types';
+
+  const { item = null }: { item?: DirectusAboutIntroRecord | null } = $props();
+
+  const title = $derived(item?.title ?? ABOUT_INTRO_TITLE);
+  const lead = $derived(item?.lead ?? ABOUT_INTRO_LEAD);
+  const paragraphs = $derived(
+    item?.paragraphs && item.paragraphs.length > 0 ? item.paragraphs : ABOUT_INTRO_PARAGRAPHS
+  );
+  const imageFileId = $derived(
+    typeof item?.image === 'string' ? item.image : (item?.image?.id ?? undefined)
+  );
+  const imageSrc = $derived(getAssetUrl(imageFileId) ?? asset(ABOUT_INTRO_IMAGE));
+  const imageAlt = $derived(item?.image_alt ?? ABOUT_INTRO_IMAGE_ALT);
 </script>
 
 <style lang="scss">
@@ -17,15 +32,15 @@
   <div class="container about-intro__inner">
     <div class="about-intro__content">
       <h2 id="about-intro-title" class="about-intro__title">
-        {ABOUT_INTRO_TITLE}
+        {title}
       </h2>
 
       <p class="about-intro__lead">
-        {ABOUT_INTRO_LEAD}
+        {lead}
       </p>
 
       <div class="about-intro__body">
-        {#each ABOUT_INTRO_PARAGRAPHS as paragraph (paragraph)}
+        {#each paragraphs as paragraph (paragraph)}
           <p class="about-intro__paragraph">{paragraph}</p>
         {/each}
       </div>
@@ -34,8 +49,8 @@
     <figure class="about-intro__media">
       <img
         class="about-intro__image"
-        src={asset(ABOUT_INTRO_IMAGE)}
-        alt={ABOUT_INTRO_IMAGE_ALT}
+        src={imageSrc}
+        alt={imageAlt}
         width="692"
         height="461"
         loading="lazy"

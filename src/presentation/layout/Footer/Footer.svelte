@@ -7,6 +7,24 @@
 
   const year = new Date().getFullYear();
   const footerNavigation = $derived(getFooterNavigation(page.data.navigation));
+
+  const settings = $derived(page.data.settings);
+  const hotlineDisplay = $derived(
+    settings?.hotlinePhoneDisplay?.trim() ? settings.hotlinePhoneDisplay : '+7 (812) 602-14-75'
+  );
+  const hotlineHref = $derived(
+    settings?.hotlinePhoneHref?.trim() ? settings.hotlinePhoneHref : 'tel:+78126021475'
+  );
+  const address = $derived(
+    settings?.mainAddress?.trim()
+      ? settings.mainAddress
+      : 'Юридический адрес: 196105, Россия, г. Санкт-Петербург, вн.тер. г. Муниципальный округ Московская Застава, пр-кт Московский, д. 158, лит Б, помещ. 71.'
+  );
+  const emails = $derived(
+    settings?.contactEmails?.length
+      ? settings.contactEmails
+      : [{ label: 'info@taltektrans.pro', href: 'mailto:info@taltektrans.pro' }]
+  );
 </script>
 
 <style lang="scss">
@@ -60,8 +78,8 @@
       <p class="footer__section-title">Контакты</p>
       <ul class="footer__contacts-list">
         <li>
-          <a class="footer__contact-link" href="tel:+78126021475">
-            тел. +7 (812) 602-14-75
+          <a class="footer__contact-link" href={hotlineHref}>
+            тел. {hotlineDisplay}
           </a>
         </li>
         <li>
@@ -70,16 +88,15 @@
           </a>
         </li>
         <li>
-          <span class="footer__contact-text"
-            >Юридический адрес: 196105, Россия, г. Санкт-Петербург, вн.тер. г. Муниципальный округ
-            Московская Застава, пр-кт Московский, д. 158, лит Б, помещ. 71.</span
-          >
+          <span class="footer__contact-text">{address}</span>
         </li>
-        <li>
-          <a class="footer__contact-link" href="mailto:info@taltektrans.pro">
-            info@taltektrans.pro
-          </a>
-        </li>
+        {#each emails as email (email.href)}
+          <li>
+            <a class="footer__contact-link" href={email.href}>
+              {email.label}
+            </a>
+          </li>
+        {/each}
       </ul>
     </div>
 

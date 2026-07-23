@@ -1,7 +1,15 @@
 import type { PageServerLoad } from './$types';
-import { getContactsPageContent } from '$infrastructure/cms';
+import {
+  getContactsPageContent,
+  getPageContent,
+  getSiteSettings,
+} from '$infrastructure/cms';
 
 export const load: PageServerLoad = async () => {
-  const contacts = await getContactsPageContent();
-  return { contacts };
+  const [page, contacts, settings] = await Promise.all([
+    getPageContent('contacts'),
+    getContactsPageContent(),
+    getSiteSettings(),
+  ]);
+  return { page, contacts, settings };
 };

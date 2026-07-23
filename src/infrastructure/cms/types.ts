@@ -307,6 +307,8 @@ export interface AboutPageContent {
     gallery?: string[];
   };
   statsItems?: DirectusStatsItemRecord[];
+  whyUsItems?: DirectusWhyUsItemRecord[];
+  whatYouGetItems?: DirectusWhatYouGetItemRecord[];
   cta?: DirectusCtaBlockRecord;
 }
 
@@ -319,7 +321,10 @@ export interface ServicesPageContent {
   fleetModels?: DirectusFleetModelRecord[];
   deliveryTitle?: string;
   deliverySteps?: DirectusDeliveryStepRecord[];
+  whyUsItems?: DirectusWhyUsItemRecord[];
   whatYouGetItems?: DirectusWhatYouGetItemRecord[];
+  fleetParkTitle?: string;
+  fleetParkCards?: DirectusFleetParkCardRecord[];
   cta?: DirectusCtaBlockRecord;
 }
 

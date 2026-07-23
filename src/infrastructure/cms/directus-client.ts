@@ -15,13 +15,6 @@ export function isDirectusConfigured(): boolean {
   return Boolean(getBaseUrl());
 }
 
-export function getAssetUrl(fileId: string | undefined): string | undefined {
-  if (!fileId) return undefined;
-  const baseUrl = getBaseUrl();
-  if (!baseUrl) return undefined;
-  return `${baseUrl.replace(/\/$/, '')}/assets/${fileId}`;
-}
-
 export async function directusFetch<T>(path: string): Promise<T | null> {
   const baseUrl = getBaseUrl();
   if (!baseUrl) return null;

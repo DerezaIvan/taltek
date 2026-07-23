@@ -4,6 +4,7 @@ import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import fs from 'fs/promises';
 import path from 'path';
+import { spawn } from 'child_process';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -254,8 +255,75 @@ async function saveLeadToFile(lead) {
   console.log('Заявка сохранена в файл:', filepath);
 }
 
+const REBUILD_TOKEN = process.env.REBUILD_TOKEN || '';
+const REBUILD_CWD = process.env.REBUILD_CWD || '/compose';
+
+let rebuildRunning = false;
+let rebuildPending = false;
+let lastRebuild = null;
+
+function runRebuild() {
+  rebuildRunning = true;
+  lastRebuild = { startedAt: new Date().toISOString(), finishedAt: null, exitCode: null };
+
+  console.log('Запуск пересборки фронтенда: docker compose up -d --build --no-deps frontend');
+  const child = spawn('docker', ['compose', 'up', '-d', '--build', '--no-deps', 'frontend'], {
+    cwd: REBUILD_CWD,
+    env: { ...process.env, CONTENT_CACHEBUST: String(Date.now()) },
+  });
+
+  child.stdout.on('data', data => console.log('[rebuild]', data.toString().trimEnd()));
+  child.stderr.on('data', data => console.error('[rebuild]', data.toString().trimEnd()));
+
+  child.on('error', error => {
+    console.error('Не удалось запустить пересборку:', error.message);
+    finishRebuild(-1);
+  });
+
+  child.on('close', code => {
+    console.log(`Пересборка завершена с кодом ${code}`);
+    finishRebuild(code);
+  });
+}
+
+function finishRebuild(exitCode) {
+  rebuildRunning = false;
+  if (lastRebuild) {
+    lastRebuild.finishedAt = new Date().toISOString();
+    lastRebuild.exitCode = exitCode;
+  }
+  if (rebuildPending) {
+    rebuildPending = false;
+    console.log('Запуск отложенной пересборки');
+    runRebuild();
+  }
+}
+
+function checkRebuildToken(req, res, next) {
+  if (!REBUILD_TOKEN) {
+    return res.status(503).json({ error: 'Пересборка не настроена. Задайте REBUILD_TOKEN.' });
+  }
+  if (req.get('X-Rebuild-Token') !== REBUILD_TOKEN) {
+    return res.status(401).json({ error: 'Неверный токен пересборки' });
+  }
+  next();
+}
+
+app.post('/rebuild', checkRebuildToken, (_req, res) => {
+  if (rebuildRunning) {
+    rebuildPending = true;
+    return res.status(202).json({ success: true, running: true, pending: true });
+  }
+  runRebuild();
+  res.status(202).json({ success: true, running: true, pending: false });
+});
+
+app.get('/rebuild/status', checkRebuildToken, (_req, res) => {
+  res.json({ running: rebuildRunning, pending: rebuildPending, lastRun: lastRebuild });
+});
+
 app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', directus: isDirectusConfigured });
+  res.json({ status: 'ok', directus: Boolean(isDirectusConfigured) });
 });
 
 app.use((_req, res) => {

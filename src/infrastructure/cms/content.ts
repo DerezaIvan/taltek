@@ -1,4 +1,5 @@
-import { directusFetch, getAssetUrl } from './directus-client';
+import { directusFetch } from './directus-client';
+import { getAssetUrl } from './assets';
 import type {
   DirectusAboutIntroRecord,
   DirectusContractContactsCardRecord,
@@ -244,53 +245,71 @@ function mapPageHero(
 }
 
 export async function getAboutPageContent(): Promise<AboutPageContent> {
-  const [hero, aboutIntro, ourMission, statsItems, cta] = await Promise.all([
-    fetchSingleton<DirectusPageHeroRecord>('about_page_hero', 'id,image,image_position').then(
-      mapPageHero
-    ),
-    fetchList<DirectusAboutIntroRecord>(
-      'about_intro',
-      'id,title,lead,paragraphs,image,image_alt,sort,status'
-    ),
-    fetchSingleton<DirectusOurMissionRecord>('our_mission', 'id,title,subtitle,gallery').then(
-      mapOurMission
-    ),
-    fetchList<DirectusStatsItemRecord>('stats_items', 'id,label,value,description,sort,status'),
-    fetchSingleton<DirectusCtaBlockRecord>('cta_blocks', 'id,title,subtitle,status').then(record =>
-      record?.id === 'about' ? record : undefined
-    ),
-  ]);
+  const [hero, aboutIntro, ourMission, statsItems, whyUsItems, whatYouGetItems, cta] =
+    await Promise.all([
+      fetchSingleton<DirectusPageHeroRecord>('about_page_hero', 'id,image,image_position').then(
+        mapPageHero
+      ),
+      fetchList<DirectusAboutIntroRecord>(
+        'about_intro',
+        'id,title,lead,paragraphs,image,image_alt,sort,status'
+      ),
+      fetchSingleton<DirectusOurMissionRecord>('our_mission', 'id,title,subtitle,gallery').then(
+        mapOurMission
+      ),
+      fetchList<DirectusStatsItemRecord>('stats_items', 'id,label,value,description,sort,status'),
+      fetchList<DirectusWhyUsItemRecord>('why_us_items', 'id,title,description,sort,status'),
+      fetchList<DirectusWhatYouGetItemRecord>('what_you_get_items', 'id,title,sort,status'),
+      fetchSingleton<DirectusCtaBlockRecord>('cta_blocks', 'id,title,subtitle,status').then(
+        record => (record?.id === 'about' ? record : undefined)
+      ),
+    ]);
 
   return {
     hero,
     aboutIntro,
     ourMission,
     statsItems,
+    whyUsItems,
+    whatYouGetItems,
     cta,
   };
 }
 
 export async function getServicesPageContent(): Promise<ServicesPageContent> {
-  const [hero, keyServices, fleetModels, deliverySection, deliverySteps, whatYouGetItems, cta] =
-    await Promise.all([
-      fetchSingleton<DirectusPageHeroRecord>('services_page_hero', 'id,image,image_position').then(
-        mapPageHero
-      ),
-      fetchList<DirectusKeyServiceRecord>('key_services', 'id,title,description,sort,status'),
-      fetchList<DirectusFleetModelRecord>(
-        'fleet_models',
-        'id,variant,badge,title,description,image,image_alt,specs,sort,status'
-      ),
-      fetchSingleton<{ id: number; title: string }>('delivery_section', 'id,title'),
-      fetchList<DirectusDeliveryStepRecord>(
-        'delivery_steps',
-        'id,step_id,title,description,sort,status'
-      ),
-      fetchList<DirectusWhatYouGetItemRecord>('what_you_get_items', 'id,title,sort,status'),
-      fetchSingleton<DirectusCtaBlockRecord>('cta_blocks', 'id,title,subtitle,status').then(
-        record => (record?.id === 'services' ? record : undefined)
-      ),
-    ]);
+  const [
+    hero,
+    keyServices,
+    fleetModels,
+    deliverySection,
+    deliverySteps,
+    whyUsItems,
+    whatYouGetItems,
+    fleetParkSection,
+    fleetParkCards,
+    cta,
+  ] = await Promise.all([
+    fetchSingleton<DirectusPageHeroRecord>('services_page_hero', 'id,image,image_position').then(
+      mapPageHero
+    ),
+    fetchList<DirectusKeyServiceRecord>('key_services', 'id,title,description,sort,status'),
+    fetchList<DirectusFleetModelRecord>(
+      'fleet_models',
+      'id,variant,badge,title,description,image,image_alt,specs,sort,status'
+    ),
+    fetchSingleton<{ id: number; title: string }>('delivery_section', 'id,title'),
+    fetchList<DirectusDeliveryStepRecord>(
+      'delivery_steps',
+      'id,step_id,title,description,sort,status'
+    ),
+    fetchList<DirectusWhyUsItemRecord>('why_us_items', 'id,title,description,sort,status'),
+    fetchList<DirectusWhatYouGetItemRecord>('what_you_get_items', 'id,title,sort,status'),
+    fetchSingleton<{ id: number; title: string }>('fleet_park_section', 'id,title'),
+    fetchList<DirectusFleetParkCardRecord>('fleet_park_cards', 'id,value,label,badge,sort,status'),
+    fetchSingleton<DirectusCtaBlockRecord>('cta_blocks', 'id,title,subtitle,status').then(
+      record => (record?.id === 'services' ? record : undefined)
+    ),
+  ]);
 
   return {
     hero,
@@ -301,7 +320,10 @@ export async function getServicesPageContent(): Promise<ServicesPageContent> {
     })),
     deliveryTitle: deliverySection?.title,
     deliverySteps,
+    whyUsItems,
     whatYouGetItems,
+    fleetParkTitle: fleetParkSection?.title,
+    fleetParkCards,
     cta,
   };
 }

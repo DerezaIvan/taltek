@@ -19,15 +19,19 @@
 <Main>
   {#snippet pageHero()}
     <PageHero
-      imageSrc={PAGE_HERO_IMAGE}
-      imagePosition={PAGE_HERO_IMAGE_POSITION}
+      imageSrc={data.contacts?.hero?.image ?? PAGE_HERO_IMAGE}
+      imagePosition={data.contacts?.hero?.imagePosition ?? PAGE_HERO_IMAGE_POSITION}
       {breadcrumbs}
       {titleLines}
       subtitle={CONTACTS_SUBTITLE}
     />
   {/snippet}
 
-  <ContactsContent />
-  <ContractContacts />
+  <ContactsContent settings={data.settings} />
+  <ContractContacts
+    title={data.contacts?.contractSection?.title}
+    background={data.contacts?.contractSection?.background}
+    cards={data.contacts?.contractCards}
+  />
   <OperationsContacts content={data.contacts} />
 </Main>

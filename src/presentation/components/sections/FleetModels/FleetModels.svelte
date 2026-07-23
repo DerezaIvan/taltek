@@ -1,6 +1,30 @@
 <script lang="ts">
   import { asset } from '$app/paths';
   import { FLEET_MODELS_ITEMS, FLEET_MODELS_TITLE } from '$shared/constants/fleet-models';
+  import type { DirectusFleetModelRecord } from '$infrastructure/cms/types';
+
+  const { models = null }: { models?: DirectusFleetModelRecord[] | null } = $props();
+
+  const items = $derived(
+    models && models.length > 0
+      ? models.map((model, index) => ({
+          id: model.id,
+          variant: model.variant,
+          badge: model.badge,
+          title: model.title,
+          description: model.description,
+          imageSrc:
+            typeof model.image === 'string'
+              ? model.image
+              : (FLEET_MODELS_ITEMS[index]?.imageSrc ?? ''),
+          imageAlt: model.image_alt ?? FLEET_MODELS_ITEMS[index]?.imageAlt ?? model.title,
+          specs:
+            model.specs && model.specs.length > 0
+              ? model.specs
+              : (FLEET_MODELS_ITEMS[index]?.specs ?? []),
+        }))
+      : FLEET_MODELS_ITEMS
+  );
 </script>
 
 <style lang="scss">
@@ -16,7 +40,7 @@
     </header>
 
     <ul class="fleet-models__grid">
-      {#each FLEET_MODELS_ITEMS as item (item.id)}
+      {#each items as item (item.id)}
         <li
           class="fleet-models__card"
           class:fleet-models__card--reserve={item.variant === 'reserve'}
