@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
-import { getPageContent } from '$infrastructure/cms';
+import { getHomePageContent, getPageContent } from '$infrastructure/cms';
 
 export const load: PageServerLoad = async () => {
-  const page = await getPageContent('home');
-  return { page };
+  const [page, home] = await Promise.all([getPageContent('home'), getHomePageContent()]);
+  return { page, home };
 };

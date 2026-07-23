@@ -3,7 +3,7 @@
   import { Hero } from '$presentation/components/sections';
   import type { MainProps } from '$shared/interfaces';
 
-  let { heroTitle, heroSubtitle, children, afterHero, pageHero }: MainProps = $props();
+  let { heroTitle, heroSubtitle, heroBackground, children, afterHero, pageHero }: MainProps = $props();
 </script>
 
 <style lang="scss">
@@ -29,6 +29,7 @@
       <Hero
         {...heroTitle?.trim() ? { title: heroTitle } : {}}
         {...heroSubtitle?.trim() ? { subtitle: heroSubtitle } : {}}
+        {...heroBackground?.trim() ? { background: heroBackground } : {}}
       />
     </div>
 

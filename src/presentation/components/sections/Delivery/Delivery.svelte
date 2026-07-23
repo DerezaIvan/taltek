@@ -21,8 +21,15 @@
     type DeliveryStep,
   } from '$shared/constants/delivery';
   import type { Component } from 'svelte';
+  import type { DirectusDeliveryStepRecord } from '$infrastructure/cms/types';
 
   type DeliveryLayout = 'mosaic' | 'wide' | 'stack';
+
+  interface DeliveryStepData {
+    id: string;
+    title: string;
+    description: string;
+  }
 
   const deliveryIcons: Record<DeliveryIconId, Component> = {
     route: IconDeliveryRoute,
@@ -30,8 +37,24 @@
     documents: IconDeliveryDocuments,
   };
 
-  const deliveryStepsFirst = DELIVERY_STEPS.slice(0, 2);
-  const deliveryStepsLast = DELIVERY_STEPS.slice(2);
+  const {
+    title = null,
+    steps = null,
+  }: { title?: string | null; steps?: DirectusDeliveryStepRecord[] | null } = $props();
+
+  const sectionTitle = $derived(title ?? DELIVERY_SECTION_TITLE);
+  const deliverySteps = $derived<DeliveryStepData[]>(
+    steps && steps.length > 0
+      ? steps.map(step => ({ id: step.step_id, title: step.title, description: step.description }))
+      : [...DELIVERY_STEPS]
+  );
+  const deliveryStepsFirst = $derived(deliverySteps.slice(0, 2));
+  const deliveryStepsLast = $derived(deliverySteps.slice(2));
+
+  function resolveDeliveryStep(stepId: DeliveryStep['id']): DeliveryStepData {
+    return deliverySteps.find(step => step.id === stepId) ?? getDeliveryStep(stepId);
+  }
+
   const taltekAdaptiveImage = DELIVERY_ADAPTIVE_IMAGES[0];
   const train2AdaptiveImage = DELIVERY_ADAPTIVE_IMAGES[1];
 
@@ -85,7 +108,7 @@
   />
 {/snippet}
 
-{#snippet deliveryCard(step: DeliveryStep)}
+{#snippet deliveryCard(step: DeliveryStepData)}
   <article class="delivery__card">
     <h3 class="delivery__card-title">{step.title}</h3>
     <p class="delivery__card-desc">{step.description}</p>
@@ -115,7 +138,7 @@
 
 {#snippet rowItem(item: DeliveryRowItem)}
   {#if item.type === 'text'}
-    {@const step = getDeliveryStep(item.stepId)}
+    {@const step = resolveDeliveryStep(item.stepId)}
     <article class="delivery__card" style={itemSizeStyle(item.width, item.height)}>
       <h3 class="delivery__card-title">{step.title}</h3>
       <p class="delivery__card-desc">{step.description}</p>
@@ -134,7 +157,7 @@
 <section class="delivery" aria-labelledby="delivery-title">
   <div class="container">
     <h2 id="delivery-title" class="delivery__title">
-      {DELIVERY_SECTION_TITLE}
+      {sectionTitle}
     </h2>
 
     {#if deliveryLayout === 'mosaic'}
@@ -174,7 +197,7 @@
         </div>
 
         <div class="delivery__cards">
-          {#each DELIVERY_STEPS as step (step.id)}
+          {#each deliverySteps as step (step.id)}
             {@render deliveryCard(step)}
           {/each}
         </div>

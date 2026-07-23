@@ -5,6 +5,11 @@
     STATS_ITEMS,
     STATS_SECTION_TITLE,
   } from '$shared/constants/stats';
+  import type { DirectusStatsItemRecord } from '$infrastructure/cms/types';
+
+  const { items = null }: { items?: DirectusStatsItemRecord[] | null } = $props();
+
+  const statsItems = $derived(items && items.length > 0 ? items : STATS_ITEMS);
 </script>
 
 <style lang="scss">
@@ -31,7 +36,7 @@
     </h2>
 
     <dl class="stats__grid">
-      {#each STATS_ITEMS as item (item.id)}
+      {#each statsItems as item (item.id)}
         <div class="stats__item">
           <dt class="stats__item-label">{item.label}</dt>
           <dd class="stats__item-value">{item.value}</dd>

@@ -1,6 +1,4 @@
 <script lang="ts">
-  // TODO: SEO временно отключено
-  // import { SeoHead } from '$presentation/components/SeoHead';
   import {
     AboutIntro,
     Cta,
@@ -11,26 +9,28 @@
     WhyUs,
   } from '$presentation/components/sections';
   import { ABOUT_CTA_SUBTITLE, ABOUT_CTA_TITLE } from '$shared/constants/cta';
-  // import { getPageSeo } from '$shared/constants/seo';
 
-  // const seo = getPageSeo('about');
+  const { data } = $props();
+  const about = $derived(data.about);
 
   const breadcrumbs = [{ label: 'Главная', href: '/' }, { label: 'О компании' }];
 
   const titleLines = ['[ЭКО]ЛОГИЧНЫЙ', 'ВЫБОР ДЛЯ ВАШИХ', 'ГРУЗОВ'];
 </script>
 
-<!-- TODO: SEO временно отключено -->
-<!-- <SeoHead title={seo.title} description={seo.description} url={seo.url} ogImage={seo.ogImage} /> -->
-
 <Main>
   {#snippet pageHero()}
-    <PageHero imageSrc="/images/about-hero.webp" {breadcrumbs} {titleLines} />
+    <PageHero
+      imageSrc={about.hero?.image ?? '/images/about-hero.webp'}
+      imagePosition={about.hero?.imagePosition}
+      {breadcrumbs}
+      {titleLines}
+    />
   {/snippet}
 
-  <AboutIntro />
-  <WhyUs />
-  <WhatYouGet />
-  <OurMission />
-  <Cta title={ABOUT_CTA_TITLE} subtitle={ABOUT_CTA_SUBTITLE} />
+  <AboutIntro item={about.aboutIntro?.[0]} />
+  <WhyUs items={about.whyUsItems} />
+  <WhatYouGet items={about.whatYouGetItems} />
+  <OurMission gallery={about.ourMission?.gallery} />
+  <Cta title={about.cta?.title ?? ABOUT_CTA_TITLE} subtitle={about.cta?.subtitle ?? ABOUT_CTA_SUBTITLE} />
 </Main>

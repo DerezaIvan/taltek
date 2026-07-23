@@ -57,6 +57,8 @@ docker compose --profile cms up --build
 | `FROM_EMAIL` | Отправитель писем |
 | `TO_EMAIL` | Получатель заявок |
 | `DIRECTUS_*`, `POSTGRES_*` | Настройки Directus/Postgres в docker-compose |
+| `REBUILD_TOKEN` | Секрет для webhook авто-пересборки (`POST /rebuild` на API). Если не задан — пересборка выключена |
+| `COMPOSE_PROJECT_NAME` | Имя compose-проекта, используется API при пересборке фронтенда |
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
@@ -176,8 +178,20 @@ node directus/update-ui.mjs
 ### Workflow
 
 1. Редактируйте контент в Directus Admin.
-2. Пересобирайте сайт вручную или настройте автоматический rebuild через Directus Flow → GitHub `repository_dispatch`.
+2. При сохранении контента Directus Flow вызывает `POST /rebuild` на API — сайт пересобирается автоматически, изменения появляются в течение 1–2 минут.
 3. Фронтенд забирает данные на этапе сборки и prerender в статику.
+
+### Настройка авто-пересборки (Directus Flow)
+
+1. Задайте `REBUILD_TOKEN` в `.env` (любая длинная случайная строка).
+2. Перезапустите API: `docker compose up -d --build api`.
+3. В Directus Admin → **Settings → Flows** создайте новый Flow:
+   - **Trigger:** Event Hook, тип `action`, события `items.create` + `items.update` + `items.delete`, коллекции — все контентные, **кроме** `submissions` и `directus_*`.
+   - **Action:** Webhook / Request URL, метод `POST`, URL `http://api:3001/rebuild`, заголовок `X-Rebuild-Token` со значением токена из `.env`.
+
+Несколько сохранений подряд не запускают параллельные сборки — запросы ставятся в очередь и выполняется максимум одна повторная пересборка. Статус можно проверить запросом `GET /rebuild/status` с тем же заголовком `X-Rebuild-Token`.
+
+Порт API (3001) не публикуется наружу — сервис доступен только внутри docker-сети (nginx проксирует `/api/`, а `/rebuild` через nginx не проксируется вовсе). Поэтому вызвать пересборку снаружи нельзя даже со знанием токена. Проверка статуса — изнутри хоста: `docker compose exec api wget -qO- --header="X-Rebuild-Token: <токен>" http://localhost:3001/rebuild/status`.
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 

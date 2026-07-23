@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-
 FROM node:22-alpine AS build
 
 WORKDIR /app
@@ -15,12 +14,13 @@ COPY . .
 ARG PUBLIC_DIRECTUS_URL=
 ARG DIRECTUS_TOKEN=
 ARG PUBLIC_API_URL=
+ARG CONTENT_CACHEBUST=
 
 ENV PUBLIC_DIRECTUS_URL=$PUBLIC_DIRECTUS_URL
 ENV DIRECTUS_TOKEN=$DIRECTUS_TOKEN
 ENV PUBLIC_API_URL=$PUBLIC_API_URL
 
-RUN npm run build
+RUN echo "content build: $CONTENT_CACHEBUST" && npm run build
 
 FROM nginx:1.27-alpine AS runtime
 
