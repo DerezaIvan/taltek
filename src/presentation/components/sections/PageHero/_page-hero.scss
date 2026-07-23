@@ -85,6 +85,9 @@
     &__title {
       margin-top: 20px;
       text-align: left;
+      font-size: clamp(20px, 6vw, typography.$heading-xl-size);
+      line-height: 1.2;
+      letter-spacing: 0.5px;
     }
 
     &__subtitle {
