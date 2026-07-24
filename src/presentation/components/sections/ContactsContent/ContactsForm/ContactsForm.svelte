@@ -321,7 +321,9 @@
           bind:value={wagonType}
           onblur={() => (touched.wagonType = true)}
           aria-invalid={touched.wagonType && errors.wagonType ? 'true' : 'false'}
-          aria-describedby={touched.wagonType && errors.wagonType ? 'contacts-wagon-type-error' : undefined}
+          aria-describedby={touched.wagonType && errors.wagonType
+            ? 'contacts-wagon-type-error'
+            : undefined}
         >
           <option value="">{CONTACTS_FORM_FIELDS.wagonType.placeholder}</option>
           {#each CONTACTS_WAGON_TYPES as option (option.value)}

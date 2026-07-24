@@ -38,7 +38,8 @@
       src={asset('/images/footer-bckg.webp')}
       alt=""
       loading="lazy"
-      decoding="async" />
+      decoding="async"
+    />
     <div class="footer__overlay"></div>
   </div>
 
@@ -65,7 +66,8 @@
               <a
                 class="footer__nav-link"
                 class:footer__nav-link--active={isActiveRoute(item.href, page.url.pathname)}
-                href={resolve(item.href)}>
+                href={resolve(item.href)}
+              >
                 {item.label}
               </a>
             {/if}
@@ -83,9 +85,7 @@
           </a>
         </li>
         <li>
-          <a class="footer__contact-link" href="tel:+78126021476">
-            факс +7 (812) 602-14-76
-          </a>
+          <a class="footer__contact-link" href="tel:+78126021476"> факс +7 (812) 602-14-76 </a>
         </li>
         <li>
           <span class="footer__contact-text">{address}</span>

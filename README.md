@@ -43,22 +43,22 @@ docker compose --profile cms up --build
 
 Скопируйте `.env.example` в `.env`.
 
-| Переменная | Описание |
-|------------|----------|
-| `PUBLIC_DIRECTUS_URL` | URL Directus API |
-| `DIRECTUS_TOKEN` | Read-only token для сборки фронтенда |
-| `DIRECTUS_API_TOKEN` | Static token для сохранения заявок в Directus |
-| `PUBLIC_API_URL` | URL API для отправки заявок |
-| `CORS_ORIGIN` | Разрешённый origin для API |
-| `SMTP_HOST` | SMTP сервер для отправки заявок |
-| `SMTP_PORT` | Порт SMTP (по умолч. 587) |
-| `SMTP_USER` | Пользователь SMTP |
-| `SMTP_PASS` | Пароль SMTP |
-| `FROM_EMAIL` | Отправитель писем |
-| `TO_EMAIL` | Получатель заявок |
-| `DIRECTUS_*`, `POSTGRES_*` | Настройки Directus/Postgres в docker-compose |
-| `REBUILD_TOKEN` | Секрет для webhook авто-пересборки (`POST /rebuild` на API). Если не задан — пересборка выключена |
-| `COMPOSE_PROJECT_NAME` | Имя compose-проекта, используется API при пересборке фронтенда |
+| Переменная                 | Описание                                                                                          |
+| -------------------------- | ------------------------------------------------------------------------------------------------- |
+| `PUBLIC_DIRECTUS_URL`      | URL Directus API                                                                                  |
+| `DIRECTUS_TOKEN`           | Read-only token для сборки фронтенда                                                              |
+| `DIRECTUS_API_TOKEN`       | Static token для сохранения заявок в Directus                                                     |
+| `PUBLIC_API_URL`           | URL API для отправки заявок                                                                       |
+| `CORS_ORIGIN`              | Разрешённый origin для API                                                                        |
+| `SMTP_HOST`                | SMTP сервер для отправки заявок                                                                   |
+| `SMTP_PORT`                | Порт SMTP (по умолч. 587)                                                                         |
+| `SMTP_USER`                | Пользователь SMTP                                                                                 |
+| `SMTP_PASS`                | Пароль SMTP                                                                                       |
+| `FROM_EMAIL`               | Отправитель писем                                                                                 |
+| `TO_EMAIL`                 | Получатель заявок                                                                                 |
+| `DIRECTUS_*`, `POSTGRES_*` | Настройки Directus/Postgres в docker-compose                                                      |
+| `REBUILD_TOKEN`            | Секрет для webhook авто-пересборки (`POST /rebuild` на API). Если не задан — пересборка выключена |
+| `COMPOSE_PROJECT_NAME`     | Имя compose-проекта, используется API при пересборке фронтенда                                    |
 
 Без Directus сайт собирается и работает на fallback-константах из `src/shared/constants/`.
 
@@ -154,6 +154,7 @@ node directus/update-ui.mjs
 ```
 
 Этот скрипт:
+
 - устанавливает русский язык проекта и текущего администратора;
 - добавляет понятные русские названия коллекций и полей;
 - добавляет подсказки, иконки и шаблоны отображения.

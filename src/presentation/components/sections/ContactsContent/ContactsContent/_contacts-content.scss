@@ -12,6 +12,15 @@
   }
 }
 
+@media (max-width: $contacts-stack-bp) {
+  .contacts-content {
+    &__inner {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+}
+
 @media (max-width: $bp-desktop-md) {
   .contacts-content {
     &__inner {

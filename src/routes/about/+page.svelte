@@ -32,5 +32,8 @@
   <WhyUs items={about.whyUsItems} />
   <WhatYouGet items={about.whatYouGetItems} />
   <OurMission gallery={about.ourMission?.gallery} />
-  <Cta title={about.cta?.title ?? ABOUT_CTA_TITLE} subtitle={about.cta?.subtitle ?? ABOUT_CTA_SUBTITLE} />
+  <Cta
+    title={about.cta?.title ?? ABOUT_CTA_TITLE}
+    subtitle={about.cta?.subtitle ?? ABOUT_CTA_SUBTITLE}
+  />
 </Main>

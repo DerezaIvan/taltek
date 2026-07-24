@@ -205,7 +205,11 @@ app.post('/contact', async (req, res) => {
 
   const notices = [];
   if (!emailSent) {
-    notices.push(transporter ? 'Заявка сохранена, но письмо не удалось отправить.' : 'Заявка сохранена. Отправка письма временно недоступна.');
+    notices.push(
+      transporter
+        ? 'Заявка сохранена, но письмо не удалось отправить.'
+        : 'Заявка сохранена. Отправка письма временно недоступна.'
+    );
   }
   if (isDirectusConfigured && !directusSaved) {
     notices.push('Directus временно недоступен, заявка сохранена в файл.');

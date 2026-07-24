@@ -70,10 +70,24 @@ $cc-cards-single-col-max: 889px;
     margin: 0;
     padding: 0;
     list-style: none;
+
+    @media screen and (max-width: 1470px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 
   &__card-item {
     min-width: min(100%, #{$cc-card-min-column});
+  }
+}
+
+@media screen and (max-width: 1470px) {
+  .contract-contacts {
+    &__card-item--solo {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(100%, calc((100% - #{$cc-cards-gap}) / 2));
+    }
   }
 }
 
@@ -84,15 +98,19 @@ $cc-cards-single-col-max: 889px;
     &__inner {
       align-items: center;
     }
+  }
+}
 
+@media screen and (max-width: 1000px) {
+  .contract-contacts {
     &__cards {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
     }
 
     &__card-item--solo {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: min(100%, calc((100% - #{$cc-cards-gap}) / 2));
+      grid-column: auto;
+      justify-self: stretch;
+      width: auto;
     }
   }
 }
@@ -108,16 +126,6 @@ $cc-cards-single-col-max: 889px;
 
     &__inner {
       gap: 32px;
-    }
-
-    &__cards {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    &__card-item--solo {
-      grid-column: auto;
-      justify-self: stretch;
-      width: auto;
     }
   }
 }

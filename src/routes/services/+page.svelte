@@ -29,7 +29,10 @@
   <KeyServices items={data.services?.keyServices ?? null} />
   <WhyUs items={data.services?.whyUsItems ?? null} />
   <FleetModels models={data.services?.fleetModels ?? null} />
-  <FleetPark title={data.services?.fleetParkTitle ?? null} cards={data.services?.fleetParkCards ?? null} />
+  <FleetPark
+    title={data.services?.fleetParkTitle ?? null}
+    cards={data.services?.fleetParkCards ?? null}
+  />
   <Cta
     title={data.services?.cta?.title ?? SERVICES_CTA_TITLE}
     subtitle={data.services?.cta?.subtitle ?? SERVICES_CTA_SUBTITLE}

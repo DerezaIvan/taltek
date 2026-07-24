@@ -15,7 +15,9 @@
 
   const sectionTitle = $derived(title?.trim() ? title : FLEET_PARK_TITLE);
   const smallCards = $derived(
-    cards && cards.length > 0 ? cards.slice(0, FLEET_PARK_SMALL_CARDS.length) : FLEET_PARK_SMALL_CARDS
+    cards && cards.length > 0
+      ? cards.slice(0, FLEET_PARK_SMALL_CARDS.length)
+      : FLEET_PARK_SMALL_CARDS
   );
   const featureCard = $derived(
     cards && cards.length > FLEET_PARK_SMALL_CARDS.length

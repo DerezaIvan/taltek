@@ -7,11 +7,16 @@
     TERRITORY_CARDS,
   } from '$shared/constants/operations-contacts';
   import type { ContactsPageContent } from '$infrastructure/cms/types';
-  import { DispatcherCard, TerritoryCard } from '$presentation/components/sections/OperationsContacts';
+  import {
+    DispatcherCard,
+    TerritoryCard,
+  } from '$presentation/components/sections/OperationsContacts';
 
   let { content }: { content?: ContactsPageContent } = $props();
 
-  const dispatchersTitle = $derived(content?.operationsSection?.dispatchersTitle ?? DISPATCHERS_TITLE);
+  const dispatchersTitle = $derived(
+    content?.operationsSection?.dispatchersTitle ?? DISPATCHERS_TITLE
+  );
   const dispatchersSubtitle = $derived(
     content?.operationsSection?.dispatchersSubtitle ?? DISPATCHERS_SUBTITLE_LINES.join('\n')
   );
