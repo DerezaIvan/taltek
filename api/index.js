@@ -46,19 +46,22 @@ const WAGON_TYPE_EMAILS = {
   grain: 'e.kokoeva@taltektrans.pro',
 };
 
-const isSmtpConfigured = smtpHost && smtpUser && smtpPass && fromEmail && toEmail;
+const isSmtpConfigured = smtpHost && fromEmail && toEmail;
 
 let transporter = null;
 if (isSmtpConfigured) {
-  transporter = nodemailer.createTransport({
+  const transportOptions = {
     host: smtpHost,
     port: smtpPort,
     secure: smtpPort === 465,
-    auth: {
+  };
+  if (smtpUser && smtpPass) {
+    transportOptions.auth = {
       user: smtpUser,
       pass: smtpPass,
-    },
-  });
+    };
+  }
+  transporter = nodemailer.createTransport(transportOptions);
 
   transporter.verify(error => {
     if (error) {
@@ -69,7 +72,7 @@ if (isSmtpConfigured) {
   });
 } else {
   console.warn(
-    'SMTP не настроен. Заявки отправляться не будут. Задайте SMTP_HOST, SMTP_USER, SMTP_PASS, FROM_EMAIL, TO_EMAIL для полноценной работы.'
+    'SMTP не настроен. Заявки отправляться не будут. Задайте SMTP_HOST, FROM_EMAIL, TO_EMAIL (и SMTP_USER/SMTP_PASS при необходимости авторизации) для полноценной работы.'
   );
 }
 
