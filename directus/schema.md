@@ -258,19 +258,19 @@
 
 ### `operations_dispatchers`
 
-| Поле          | Тип      | Описание                          |
-| ------------- | -------- | --------------------------------- |
-| `id`          | Input    | Идентификатор                     |
-| `title`       | Input    | Название направления              |
-| `phone`       | Input    | Основной телефон для отображения  |
-| `phone_href`  | Input    | Ссылка tel:                       |
-| `badge`       | Input    | Режим работы                      |
-| `phone2`      | Input    | Дополнительный телефон            |
-| `phone_href2` | Input    | Ссылка tel: для доп. телефона     |
-| `badge2`      | Input    | Режим работы для доп. телефона    |
-| `email`       | Input    | Email диспетчера                  |
-| `sort`        | Input    | Порядок                           |
-| `status`      | Dropdown | `published` / `draft`             |
+| Поле          | Тип      | Описание                         |
+| ------------- | -------- | -------------------------------- |
+| `id`          | Input    | Идентификатор                    |
+| `title`       | Input    | Название направления             |
+| `phone`       | Input    | Основной телефон для отображения |
+| `phone_href`  | Input    | Ссылка tel:                      |
+| `badge`       | Input    | Режим работы                     |
+| `phone2`      | Input    | Дополнительный телефон           |
+| `phone_href2` | Input    | Ссылка tel: для доп. телефона    |
+| `badge2`      | Input    | Режим работы для доп. телефона   |
+| `email`       | Input    | Email диспетчера                 |
+| `sort`        | Input    | Порядок                          |
+| `status`      | Dropdown | `published` / `draft`            |
 
 ### `operations_territories`
 

@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { DispatcherCardData } from '$shared/constants/operations-contacts';
-  import { EmailContactRow, PhoneContactRow } from '$presentation/components/sections/OperationsContacts';
+  import {
+    EmailContactRow,
+    PhoneContactRow,
+  } from '$presentation/components/sections/OperationsContacts';
 
   let { card }: { card: DispatcherCardData } = $props();
 </script>

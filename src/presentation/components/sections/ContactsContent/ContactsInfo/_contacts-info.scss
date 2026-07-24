@@ -2,6 +2,8 @@
 @use 'presentation/styles/typography-tokens' as typography;
 @use 'presentation/components/sections/ContactsContent/contacts-tokens' as *;
 
+$bp-contacts-cards-stack: 1470px;
+
 .contacts-info {
   display: flex;
   flex: 0 0 $contacts-sidebar-width;
@@ -106,6 +108,15 @@
     &:hover {
       opacity: 0.8;
     }
+  }
+}
+
+@media (max-width: $bp-contacts-cards-stack) {
+  .contacts-info {
+    display: grid;
+    grid-auto-rows: 1fr;
+    flex: 1 1 auto;
+    width: 100%;
   }
 }
 

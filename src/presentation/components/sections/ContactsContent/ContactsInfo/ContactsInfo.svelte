@@ -1,6 +1,10 @@
 <script lang="ts">
   import { IconAt, IconLocationPin, IconPhone } from '$presentation/components/icons';
-  import { CONTACTS_HOTLINE, CONTACTS_HOTLINE_INTL, CONTACTS_INFO } from '$shared/constants/contacts';
+  import {
+    CONTACTS_HOTLINE,
+    CONTACTS_HOTLINE_INTL,
+    CONTACTS_INFO,
+  } from '$shared/constants/contacts';
   import type { SiteSettings } from '$infrastructure/cms/types';
 
   const { settings = null }: { settings?: SiteSettings | null } = $props();

@@ -91,10 +91,7 @@ const content = {
     hotline_phone_display: '8 800 533 9 888',
     hotline_phone_href: 'tel:+78005339888',
     main_address: '125047, Россия, г. Москва, Дукат Плейс 3, Гашека 6, офис 1210',
-    contact_emails: [
-      { label: 'zayavka@taltektrans.pro', href: 'mailto:zayavka@taltektrans.pro' },
-      { label: 'info@taltektrans.pro', href: 'mailto:info@taltektrans.pro' },
-    ],
+    contact_emails: [{ label: 'info@taltektrans.pro', href: 'mailto:info@taltektrans.pro' }],
   },
 
   navigation_items: [
