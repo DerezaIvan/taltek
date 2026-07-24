@@ -57,17 +57,21 @@ export const CONTACTS_CONSENT = {
 } as const;
 
 export const CONTACTS_HOTLINE = {
-  title: 'Единый номер',
+  title: 'Номер для звонков из РФ',
   phone: '8 800 533 9 888',
   phoneHref: 'tel:+78005339888',
+  subtitle: 'Главный офис · Москва',
+} as const;
+
+export const CONTACTS_HOTLINE_INTL = {
+  title: 'Номер для международных звонков',
+  phone: '+7 495 138 9 988',
+  phoneHref: 'tel:+74951389988',
   subtitle: 'Главный офис · Москва',
 } as const;
 
 export const CONTACTS_INFO = {
   title: 'Контактная информация',
   address: '125047, Россия, г. Москва, Дукат Плейс 3, Гашека 6, офис 1210',
-  emails: [
-    { label: 'zayavka@taltektrans.pro', href: 'mailto:zayavka@taltektrans.pro' },
-    { label: 'info@taltektrans.pro', href: 'mailto:info@taltektrans.pro' },
-  ],
+  emails: [{ label: 'info@taltektrans.pro', href: 'mailto:info@taltektrans.pro' }],
 } as const;

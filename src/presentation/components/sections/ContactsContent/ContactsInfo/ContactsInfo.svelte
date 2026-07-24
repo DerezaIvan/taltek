@@ -1,6 +1,6 @@
 <script lang="ts">
   import { IconAt, IconLocationPin, IconPhone } from '$presentation/components/icons';
-  import { CONTACTS_HOTLINE, CONTACTS_INFO } from '$shared/constants/contacts';
+  import { CONTACTS_HOTLINE, CONTACTS_HOTLINE_INTL, CONTACTS_INFO } from '$shared/constants/contacts';
   import type { SiteSettings } from '$infrastructure/cms/types';
 
   const { settings = null }: { settings?: SiteSettings | null } = $props();
@@ -33,6 +33,21 @@
           {hotlinePhone}
         </a>
         <p class="contacts-info__subtitle">{CONTACTS_HOTLINE.subtitle}</p>
+      </div>
+    </div>
+
+    <h3 class="contacts-info__title">{CONTACTS_HOTLINE_INTL.title}</h3>
+
+    <div class="contacts-info__row">
+      <span class="contacts-info__icon" aria-hidden="true">
+        <IconPhone />
+      </span>
+
+      <div class="contacts-info__content">
+        <a class="contacts-info__phone" href={CONTACTS_HOTLINE_INTL.phoneHref}>
+          {CONTACTS_HOTLINE_INTL.phone}
+        </a>
+        <p class="contacts-info__subtitle">{CONTACTS_HOTLINE_INTL.subtitle}</p>
       </div>
     </div>
   </article>
