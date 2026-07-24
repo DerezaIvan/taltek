@@ -322,12 +322,9 @@ async function sendRebuildNotification() {
 
   const lines = [
     success
-      ? 'Пересборка сайта после изменений в CMS завершилась успешно.'
-      : 'Пересборка сайта после изменений в CMS завершилась с ошибкой. Изменения НЕ опубликованы, сайт работает в прежней версии.',
-    '',
-    `Начало: ${lastRebuild.startedAt}`,
-    `Окончание: ${lastRebuild.finishedAt}`,
-    `Код завершения: ${lastRebuild.exitCode}`,
+      ? `Дата внесения правки: ${formatMoscowDate(lastRebuild.finishedAt)}`
+      : 'Пересборка сайта после изменений в CMS завершилась с ошибкой. Изменения НЕ опубликованы, сайт работает в прежней версии.\n\n' +
+        `Дата правки: ${formatMoscowDate(lastRebuild.finishedAt)}`,
   ];
 
   if (!success && rebuildLogTail.length > 0) {
@@ -391,6 +388,20 @@ app.get('/health', (_req, res) => {
 app.use((_req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
+
+function formatMoscowDate(isoDate) {
+  const parts = new Intl.DateTimeFormat('ru-RU', {
+    timeZone: 'Europe/Moscow',
+    hour: '2-digit',
+    minute: '2-digit',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  }).formatToParts(new Date(isoDate));
+  const get = type => parts.find(p => p.type === type)?.value || '';
+  // "12:09 24 июля 2026 г."
+  return `${get('hour')}:${get('minute')} ${get('day')} ${get('month')} ${get('year')} г.`;
+}
 
 function escapeHtml(value) {
   return value
