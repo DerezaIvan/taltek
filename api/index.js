@@ -41,9 +41,9 @@ const fromEmail = process.env.FROM_EMAIL;
 const toEmail = process.env.TO_EMAIL;
 
 const WAGON_TYPE_EMAILS = {
-  gondola: 'dereza2012@yandex.ru',
-  covered: 'dereza2012@yandex.ru',
-  grain: 'dereza2012@yandex.ru',
+  gondola: 'pv@taltektrans.pro',
+  covered: 'kv@taltektrans.pro',
+  grain: 'e.kokoeva@taltektrans.pro',
 };
 
 const isSmtpConfigured = smtpHost && smtpUser && smtpPass && fromEmail && toEmail;
