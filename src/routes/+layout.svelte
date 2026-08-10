@@ -2,9 +2,20 @@
   import '$presentation/styles/global.scss';
   import type { Snippet } from 'svelte';
   import { page } from '$app/state';
-  import { onNavigate } from '$app/navigation';
+  import { afterNavigate, onNavigate } from '$app/navigation';
 
   let { children }: { children: Snippet } = $props();
+
+  afterNavigate(navigation => {
+    if (navigation.type === 'enter') return;
+
+    const url = page.url;
+    const ym = (window as unknown as { ym?: (...args: unknown[]) => void }).ym;
+    ym?.(111451644, 'hit', url.href, {
+      title: document.title,
+      referer: navigation.from?.url.href ?? document.referrer,
+    });
+  });
 
   onNavigate(navigation => {
     if (!document.startViewTransition) return;
