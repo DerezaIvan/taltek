@@ -44,14 +44,13 @@
       poster={posterUrl}
     >
       {#if isMobile}
-        <source src={asset('/video/hero-train-loop-720p.webm')} type="video/webm" />
-        <source src={asset('/video/hero-train-loop-720p.mp4')} type="video/mp4" />
+        <source src={asset('/video/hero-taltek-loop-720p.webm')} type="video/webm" />
+        <source src={asset('/video/hero-taltek-loop-720p.mp4')} type="video/mp4" />
       {:else}
-        <source src={asset('/video/hero-train-loop-1080p.webm')} type="video/webm" />
-        <source src={asset('/video/hero-train-loop-1080p.mp4')} type="video/mp4" />
+        <source src={asset('/video/hero-taltek-loop-1080p.webm')} type="video/webm" />
+        <source src={asset('/video/hero-taltek-loop-1080p.mp4')} type="video/mp4" />
       {/if}
     </video>
-    <div class="hero__overlay"></div>
   </div>
 
   <div class="hero__content">
