@@ -63,6 +63,12 @@
       border: none;
     }
 
+     &--navy{
+      padding: 0;
+      color: var(--brand-navy);
+      padding: 5px;
+    }
+
     &__content {
       container-type: inline-size;
       position: relative;

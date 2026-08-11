@@ -1,7 +1,7 @@
 import type { Snippet } from 'svelte';
 import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 
-export type ActionButtonVariant = 'glass' | 'ghost' | 'solid';
+export type ActionButtonVariant = 'glass' | 'ghost' | 'solid' | 'navy';
 
 export type ActionButtonProps = {
   variant?: ActionButtonVariant;
