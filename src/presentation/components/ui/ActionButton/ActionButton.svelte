@@ -23,8 +23,8 @@
     class:action-button--glass={variant === 'glass'}
     class:action-button--ghost={variant === 'ghost'}
     class:action-button--solid={variant === 'solid'}
-    {...rest}
-  >
+    class:action-button--navy={variant === 'navy'}
+    {...rest}>
     {#if icons}
       <span class="action-button__content">
         <span class="action-button__runway" aria-hidden="true">
@@ -46,8 +46,8 @@
     class:action-button--glass={variant === 'glass'}
     class:action-button--ghost={variant === 'ghost'}
     class:action-button--solid={variant === 'solid'}
-    {...rest}
-  >
+    class:action-button--navy={variant === 'navy'}
+    {...rest}>
     {#if icons}
       <span class="action-button__content">
         <span class="action-button__runway" aria-hidden="true">

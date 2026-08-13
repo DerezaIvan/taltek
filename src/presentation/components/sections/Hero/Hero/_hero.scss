@@ -2,7 +2,8 @@
 @use 'presentation/styles/variables' as *;
 
 .hero {
-  @include hero-media-layout;
+  @include hero-media-layout(false);
+  background: #000;
 
   &__video {
     @include hero-media-cover;
@@ -15,7 +16,7 @@
 
   &__title {
     max-width: min(100%, 1350px);
-    color: #fff;
+    color: #f2f2f2;;
     font-weight: 500;
     font-size: clamp(30px, 2.65vw + 20.05px, 72px);
     line-height: 1.2;
@@ -32,7 +33,7 @@
 
   &__subtitle {
     margin-top: 22px;
-    color: #fff;
+    color: #f2f2f2;;
     font-weight: 400;
   }
 
