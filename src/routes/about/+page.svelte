@@ -9,6 +9,7 @@
     WhyUs,
   } from '$presentation/components/sections';
   import { ABOUT_CTA_SUBTITLE, ABOUT_CTA_TITLE } from '$shared/constants/cta';
+  import { SeoHead } from '$presentation/components/SeoHead';
 
   const { data } = $props();
   const about = $derived(data.about);
@@ -17,6 +18,13 @@
 
   const titleLines = ['[ЭКО]ЛОГИЧНЫЙ', 'ВЫБОР ДЛЯ ВАШИХ', 'ГРУЗОВ'];
 </script>
+
+<SeoHead
+  title={data.page.title}
+  description={data.page.description}
+  url={data.page.url}
+  ogImage={data.page.ogImage}
+/>
 
 <Main>
   {#snippet pageHero()}

@@ -9,6 +9,7 @@
     Cta,
   } from '$presentation/components/sections';
   import { SERVICES_CTA_SUBTITLE, SERVICES_CTA_TITLE } from '$shared/constants/cta';
+  import { SeoHead } from '$presentation/components/SeoHead';
 
   const { data } = $props();
 
@@ -16,6 +17,13 @@
 
   const titleLines = ['Максимально надёжное и оперативное решение Ваших транспортных задач'];
 </script>
+
+<SeoHead
+  title={data.page.title}
+  description={data.page.description}
+  url={data.page.url}
+  ogImage={data.page.ogImage}
+/>
 
 <Main>
   {#snippet pageHero()}
