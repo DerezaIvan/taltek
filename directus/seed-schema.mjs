@@ -196,7 +196,7 @@ const collections = [
 
   collection('our_mission', {
     singleton: true,
-    icon: 'target',
+    icon: 'flag',
     fields: [
       helpers.input('title', { required: true }),
       helpers.textarea('subtitle', { required: true }),
@@ -388,6 +388,7 @@ const collections = [
       helpers.input('direction_to'),
       helpers.textarea('comment'),
       helpers.dropdown('status', ['new', 'processed', 'archived'], { default: 'new' }),
+      helpers.dateTime('created_at'),
     ],
   }),
 ];

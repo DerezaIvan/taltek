@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
+import ExcelJS from 'exceljs';
 import fs from 'fs/promises';
 import path from 'path';
 import { spawn } from 'child_process';
@@ -381,6 +382,132 @@ app.get('/rebuild/status', checkRebuildToken, (_req, res) => {
   res.json({ running: rebuildRunning, pending: rebuildPending, lastRun: lastRebuild });
 });
 
+const EXPORT_TOKEN = process.env.EXPORT_TOKEN || '';
+
+const SUBMISSION_STATUS_LABELS = {
+  new: 'Новая',
+  processed: 'Обработана',
+  archived: 'Архив',
+};
+
+// Список полей коллекции submissions кэшируем ненадолго: поле created_at
+// могут добавить в Directus уже после деплоя, и выгрузка должна это подхватить.
+const FIELDS_CACHE_TTL = 5 * 60 * 1000;
+let submissionsFieldsCache = null;
+let submissionsFieldsCachedAt = 0;
+
+async function getSubmissionsFields() {
+  if (submissionsFieldsCache && Date.now() - submissionsFieldsCachedAt < FIELDS_CACHE_TTL) {
+    return submissionsFieldsCache;
+  }
+  const response = await fetch(`${DIRECTUS_URL}/fields/submissions`, {
+    headers: { Authorization: `Bearer ${DIRECTUS_API_TOKEN}` },
+  });
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(`Directus error ${response.status}: ${body}`);
+  }
+  const { data } = await response.json();
+  submissionsFieldsCache = new Set(data.map(field => field.field));
+  submissionsFieldsCachedAt = Date.now();
+  return submissionsFieldsCache;
+}
+
+function checkExportToken(req, res, next) {
+  if (!EXPORT_TOKEN) {
+    return res.status(503).json({ error: 'Выгрузка не настроена. Задайте EXPORT_TOKEN.' });
+  }
+  // Токен принимаем и из query (?token=), чтобы выгрузку можно было открыть простой ссылкой.
+  const token = req.get('X-Export-Token') || req.query.token || '';
+  if (token !== EXPORT_TOKEN) {
+    return res.status(401).json({ error: 'Неверный токен доступа' });
+  }
+  next();
+}
+
+app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
+  if (!isDirectusConfigured) {
+    return res.status(503).json({ error: 'Directus не настроен, выгрузка недоступна.' });
+  }
+
+  const { from, to, status } = req.query;
+  const datePattern = /^\d{4}-\d{2}-\d{2}$/;
+  if ((from && !datePattern.test(from)) || (to && !datePattern.test(to))) {
+    return res.status(400).json({ error: 'Даты указывайте в формате ГГГГ-ММ-ДД (например, 2026-09-01)' });
+  }
+
+  try {
+    const fields = await getSubmissionsFields();
+    const hasCreatedAt = fields.has('created_at');
+
+    const params = new URLSearchParams({
+      limit: '-1',
+      sort: hasCreatedAt ? '-created_at' : '-id',
+    });
+    if (hasCreatedAt && from) params.append('filter[created_at][_gte]', `${from}T00:00:00`);
+    if (hasCreatedAt && to) params.append('filter[created_at][_lte]', `${to}T23:59:59`);
+    if (status) params.append('filter[status][_eq]', status);
+
+    const response = await fetch(`${DIRECTUS_URL}/items/submissions?${params}`, {
+      headers: { Authorization: `Bearer ${DIRECTUS_API_TOKEN}` },
+    });
+    if (!response.ok) {
+      const body = await response.text();
+      throw new Error(`Directus error ${response.status}: ${body}`);
+    }
+    const { data: submissions } = await response.json();
+
+    const workbook = new ExcelJS.Workbook();
+    workbook.creator = 'Taltek';
+    const sheet = workbook.addWorksheet('Заявки');
+
+    sheet.columns = [
+      { header: 'ID', key: 'id', width: 8 },
+      { header: 'Дата', key: 'created_at', width: 18 },
+      { header: 'Имя', key: 'name', width: 24 },
+      { header: 'Телефон', key: 'phone', width: 20 },
+      { header: 'Email', key: 'email', width: 28 },
+      { header: 'Компания', key: 'company', width: 24 },
+      { header: 'Тип вагона', key: 'wagon_type', width: 18 },
+      { header: 'Откуда', key: 'direction_from', width: 18 },
+      { header: 'Куда', key: 'direction_to', width: 18 },
+      { header: 'Комментарий', key: 'comment', width: 40 },
+      { header: 'Статус', key: 'status', width: 14 },
+    ];
+    sheet.getRow(1).font = { bold: true };
+
+    for (const item of submissions) {
+      sheet.addRow({
+        id: item.id,
+        created_at: item.created_at ? formatMoscowDateTime(item.created_at) : '',
+        name: item.name || '',
+        phone: item.phone || '',
+        email: item.email || '',
+        company: item.company || '',
+        wagon_type: item.wagon_type || '',
+        direction_from: item.direction_from || '',
+        direction_to: item.direction_to || '',
+        comment: item.comment || '',
+        status: SUBMISSION_STATUS_LABELS[item.status] || item.status || '',
+      });
+    }
+
+    const filename = `submissions-${new Date().toISOString().slice(0, 10)}.xlsx`;
+    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    await workbook.xlsx.write(res);
+    res.end();
+    console.log(`Выгрузка заявок в Excel: ${submissions.length} строк`);
+  } catch (error) {
+    console.error('Ошибка выгрузки заявок:', error);
+    if (res.headersSent) {
+      res.end();
+    } else {
+      res.status(502).json({ error: 'Не удалось получить заявки из Directus. Попробуйте позже.' });
+    }
+  }
+});
+
 app.get('/health', (_req, res) => {
   res.json({ status: 'ok', directus: Boolean(isDirectusConfigured) });
 });
@@ -401,6 +528,20 @@ function formatMoscowDate(isoDate) {
   const get = type => parts.find(p => p.type === type)?.value || '';
   // "12:09 24 июля 2026 г."
   return `${get('hour')}:${get('minute')} ${get('day')} ${get('month')} ${get('year')} г.`;
+}
+
+function formatMoscowDateTime(isoDate) {
+  const parts = new Intl.DateTimeFormat('ru-RU', {
+    timeZone: 'Europe/Moscow',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  }).formatToParts(new Date(isoDate));
+  const get = type => parts.find(p => p.type === type)?.value || '';
+  // "24.07.2026 12:09"
+  return `${get('day')}.${get('month')}.${get('year')} ${get('hour')}:${get('minute')}`;
 }
 
 function escapeHtml(value) {

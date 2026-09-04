@@ -1,0 +1,16 @@
+{
+  "name": "directus-extension-taltek-export-endpoint",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Прокси-эндпоинт /export-xlsx: выгрузка заявок в Excel через сессию Directus",
+  "directus:extension": {
+    "type": "endpoint",
+    "path": "index.js",
+    "source": "index.js",
+    "host": "^11.5.0",
+    "sandbox": {
+      "enabled": false,
+      "requestedScopes": {}
+    }
+  }
+}

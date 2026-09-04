@@ -57,7 +57,7 @@ const SYSTEM_FIELD_DEFAULTS = {
     translations: tr('Код'),
   },
   status: {
-    note: 'published — опубликовано, draft — черновик',
+    note: 'published - опубликовано, draft - черновик',
     translations: tr('Статус'),
   },
   sort: {
@@ -111,7 +111,7 @@ const uiConfig = [
       label: { note: 'Текст ссылки в меню', translations: tr('Название ссылки') },
       href: { note: 'Адрес страницы, например /about/', translations: tr('Ссылка') },
       sort: { note: 'Порядок в меню', translations: tr('Порядок') },
-      status: { note: 'published — видно, draft — скрыто', translations: tr('Статус') },
+      status: { note: 'published - видно, draft - скрыто', translations: tr('Статус') },
     },
   },
   {
@@ -120,7 +120,7 @@ const uiConfig = [
       icon: 'article',
       note: 'SEO-настройки страниц: title, description, hero.',
       translations: tr('Страницы и SEO'),
-      display_template: '{{slug}} — {{title}}',
+      display_template: '{{slug}} - {{title}}',
     },
     fields: {
       slug: {
@@ -135,7 +135,7 @@ const uiConfig = [
         translations: tr('Заголовок Hero'),
       },
       hero_subtitle: { note: 'Подзаголовок Hero-секции', translations: tr('Подзаголовок Hero') },
-      status: { note: 'published — страница доступна, draft — нет', translations: tr('Статус') },
+      status: { note: 'published - страница доступна, draft - нет', translations: tr('Статус') },
       sort: { note: 'Порядок (не влияет на сайт)', translations: tr('Порядок') },
     },
   },
@@ -144,7 +144,7 @@ const uiConfig = [
     meta: {
       icon: 'home',
       note: 'Первый экран главной страницы.',
-      translations: tr('Главная — Hero'),
+      translations: tr('Главная - Hero'),
     },
     fields: {
       title: { note: 'Главный заголовок на первом экране', translations: tr('Заголовок') },
@@ -157,7 +157,7 @@ const uiConfig = [
     meta: {
       icon: 'info',
       note: 'Блок «О компании» с текстом и изображением.',
-      translations: tr('О компании — вступление'),
+      translations: tr('О компании - вступление'),
       display_template: '{{title}}',
     },
     fields: {
@@ -171,7 +171,7 @@ const uiConfig = [
   {
     collection: 'our_mission',
     meta: {
-      icon: 'target',
+      icon: 'flag',
       note: 'Блок «Наша миссия» с галереей.',
       translations: tr('Наша миссия'),
     },
@@ -200,7 +200,7 @@ const uiConfig = [
     meta: {
       icon: 'local_shipping',
       note: 'Заголовок блока доставки на главной.',
-      translations: tr('Доставка — заголовок'),
+      translations: tr('Доставка - заголовок'),
     },
     fields: {
       title: { note: 'Заголовок блока доставки', translations: tr('Заголовок') },
@@ -211,7 +211,7 @@ const uiConfig = [
     meta: {
       icon: 'format_list_numbered',
       note: 'Шаги доставки (01–05).',
-      translations: tr('Доставка — шаги'),
+      translations: tr('Доставка - шаги'),
       display_template: '{{step_id}}. {{title}}',
     },
     fields: {
@@ -253,7 +253,7 @@ const uiConfig = [
       icon: 'show_chart',
       note: 'Цифры «Талтэк в цифрах».',
       translations: tr('Цифры'),
-      display_template: '{{label}} — {{value}}',
+      display_template: '{{label}} - {{value}}',
     },
     fields: {
       id: { note: 'Код цифры', translations: tr('Код') },
@@ -267,7 +267,7 @@ const uiConfig = [
     meta: {
       icon: 'train',
       note: 'Заголовок блока парка вагонов.',
-      translations: tr('Парк вагонов — заголовок'),
+      translations: tr('Парк вагонов - заголовок'),
     },
     fields: {
       title: { note: 'Заголовок блока', translations: tr('Заголовок') },
@@ -278,7 +278,7 @@ const uiConfig = [
     meta: {
       icon: 'train',
       note: 'Карточки с цифрами парка вагонов.',
-      translations: tr('Парк вагонов — карточки'),
+      translations: tr('Парк вагонов - карточки'),
       display_template: '{{label}}',
     },
     fields: {
@@ -316,7 +316,7 @@ const uiConfig = [
       icon: 'campaign',
       note: 'CTA-блоки на главной, о компании и услугах.',
       translations: tr('Призывы к действию'),
-      display_template: '{{id}} — {{title}}',
+      display_template: '{{id}} - {{title}}',
     },
     fields: {
       id: { note: 'Код блока: home, about, services', translations: tr('Код блока') },
@@ -329,7 +329,7 @@ const uiConfig = [
     meta: {
       icon: 'image',
       note: 'Фоновое изображение на странице «О компании».',
-      translations: tr('О компании — фон'),
+      translations: tr('О компании - фон'),
     },
     fields: {
       image: { note: 'Фоновое изображение', translations: tr('Изображение') },
@@ -341,7 +341,7 @@ const uiConfig = [
     meta: {
       icon: 'image',
       note: 'Фоновое изображение на странице «Услуги».',
-      translations: tr('Услуги — фон'),
+      translations: tr('Услуги - фон'),
     },
     fields: {
       image: { note: 'Фоновое изображение', translations: tr('Изображение') },
@@ -353,7 +353,7 @@ const uiConfig = [
     meta: {
       icon: 'image',
       note: 'Фоновое изображение на странице «Контакты».',
-      translations: tr('Контакты — фон'),
+      translations: tr('Контакты - фон'),
     },
     fields: {
       image: { note: 'Фоновое изображение', translations: tr('Изображение') },
@@ -365,7 +365,7 @@ const uiConfig = [
     meta: {
       icon: 'contact_mail',
       note: 'Заголовок и фон блока «Заключить контракт».',
-      translations: tr('Контракты — заголовок'),
+      translations: tr('Контракты - заголовок'),
     },
     fields: {
       title: { note: 'Заголовок блока', translations: tr('Заголовок') },
@@ -377,7 +377,7 @@ const uiConfig = [
     meta: {
       icon: 'contact_mail',
       note: 'Карточки контактных лиц для заключения договоров.',
-      translations: tr('Контракты — контакты'),
+      translations: tr('Контракты - контакты'),
       display_template: '{{name}}',
     },
     fields: {
@@ -395,7 +395,7 @@ const uiConfig = [
     meta: {
       icon: 'support_agent',
       note: 'Заголовки блока операционных контактов.',
-      translations: tr('Операционные контакты — заголовки'),
+      translations: tr('Операционные контакты - заголовки'),
     },
     fields: {
       dispatchers_title: {
@@ -461,7 +461,7 @@ const uiConfig = [
     meta: {
       icon: 'policy',
       note: 'Вступление страницы политики конфиденциальности.',
-      translations: tr('Политика — вступление'),
+      translations: tr('Политика - вступление'),
     },
     fields: {
       intro: { note: 'Вступительный текст', translations: tr('Вступление') },
@@ -472,7 +472,7 @@ const uiConfig = [
     meta: {
       icon: 'policy',
       note: 'Разделы страницы политики конфиденциальности.',
-      translations: tr('Политика — разделы'),
+      translations: tr('Политика - разделы'),
       display_template: '{{title}}',
     },
     fields: {
@@ -487,7 +487,7 @@ const uiConfig = [
       icon: 'inbox',
       note: 'Заявки из контактной формы.',
       translations: tr('Заявки'),
-      display_template: '{{name}} — {{phone}}',
+      display_template: '{{name}} - {{phone}}',
     },
     fields: {
       name: { note: 'Имя', translations: tr('Имя') },

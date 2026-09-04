@@ -33,6 +33,7 @@ services:
       TO_EMAIL: ${TO_EMAIL}
       REBUILD_TOKEN: ${REBUILD_TOKEN:-}
       REBUILD_NOTIFY_EMAILS: ${REBUILD_NOTIFY_EMAILS:-}
+      EXPORT_TOKEN: ${EXPORT_TOKEN:-}
       COMPOSE_PROJECT_NAME: ${COMPOSE_PROJECT_NAME:-taltek}
       REBUILD_CWD: ${HOST_PROJECT_DIR:-/compose}
     volumes:
@@ -73,8 +74,11 @@ services:
       PUBLIC_URL: ${DIRECTUS_PUBLIC_URL:-http://localhost:8055}
       CORS_ENABLED: 'true'
       CORS_ORIGIN: 'true'
+      EXPORT_TOKEN: ${EXPORT_TOKEN:-}
+      EXTENSIONS_AUTO_RELOAD: 'true'
     volumes:
       - directus_uploads:/directus/uploads
+      - ./directus/extensions:/directus/extensions
     depends_on:
       postgres:
         condition: service_healthy

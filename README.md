@@ -171,6 +171,45 @@ node directus/update-ui.mjs
 - Контактные лица: `contract_contacts_cards`, `operations_dispatchers`, `operations_territories`
 - Заявки из формы: `submissions`
 
+### Локальная разработка расширений (стили панелей)
+
+Панели «Выгрузка заявок (Excel)» и «Заявки» (список с просмотром) в Аналитике, а также прокси-эндпоинт `/export-xlsx` — локальные расширения Directus:
+
+- `directus/extensions-src/taltek-export-panel/` — исходники панели выгрузки (Vue SFC), стили в `src/panel.vue` (блок `<style scoped>`);
+- `directus/extensions-src/taltek-submissions-panel/` — исходники панели списка заявок с карточкой просмотра;
+- `directus/extensions/directus-extension-*/` — собранные бандлы, смонтированы в контейнер `./directus/extensions:/directus/extensions`;
+- `directus/extensions/directus-extension-taltek-export-endpoint/` — эндпоинт `/export-xlsx` (plain JS, сборка не нужна).
+
+Цикл разработки:
+
+```bash
+# 1. поднять CMS локально (нужен запущенный Docker Desktop)
+cp .env.example .env
+docker compose --profile cms up -d postgres directus
+
+# 2. править directus/extensions-src/taltek-export-panel/src/panel.vue
+
+# 3. пересобрать панель
+cd directus/extensions-src/taltek-export-panel
+npm install   # один раз
+npm run build # после каждой правки
+
+# 4. если изменения не подхватились сами (EXTENSIONS_AUTO_RELOAD=true), перезапустить:
+docker compose --profile cms restart directus
+
+Для реальных данных локально можно развернуть дамп прода:
+
+```bash
+ssh root@<сервер> "docker exec taltek-postgres-1 pg_dump -U directus directus" > dump.sql
+docker compose --profile cms up -d postgres
+cat dump.sql | docker exec -i taltek-postgres-1 psql -U directus -d directus
+docker compose --profile cms up -d directus
+```
+
+Без локального `api`-сервиса кнопка выгрузки вернёт ошибку — это нормально, стили панели на это не влияют. Полная цепочка локально: `docker compose --profile cms up -d --build` (все сервисы).
+
+Общие стили админки (цвет проекта, логотип, кастомный CSS) правятся без локального запуска: Settings → Project Settings → Custom CSS.
+
 ### Права доступа
 
 - Для сборки сайта достаточно read-only static token (`DIRECTUS_TOKEN`).
