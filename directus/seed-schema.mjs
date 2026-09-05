@@ -97,7 +97,7 @@ const helpers = {
   files: (name, options = {}) =>
     field('alias', name, { interface: 'files', special: ['files'], ...options }),
   dateTime: (name, options = {}) =>
-    field('dateTime', name, { interface: 'datetime', special: ['date-created'], ...options }),
+    field('timestamp', name, { interface: 'datetime', special: ['date-created'], ...options }),
 };
 
 function collection(name, options = {}) {

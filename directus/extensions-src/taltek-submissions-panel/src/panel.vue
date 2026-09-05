@@ -73,9 +73,6 @@
           >
             {{ busy ? 'Сохраняю...' : 'Отметить просмотренной' }}
           </button>
-          <a class="subs__open" :href="`/admin/content/submissions/${selected.id}`" target="_top">
-            Открыть в разделе «Заявки»
-          </a>
           <div v-if="error" class="subs__error">{{ error }}</div>
         </div>
       </div>
