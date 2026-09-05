@@ -534,11 +534,12 @@
           ×
         </button>
         <p class="captcha-modal__title">Подтвердите, что вы не робот</p>
-        <altcha-widget
-          class="captcha-modal__widget"
-          challengeurl={CHALLENGE_URL}
-          strings={CAPTCHA_STRINGS}
-          onstatechange={handleCaptchaState}></altcha-widget>
+        <div class="captcha-modal__widget">
+          <altcha-widget
+            challengeurl={CHALLENGE_URL}
+            strings={CAPTCHA_STRINGS}
+            onstatechange={handleCaptchaState}></altcha-widget>
+        </div>
       </div>
     </div>
   {/if}
