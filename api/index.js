@@ -3,13 +3,17 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import nodemailer from 'nodemailer';
 import ExcelJS from 'exceljs';
+import { createChallenge, verifySolution } from 'altcha-lib';
 import fs from 'fs/promises';
 import path from 'path';
 import { spawn } from 'child_process';
+import { startWeeklyDigest } from './weekly-digest.mjs';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 const LEADS_DIR = process.env.LEADS_DIR || '/app/data';
+
+app.set('trust proxy', 1);
 
 const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL?.replace(/\/$/, '') || '';
 const DIRECTUS_API_TOKEN = process.env.DIRECTUS_API_TOKEN || '';
@@ -19,7 +23,7 @@ const allowedOrigin = process.env.CORS_ORIGIN || '*';
 app.use(
   cors({
     origin: allowedOrigin,
-    methods: ['POST', 'OPTIONS'],
+    methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type'],
   })
 );
@@ -48,6 +52,12 @@ const WAGON_TYPE_EMAILS = {
 };
 
 const isSmtpConfigured = smtpHost && fromEmail && toEmail;
+
+const ALTCHA_HMAC_KEY = process.env.ALTCHA_HMAC_KEY || '';
+
+if (!ALTCHA_HMAC_KEY) {
+  console.warn('ALTCHA не настроена. Задайте ALTCHA_HMAC_KEY для проверки заявок капчей.');
+}
 
 let transporter = null;
 if (isSmtpConfigured) {
@@ -83,6 +93,12 @@ if (isDirectusConfigured) {
   console.warn('Directus не настроен. Заявки будут сохраняться только в файлы.');
 }
 
+startWeeklyDigest({
+  getTransporter: () => transporter,
+  directusUrl: DIRECTUS_URL,
+  directusToken: DIRECTUS_API_TOKEN,
+});
+
 function validatePhone(value) {
   const digits = value.replace(/\D/g, '');
   return digits.length >= 10;
@@ -112,6 +128,15 @@ app.post('/contact', async (req, res) => {
     return res.status(400).json({ error: 'Введите корректный email' });
   }
 
+  if (ALTCHA_HMAC_KEY) {
+    const captchaValid = await verifySolution(req.body.captchaToken ?? '', ALTCHA_HMAC_KEY).catch(
+      () => false
+    );
+    if (!captchaValid) {
+      return res.status(400).json({ error: 'Проверка не пройдена. Подтвердите, что вы не робот.' });
+    }
+  }
+
   const wagonTypeLabel =
     {
       gondola: 'Полувагон',
@@ -133,9 +158,7 @@ app.post('/contact', async (req, res) => {
     comment: comment?.trim() || '',
   };
 
-  let emailSent = false;
-  let emailError = null;
-
+  let mailOptions = null;
   if (transporter) {
     const recipient = WAGON_TYPE_EMAILS[wagonType] || toEmail;
     const subject = `Новая заявка с сайта от ${lead.name}`;
@@ -171,33 +194,14 @@ app.post('/contact', async (req, res) => {
       </table>
     `;
 
-    try {
-      await transporter.sendMail({
-        from: `"Сайт Taltek" <${fromEmail}>`,
-        to: recipient,
-        subject,
-        text,
-        html,
-        replyTo: lead.email || undefined,
-      });
-      emailSent = true;
-    } catch (error) {
-      emailError = error.message;
-      console.error('Ошибка отправки письма:', error);
-    }
-  }
-
-  let directusSaved = false;
-  let directusError = null;
-
-  if (isDirectusConfigured) {
-    try {
-      await saveLeadToDirectus(lead);
-      directusSaved = true;
-    } catch (error) {
-      directusError = error.message;
-      console.error('Ошибка сохранения в Directus:', error);
-    }
+    mailOptions = {
+      from: `"Сайт Taltek" <${fromEmail}>`,
+      to: recipient,
+      subject,
+      text,
+      html,
+      replyTo: lead.email || undefined,
+    };
   }
 
   try {
@@ -207,24 +211,19 @@ app.post('/contact', async (req, res) => {
     return res.status(500).json({ error: 'Не удалось сохранить заявку. Попробуйте позже.' });
   }
 
-  const notices = [];
-  if (!emailSent) {
-    notices.push(
-      transporter
-        ? 'Заявка сохранена, но письмо не удалось отправить.'
-        : 'Заявка сохранена. Отправка письма временно недоступна.'
-    );
-  }
-  if (isDirectusConfigured && !directusSaved) {
-    notices.push('Directus временно недоступен, заявка сохранена в файл.');
+  res.json({ success: true });
+
+  if (mailOptions) {
+    transporter.sendMail(mailOptions).catch(error => {
+      console.error('Ошибка отправки письма:', error);
+    });
   }
 
-  res.json({
-    success: true,
-    savedToDirectus: directusSaved,
-    emailSent,
-    notice: notices.length > 0 ? notices.join(' ') : undefined,
-  });
+  if (isDirectusConfigured) {
+    saveLeadToDirectus(lead).catch(error => {
+      console.error('Ошибка сохранения в Directus:', error);
+    });
+  }
 });
 
 async function saveLeadToDirectus(lead) {
@@ -433,7 +432,9 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
   const { from, to, status } = req.query;
   const datePattern = /^\d{4}-\d{2}-\d{2}$/;
   if ((from && !datePattern.test(from)) || (to && !datePattern.test(to))) {
-    return res.status(400).json({ error: 'Даты указывайте в формате ГГГГ-ММ-ДД (например, 2026-09-01)' });
+    return res
+      .status(400)
+      .json({ error: 'Даты указывайте в формате ГГГГ-ММ-ДД (например, 2026-09-01)' });
   }
 
   try {
@@ -493,7 +494,10 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
     }
 
     const filename = `submissions-${new Date().toISOString().slice(0, 10)}.xlsx`;
-    res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    res.setHeader(
+      'Content-Type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     await workbook.xlsx.write(res);
     res.end();
@@ -506,6 +510,14 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
       res.status(502).json({ error: 'Не удалось получить заявки из Directus. Попробуйте позже.' });
     }
   }
+});
+
+app.get('/captcha/challenge', async (_req, res) => {
+  if (!ALTCHA_HMAC_KEY) {
+    return res.status(503).json({ error: 'Капча не настроена. Задайте ALTCHA_HMAC_KEY.' });
+  }
+  const challenge = await createChallenge({ hmacKey: ALTCHA_HMAC_KEY });
+  res.json(challenge);
 });
 
 app.get('/health', (_req, res) => {
@@ -526,7 +538,6 @@ function formatMoscowDate(isoDate) {
     year: 'numeric',
   }).formatToParts(new Date(isoDate));
   const get = type => parts.find(p => p.type === type)?.value || '';
-  // "12:09 24 июля 2026 г."
   return `${get('hour')}:${get('minute')} ${get('day')} ${get('month')} ${get('year')} г.`;
 }
 
@@ -540,7 +551,6 @@ function formatMoscowDateTime(isoDate) {
     minute: '2-digit',
   }).formatToParts(new Date(isoDate));
   const get = type => parts.find(p => p.type === type)?.value || '';
-  // "24.07.2026 12:09"
   return `${get('day')}.${get('month')}.${get('year')} ${get('hour')}:${get('minute')}`;
 }
 

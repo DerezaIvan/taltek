@@ -1,5 +1,7 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
+  import { onMount } from 'svelte';
+  import { env } from '$env/dynamic/public';
   import { RequestButton } from '$presentation/components/ui';
   import {
     CONTACTS_CONSENT,
@@ -8,6 +10,59 @@
     CONTACTS_WAGON_TYPES,
   } from '$shared/constants/contacts';
   import { submitContactsForm } from '$infrastructure/api/submit-form';
+
+  const API_URL = (env.PUBLIC_API_URL ?? '').replace(/\/$/, '');
+  const CHALLENGE_URL = API_URL ? `${API_URL}/captcha/challenge` : '';
+
+  const CAPTCHA_STRINGS = JSON.stringify({
+    label: 'Я не робот',
+    verified: 'Проверено',
+    verifying: 'Проверяю...',
+    waitAlert: 'Идёт проверка, подождите...',
+    error: 'Ошибка проверки. Попробуйте ещё раз.',
+    footer: 'Защита от спама ALTCHA',
+  });
+
+  let captchaEnabled = $state(false);
+  let captchaModalOpen = $state(false);
+  let captchaToken = '';
+
+  onMount(async () => {
+    if (!CHALLENGE_URL) return;
+    try {
+      const response = await fetch(CHALLENGE_URL);
+      if (!response.ok) return;
+      await import('altcha');
+      captchaEnabled = true;
+    } catch {}
+  });
+
+  function handleCaptchaState(event: CustomEvent) {
+    const { state, payload } = event.detail ?? {};
+    captchaToken = state === 'verified' ? payload : '';
+    if (state === 'verified' && captchaModalOpen) {
+      captchaModalOpen = false;
+      void doSubmit();
+    }
+  }
+
+  function closeCaptchaModal() {
+    captchaModalOpen = false;
+  }
+
+  $effect(() => {
+    if (!captchaModalOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeCaptchaModal();
+    };
+    window.addEventListener('keydown', onKeydown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeydown);
+    };
+  });
 
   interface FormErrors {
     name?: string;
@@ -161,6 +216,15 @@
       return;
     }
 
+    if (captchaEnabled && !captchaToken) {
+      captchaModalOpen = true;
+      return;
+    }
+
+    await doSubmit();
+  }
+
+  async function doSubmit() {
     isSubmitting = true;
 
     try {
@@ -173,6 +237,7 @@
         directionFrom: directionFrom.trim(),
         directionTo: directionTo.trim(),
         comment: comment.trim(),
+        captchaToken: captchaToken || undefined,
       });
 
       formSuccess = 'Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.';
@@ -185,6 +250,8 @@
       formError =
         error instanceof Error ? error.message : 'Не удалось отправить форму. Попробуйте позже.';
     } finally {
+      // токен капчи одноразовый
+      captchaToken = '';
       isSubmitting = false;
     }
   }
@@ -192,6 +259,67 @@
 
 <style lang="scss">
   @use './_contacts-form.scss';
+
+  .captcha-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    &__backdrop {
+      position: absolute;
+      inset: 0;
+      border: none;
+      padding: 0;
+      cursor: default;
+      background: rgba(10, 25, 50, 0.55);
+      backdrop-filter: blur(4px);
+    }
+
+    &__box {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      padding: 28px 24px 24px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      text-align: center;
+    }
+
+    &__title {
+      margin: 0 0 16px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #15294b;
+    }
+
+    &__close {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      border: none;
+      background: none;
+      padding: 4px 8px;
+      font-size: 20px;
+      line-height: 1;
+      cursor: pointer;
+      color: #15294b;
+      opacity: 0.5;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    &__widget {
+      display: flex;
+      justify-content: center;
+    }
+  }
 </style>
 
 <form class="contacts-form" onsubmit={handleSubmit} novalidate>
@@ -202,8 +330,7 @@
       <label
         class="contacts-form__label"
         class:contacts-form__label--required={CONTACTS_FORM_FIELDS.name.required}
-        for="contacts-name"
-      >
+        for="contacts-name">
         {CONTACTS_FORM_FIELDS.name.label}
         {#if CONTACTS_FORM_FIELDS.name.required}
           <span class="contacts-form__required" aria-hidden="true">*</span>
@@ -220,8 +347,7 @@
         bind:value={name}
         onblur={() => (touched.name = true)}
         aria-invalid={touched.name && errors.name ? 'true' : 'false'}
-        aria-describedby={touched.name && errors.name ? 'contacts-name-error' : undefined}
-      />
+        aria-describedby={touched.name && errors.name ? 'contacts-name-error' : undefined} />
       {#if touched.name && errors.name}
         <span id="contacts-name-error" class="contacts-form__error" role="alert">
           {errors.name}
@@ -233,8 +359,7 @@
       <label
         class="contacts-form__label"
         class:contacts-form__label--required={CONTACTS_FORM_FIELDS.phone.required}
-        for="contacts-phone"
-      >
+        for="contacts-phone">
         {CONTACTS_FORM_FIELDS.phone.label}
         {#if CONTACTS_FORM_FIELDS.phone.required}
           <span class="contacts-form__required" aria-hidden="true">*</span>
@@ -253,8 +378,7 @@
         onfocus={handlePhoneFocus}
         onblur={() => (touched.phone = true)}
         aria-invalid={touched.phone && errors.phone ? 'true' : 'false'}
-        aria-describedby={touched.phone && errors.phone ? 'contacts-phone-error' : undefined}
-      />
+        aria-describedby={touched.phone && errors.phone ? 'contacts-phone-error' : undefined} />
       {#if touched.phone && errors.phone}
         <span id="contacts-phone-error" class="contacts-form__error" role="alert">
           {errors.phone}
@@ -277,8 +401,7 @@
         bind:value={email}
         onblur={() => (touched.email = true)}
         aria-invalid={touched.email && errors.email ? 'true' : 'false'}
-        aria-describedby={touched.email && errors.email ? 'contacts-email-error' : undefined}
-      />
+        aria-describedby={touched.email && errors.email ? 'contacts-email-error' : undefined} />
       {#if touched.email && errors.email}
         <span id="contacts-email-error" class="contacts-form__error" role="alert">
           {errors.email}
@@ -297,16 +420,14 @@
         name="company"
         autocomplete="organization"
         placeholder={CONTACTS_FORM_FIELDS.company.placeholder}
-        bind:value={company}
-      />
+        bind:value={company} />
     </div>
 
     <div class="contacts-form__field contacts-form__field--half">
       <label
         class="contacts-form__label"
         class:contacts-form__label--required={CONTACTS_FORM_FIELDS.wagonType.required}
-        for="contacts-wagon-type"
-      >
+        for="contacts-wagon-type">
         {CONTACTS_FORM_FIELDS.wagonType.label}
         {#if CONTACTS_FORM_FIELDS.wagonType.required}
           <span class="contacts-form__required" aria-hidden="true">*</span>
@@ -323,8 +444,7 @@
           aria-invalid={touched.wagonType && errors.wagonType ? 'true' : 'false'}
           aria-describedby={touched.wagonType && errors.wagonType
             ? 'contacts-wagon-type-error'
-            : undefined}
-        >
+            : undefined}>
           <option value="">{CONTACTS_FORM_FIELDS.wagonType.placeholder}</option>
           {#each CONTACTS_WAGON_TYPES as option (option.value)}
             <option value={option.value}>{option.label}</option>
@@ -349,8 +469,7 @@
           type="text"
           name="directionFrom"
           placeholder={CONTACTS_FORM_FIELDS.direction.fromPlaceholder}
-          bind:value={directionFrom}
-        />
+          bind:value={directionFrom} />
         <span class="contacts-form__direction-arrow" aria-hidden="true">→</span>
         <input
           id="contacts-direction-to"
@@ -358,8 +477,7 @@
           type="text"
           name="directionTo"
           placeholder={CONTACTS_FORM_FIELDS.direction.toPlaceholder}
-          bind:value={directionTo}
-        />
+          bind:value={directionTo} />
       </div>
     </div>
 
@@ -373,8 +491,7 @@
         type="text"
         name="comment"
         placeholder={CONTACTS_FORM_FIELDS.comment.placeholder}
-        bind:value={comment}
-      />
+        bind:value={comment} />
     </div>
   </div>
 
@@ -384,8 +501,7 @@
         class="contacts-form__checkbox"
         type="checkbox"
         name="consent"
-        bind:checked={consent}
-      />
+        bind:checked={consent} />
       <span class="contacts-form__consent-text">
         <span class="contacts-form__required" aria-hidden="true">*</span>
         {CONTACTS_CONSENT.prefix}
@@ -397,6 +513,35 @@
 
     <RequestButton variant="solid" type="submit" disabled={isSubmitDisabled} />
   </div>
+
+  {#if captchaModalOpen}
+    <div
+      class="captcha-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Проверка, что вы не робот">
+      <button
+        type="button"
+        class="captcha-modal__backdrop"
+        aria-label="Закрыть"
+        onclick={closeCaptchaModal}></button>
+      <div class="captcha-modal__box">
+        <button
+          type="button"
+          class="captcha-modal__close"
+          aria-label="Закрыть"
+          onclick={closeCaptchaModal}>
+          ×
+        </button>
+        <p class="captcha-modal__title">Подтвердите, что вы не робот</p>
+        <altcha-widget
+          class="captcha-modal__widget"
+          challengeurl={CHALLENGE_URL}
+          strings={CAPTCHA_STRINGS}
+          onstatechange={handleCaptchaState}></altcha-widget>
+      </div>
+    </div>
+  {/if}
 
   {#if formError}
     <div class="contacts-form__message contacts-form__message--error" role="alert">

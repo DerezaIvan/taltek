@@ -15,6 +15,7 @@ export interface ContactsFormPayload {
   directionFrom: string;
   directionTo: string;
   comment: string;
+  captchaToken?: string;
 }
 
 export async function submitForm(_payload: SubmitFormPayload): Promise<void> {
