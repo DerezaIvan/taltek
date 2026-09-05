@@ -391,6 +391,34 @@ const collections = [
       helpers.dateTime('created_at'),
     ],
   }),
+
+  // Заявки, отклонённые проверкой капчи (спам-лог для панели в Аналитике)
+  collection('blocked_submissions', {
+    icon: 'block',
+    fields: [
+      field('string', 'reason', {
+        interface: 'select-dropdown',
+        options: {
+          choices: [
+            { text: 'Нет токена', value: 'no_token' },
+            { text: 'Неверный токен', value: 'invalid_token' },
+          ],
+        },
+        required: true,
+      }),
+      helpers.input('ip'),
+      helpers.textarea('user_agent'),
+      helpers.input('name'),
+      helpers.input('phone'),
+      helpers.input('email'),
+      helpers.input('company'),
+      helpers.input('wagon_type'),
+      helpers.input('direction_from'),
+      helpers.input('direction_to'),
+      helpers.textarea('comment'),
+      helpers.dateTime('created_at'),
+    ],
+  }),
 ];
 
 async function createCollection(token, collection) {

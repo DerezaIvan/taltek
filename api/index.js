@@ -129,10 +129,10 @@ app.post('/contact', async (req, res) => {
   }
 
   if (ALTCHA_HMAC_KEY) {
-    const captchaValid = await verifySolution(req.body.captchaToken ?? '', ALTCHA_HMAC_KEY).catch(
-      () => false
-    );
+    const captchaToken = req.body.captchaToken ?? '';
+    const captchaValid = await verifySolution(captchaToken, ALTCHA_HMAC_KEY).catch(() => false);
     if (!captchaValid) {
+      logBlockedSubmission(req, captchaToken ? 'invalid_token' : 'no_token');
       return res.status(400).json({ error: 'Проверка не пройдена. Подтвердите, что вы не робот.' });
     }
   }
@@ -252,6 +252,52 @@ async function saveLeadToDirectus(lead) {
   }
 
   console.log('Заявка сохранена в Directus');
+}
+
+// Отклонённые капчей заявки пишем в Directus (blocked_submissions), чтобы менеджер
+// видел попытки спама в Аналитике. Запись идёт в фоне и не влияет на ответ клиенту.
+function logBlockedSubmission(req, reason) {
+  if (!isDirectusConfigured) return;
+
+  const cut = (value, max = 255) =>
+    String(value ?? '')
+      .slice(0, max)
+      .trim();
+
+  const payload = {
+    reason,
+    ip: cut(req.ip, 45),
+    user_agent: cut(req.get('user-agent'), 1000),
+    name: cut(req.body?.name),
+    phone: cut(req.body?.phone),
+    email: cut(req.body?.email),
+    company: cut(req.body?.company),
+    wagon_type: cut(req.body?.wagonType),
+    direction_from: cut(req.body?.directionFrom),
+    direction_to: cut(req.body?.directionTo),
+    comment: cut(req.body?.comment, 5000),
+  };
+
+  fetch(`${DIRECTUS_URL}/items/blocked_submissions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${DIRECTUS_API_TOKEN}`,
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(async response => {
+      if (!response.ok) {
+        console.error(
+          'Не удалось записать заблокированную заявку:',
+          response.status,
+          await response.text()
+        );
+      }
+    })
+    .catch(error => {
+      console.error('Ошибка записи заблокированной заявки:', error);
+    });
 }
 
 async function saveLeadToFile(lead) {
