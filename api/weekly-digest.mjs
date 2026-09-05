@@ -4,12 +4,6 @@ import ExcelJS from 'exceljs';
 const MSK_OFFSET_MS = 3 * 60 * 60 * 1000;
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
-const SUBMISSION_STATUS_LABELS = {
-  new: 'Новая',
-  processed: 'Обработана',
-  archived: 'Архив',
-};
-
 // Еженедельная рассылка заявок за прошлую неделю: каждый понедельник
 // в 09:00 МСК (06:00 UTC) отправляет XLSX-отчёт на адреса из DIGEST_EMAILS.
 export function startWeeklyDigest({ getTransporter, directusUrl, directusToken }) {
@@ -157,7 +151,6 @@ async function buildWorkbook(submissions) {
     { header: 'Откуда', key: 'direction_from', width: 18 },
     { header: 'Куда', key: 'direction_to', width: 18 },
     { header: 'Комментарий', key: 'comment', width: 40 },
-    { header: 'Статус', key: 'status', width: 14 },
   ];
   sheet.getRow(1).font = { bold: true };
 
@@ -173,7 +166,6 @@ async function buildWorkbook(submissions) {
       direction_from: item.direction_from || '',
       direction_to: item.direction_to || '',
       comment: item.comment || '',
-      status: SUBMISSION_STATUS_LABELS[item.status] || item.status || '',
     });
   }
 

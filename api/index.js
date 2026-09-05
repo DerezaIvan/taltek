@@ -383,12 +383,6 @@ app.get('/rebuild/status', checkRebuildToken, (_req, res) => {
 
 const EXPORT_TOKEN = process.env.EXPORT_TOKEN || '';
 
-const SUBMISSION_STATUS_LABELS = {
-  new: 'Новая',
-  processed: 'Обработана',
-  archived: 'Архив',
-};
-
 // Список полей коллекции submissions кэшируем ненадолго: поле created_at
 // могут добавить в Directus уже после деплоя, и выгрузка должна это подхватить.
 const FIELDS_CACHE_TTL = 5 * 60 * 1000;
@@ -473,7 +467,6 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
       { header: 'Откуда', key: 'direction_from', width: 18 },
       { header: 'Куда', key: 'direction_to', width: 18 },
       { header: 'Комментарий', key: 'comment', width: 40 },
-      { header: 'Статус', key: 'status', width: 14 },
     ];
     sheet.getRow(1).font = { bold: true };
 
@@ -489,7 +482,6 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
         direction_from: item.direction_from || '',
         direction_to: item.direction_to || '',
         comment: item.comment || '',
-        status: SUBMISSION_STATUS_LABELS[item.status] || item.status || '',
       });
     }
 
