@@ -8,6 +8,7 @@
     --action-button-pulse-color: rgba(30, 96, 179, 0.45);
 
     box-sizing: border-box;
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -69,7 +70,20 @@
     }
 
     &--pulse {
-      animation: action-button-pulse 2.2s ease-out infinite;
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border: 2px solid var(--action-button-pulse-color);
+        border-radius: inherit;
+        pointer-events: none;
+        animation: action-button-pulse-wave 1.8s linear infinite;
+      }
+
+      &::after {
+        animation-delay: -0.9s;
+      }
     }
 
      &--navy{
@@ -160,7 +174,11 @@
 
     @media (prefers-reduced-motion: reduce) {
       &--pulse {
-        animation: none;
+        &::before,
+        &::after {
+          display: none;
+          animation: none;
+        }
       }
 
       &:has(.action-button__runway):hover:not(:disabled) {
@@ -200,15 +218,15 @@
     }
   }
 
-  @keyframes action-button-pulse {
-    0%,
-    42% {
-      box-shadow: 0 0 0 0 var(--action-button-pulse-color);
+  @keyframes action-button-pulse-wave {
+    from {
+      opacity: 0.75;
+      transform: scale(1);
     }
 
-    72%,
-    100% {
-      box-shadow: 0 0 0 13px transparent;
+    to {
+      opacity: 0;
+      transform: scale(1.14, 1.42);
     }
   }
 }
