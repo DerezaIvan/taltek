@@ -25,7 +25,9 @@ export async function submitContactsForm(payload: ContactsFormPayload): Promise<
   const apiUrl = env.PUBLIC_API_URL;
 
   if (!apiUrl) {
-    throw new Error('Отправка формы не настроена: отсутствует PUBLIC_API_URL');
+    // GitHub Pages stage: имитируем успешную отправку без backend API.
+    await new Promise(resolve => setTimeout(resolve, 500));
+    return;
   }
 
   const response = await fetch(`${apiUrl.replace(/\/$/, '')}/contact`, {
