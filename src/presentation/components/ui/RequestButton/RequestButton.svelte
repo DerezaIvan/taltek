@@ -19,7 +19,7 @@
   );
 </script>
 
-<ActionButton {variant} href={requestHref} {type} {disabled} {...rest}>
+<ActionButton {variant} href={requestHref} {type} {disabled} pulse {...rest}>
   {REQUEST_BUTTON_LABEL}
   {#snippet icons()}
     <span class="action-button__icons-set action-button__icons-set--clone">

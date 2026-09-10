@@ -1,6 +1,7 @@
 <script lang="ts">
   import { resolve } from '$app/paths';
   import { RequestButton } from '$presentation/components/ui';
+  import { IconCheckmark } from '$presentation/components/icons';
   import {
     CONTACTS_CONSENT,
     CONTACTS_FORM_FIELDS,
@@ -8,6 +9,26 @@
     CONTACTS_WAGON_TYPES,
   } from '$shared/constants/contacts';
   import { submitContactsForm } from '$infrastructure/api/submit-form';
+
+  let successModalOpen = $state(false);
+
+  function closeSuccessModal() {
+    successModalOpen = false;
+  }
+
+  $effect(() => {
+    if (!successModalOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeSuccessModal();
+    };
+    window.addEventListener('keydown', onKeydown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeydown);
+    };
+  });
 
   interface FormErrors {
     name?: string;
@@ -70,8 +91,6 @@
   let errors = $state<FormErrors>({});
   let touched = $state<TouchedFields>({});
   let formError = $state('');
-  let formSuccess = $state('');
-  let successTimeout = $state<ReturnType<typeof setTimeout> | null>(null);
 
   const isFormValid = $derived(
     !validateName(name) && !validatePhone(phone) && !validateWagonType(wagonType) && consent
@@ -120,12 +139,6 @@
     if (touched.wagonType) errors.wagonType = validateWagonType(wagonType);
   });
 
-  $effect(() => {
-    return () => {
-      if (successTimeout) clearTimeout(successTimeout);
-    };
-  });
-
   function resetForm() {
     name = '';
     phone = '';
@@ -144,7 +157,6 @@
     event.preventDefault();
 
     formError = '';
-    formSuccess = '';
 
     touched = { name: true, phone: true, email: true, wagonType: true };
     errors = {
@@ -175,12 +187,8 @@
         comment: comment.trim(),
       });
 
-      formSuccess = 'Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.';
-      if (successTimeout) clearTimeout(successTimeout);
-      successTimeout = setTimeout(() => {
-        formSuccess = '';
-      }, 3000);
       resetForm();
+      successModalOpen = true;
     } catch (error) {
       formError =
         error instanceof Error ? error.message : 'Не удалось отправить форму. Попробуйте позже.';
@@ -192,6 +200,144 @@
 
 <style lang="scss">
   @use './_contacts-form.scss';
+
+  .success-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    &__backdrop {
+      position: absolute;
+      inset: 0;
+      border: none;
+      padding: 0;
+      cursor: default;
+      background: rgba(3, 32, 81, 0.62);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+    }
+
+    &__box {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 540px;
+      overflow: hidden;
+      padding: 52px 46px 44px;
+      border: 1px solid rgba(30, 96, 179, 0.16);
+      border-radius: 30px;
+      background: #fff;
+      box-shadow: 0 28px 80px rgba(3, 32, 81, 0.3);
+      text-align: center;
+    }
+
+    &__accent {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 7px;
+      background: linear-gradient(90.01deg, #1e60b3 0.01%, #0d3776 98.72%);
+    }
+
+    &__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      margin-bottom: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e60b3 0%, #0d3776 100%);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(30, 96, 179, 0.28);
+    }
+
+    &__title {
+      margin: 0 0 14px;
+      color: var(--brand-navy);
+      font-family: var(--font-family-uncage);
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    &__text {
+      max-width: 420px;
+      margin: 0 auto 28px;
+      color: var(--brand-navy-80);
+      font-family: var(--font-family-ubuntu);
+      font-size: 18px;
+      line-height: 1.55;
+    }
+
+    &__button {
+      min-width: 220px;
+      min-height: 58px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 30px;
+      background: linear-gradient(90.01deg, #1e60b3 0.01%, #0d3776 98.72%);
+      color: #fff;
+      cursor: pointer;
+      font-family: var(--font-family-ubuntu);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.46px;
+      line-height: 1;
+      text-transform: uppercase;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &__close {
+      position: absolute;
+      top: 19px;
+      right: 22px;
+      border: none;
+      background: transparent;
+      padding: 6px;
+      color: var(--brand-navy);
+      cursor: pointer;
+      font-size: 27px;
+      line-height: 1;
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      &__box {
+        padding: 46px 24px 32px;
+        border-radius: 22px;
+      }
+
+      &__icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 20px;
+      }
+
+      &__text {
+        font-size: 16px;
+      }
+
+      &__button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  }
 </style>
 
 <form class="contacts-form" onsubmit={handleSubmit} novalidate>
@@ -398,15 +544,45 @@
     <RequestButton variant="solid" type="submit" disabled={isSubmitDisabled} />
   </div>
 
+  {#if successModalOpen}
+    <div
+      class="success-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="success-modal-title"
+      aria-describedby="success-modal-text">
+      <button
+        type="button"
+        class="success-modal__backdrop"
+        aria-label="Закрыть"
+        onclick={closeSuccessModal}></button>
+      <div class="success-modal__box">
+        <span class="success-modal__accent" aria-hidden="true"></span>
+        <button
+          type="button"
+          class="success-modal__close"
+          aria-label="Закрыть"
+          onclick={closeSuccessModal}>
+          ×
+        </button>
+        <span class="success-modal__icon" aria-hidden="true">
+          <IconCheckmark />
+        </span>
+        <h3 id="success-modal-title" class="success-modal__title">Заявка отправлена</h3>
+        <p id="success-modal-text" class="success-modal__text" role="status">
+          Ваша заявка успешно отправлена, мы ответим на Ваш запрос в ближайшее время
+        </p>
+        <button type="button" class="success-modal__button" onclick={closeSuccessModal}>
+          Хорошо
+        </button>
+      </div>
+    </div>
+  {/if}
+
   {#if formError}
     <div class="contacts-form__message contacts-form__message--error" role="alert">
       {formError}
     </div>
   {/if}
 
-  {#if formSuccess}
-    <div class="contacts-form__message contacts-form__message--success" role="status">
-      {formSuccess}
-    </div>
-  {/if}
 </form>

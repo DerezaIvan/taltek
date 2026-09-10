@@ -8,6 +8,7 @@ export type ActionButtonProps = {
   href?: string;
   type?: HTMLButtonAttributes['type'];
   disabled?: boolean;
+  pulse?: boolean;
   children?: Snippet;
   icons?: Snippet;
 } & Omit<HTMLAnchorAttributes, 'href'> &
