@@ -49,4 +49,7 @@ jobs:
             DIRECTUS_CONTAINER=$(docker compose --profile cms ps -q directus)
             test -n "$DIRECTUS_CONTAINER"
             docker restart "$DIRECTUS_CONTAINER"
+            API_CONTAINER=$(docker compose ps -q api)
+            test -n "$API_CONTAINER"
+            docker exec "$API_CONTAINER" node -e 'fetch("http://127.0.0.1:3001/captcha/challenge").then(async response => { const body = await response.json(); if (!response.ok || !body.challenge || !body.salt || !body.signature) throw new Error("Некорректный ответ капчи"); console.log("Endpoint капчи работает"); }).catch(error => { console.error(error.message); process.exit(1); })'
             docker image prune -f
