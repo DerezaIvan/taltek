@@ -110,10 +110,13 @@ function validateEmail(value) {
 }
 
 app.post('/contact', async (req, res) => {
-  const { name, phone, email, company, wagonType, directionFrom, directionTo, comment } = req.body;
+  const { name, phone, email, company, okpo, wagonType, directionFrom, directionTo, comment } =
+    req.body;
 
-  if (!name?.trim() || !phone?.trim()) {
-    return res.status(400).json({ error: 'Имя и телефон обязательны для заполнения' });
+  if (!name?.trim() || !phone?.trim() || !company?.trim()) {
+    return res
+      .status(400)
+      .json({ error: 'Имя, телефон и название организации обязательны для заполнения' });
   }
 
   if (name.trim().length < 2) {
@@ -151,7 +154,8 @@ app.post('/contact', async (req, res) => {
     name: name.trim(),
     phone: phone.trim(),
     email: email?.trim() || '',
-    company: company?.trim() || '',
+    company: company.trim(),
+    okpo: okpo?.trim() || '',
     wagonType: wagonTypeLabel,
     directionFrom: directionFrom?.trim() || '',
     directionTo: directionTo?.trim() || '',
@@ -171,7 +175,8 @@ app.post('/contact', async (req, res) => {
       lead.phone,
       '',
       lead.email ? `Email: ${lead.email}` : null,
-      lead.company ? `Компания: ${lead.company}` : null,
+      `Компания: ${lead.company}`,
+      lead.okpo ? `ОКПО: ${lead.okpo}` : null,
       `Тип вагона: ${lead.wagonType}`,
       lead.directionFrom || lead.directionTo
         ? `Направление: ${lead.directionFrom || '—'} → ${lead.directionTo || '—'}`
@@ -187,7 +192,8 @@ app.post('/contact', async (req, res) => {
         <tr><td><strong>Имя</strong></td><td>${escapeHtml(lead.name)}</td></tr>
         <tr><td><strong>Телефон</strong></td><td>${escapeHtml(lead.phone)}</td></tr>
         ${lead.email ? `<tr><td><strong>Email</strong></td><td>${escapeHtml(lead.email)}</td></tr>` : ''}
-        ${lead.company ? `<tr><td><strong>Компания</strong></td><td>${escapeHtml(lead.company)}</td></tr>` : ''}
+        <tr><td><strong>Компания</strong></td><td>${escapeHtml(lead.company)}</td></tr>
+        ${lead.okpo ? `<tr><td><strong>ОКПО</strong></td><td>${escapeHtml(lead.okpo)}</td></tr>` : ''}
         <tr><td><strong>Тип вагона</strong></td><td>${escapeHtml(lead.wagonType)}</td></tr>
         ${lead.directionFrom || lead.directionTo ? `<tr><td><strong>Направление</strong></td><td>${escapeHtml(lead.directionFrom || '—')} → ${escapeHtml(lead.directionTo || '—')}</td></tr>` : ''}
         ${lead.comment ? `<tr><td><strong>Комментарий</strong></td><td>${escapeHtml(lead.comment)}</td></tr>` : ''}
@@ -238,6 +244,7 @@ async function saveLeadToDirectus(lead) {
       phone: lead.phone,
       email: lead.email,
       company: lead.company,
+      okpo: lead.okpo,
       wagon_type: lead.wagonType,
       direction_from: lead.directionFrom,
       direction_to: lead.directionTo,
@@ -272,6 +279,7 @@ function logBlockedSubmission(req, reason) {
     phone: cut(req.body?.phone),
     email: cut(req.body?.email),
     company: cut(req.body?.company),
+    okpo: cut(req.body?.okpo),
     wagon_type: cut(req.body?.wagonType),
     direction_from: cut(req.body?.directionFrom),
     direction_to: cut(req.body?.directionTo),
@@ -509,6 +517,7 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
       { header: 'Телефон', key: 'phone', width: 20 },
       { header: 'Email', key: 'email', width: 28 },
       { header: 'Компания', key: 'company', width: 24 },
+      { header: 'ОКПО', key: 'okpo', width: 14 },
       { header: 'Тип вагона', key: 'wagon_type', width: 18 },
       { header: 'Откуда', key: 'direction_from', width: 18 },
       { header: 'Куда', key: 'direction_to', width: 18 },
@@ -524,6 +533,7 @@ app.get('/export/submissions.xlsx', checkExportToken, async (req, res) => {
         phone: item.phone || '',
         email: item.email || '',
         company: item.company || '',
+        okpo: item.okpo || '',
         wagon_type: item.wagon_type || '',
         direction_from: item.direction_from || '',
         direction_to: item.direction_to || '',

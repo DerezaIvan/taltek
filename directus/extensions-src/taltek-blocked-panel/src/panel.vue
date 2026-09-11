@@ -213,6 +213,7 @@ const details = computed(() => {
     { label: 'Телефон', value: s.phone || '-', href: s.phone ? `tel:${s.phone.replace(/[^\d+]/g, '')}` : null },
     { label: 'Email', value: s.email || '-', href: s.email ? `mailto:${s.email}` : null },
     { label: 'Компания', value: s.company || '-' },
+    { label: 'ОКПО', value: s.okpo || '-' },
     { label: 'Тип вагона', value: s.wagon_type || '-' },
     { label: 'Направление', value: direction || '-' },
     { label: 'Комментарий', value: s.comment || '-' },

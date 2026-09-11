@@ -233,6 +233,7 @@ export interface DirectusSubmissionRecord {
   phone: string;
   email?: string | null;
   company?: string | null;
+  okpo?: string | null;
   wagon_type?: string | null;
   direction_from?: string | null;
   direction_to?: string | null;

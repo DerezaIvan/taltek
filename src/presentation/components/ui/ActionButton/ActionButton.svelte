@@ -6,6 +6,7 @@
     href,
     type = 'button',
     disabled = false,
+    pulse = false,
     children,
     icons,
     ...rest
@@ -24,6 +25,7 @@
     class:action-button--ghost={variant === 'ghost'}
     class:action-button--solid={variant === 'solid'}
     class:action-button--navy={variant === 'navy'}
+    class:action-button--pulse={pulse}
     {...rest}>
     {#if icons}
       <span class="action-button__content">
@@ -47,6 +49,7 @@
     class:action-button--ghost={variant === 'ghost'}
     class:action-button--solid={variant === 'solid'}
     class:action-button--navy={variant === 'navy'}
+    class:action-button--pulse={pulse}
     {...rest}>
     {#if icons}
       <span class="action-button__content">

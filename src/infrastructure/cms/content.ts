@@ -441,6 +441,7 @@ export async function createSubmission(
       phone: payload.phone,
       email: payload.email,
       company: payload.company,
+      okpo: payload.okpo,
       wagon_type: payload.wagon_type,
       direction_from: payload.direction_from,
       direction_to: payload.direction_to,

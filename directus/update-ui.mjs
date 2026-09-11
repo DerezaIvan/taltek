@@ -494,6 +494,7 @@ const uiConfig = [
       phone: { note: 'Телефон', translations: tr('Телефон') },
       email: { note: 'Email', translations: tr('Email') },
       company: { note: 'Компания', translations: tr('Компания') },
+      okpo: { note: 'ОКПО', translations: tr('ОКПО') },
       wagon_type: { note: 'Тип вагона', translations: tr('Тип вагона') },
       direction_from: { note: 'Откуда', translations: tr('Откуда') },
       direction_to: { note: 'Куда', translations: tr('Куда') },

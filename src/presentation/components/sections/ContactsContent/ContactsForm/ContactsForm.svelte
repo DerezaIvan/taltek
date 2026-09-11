@@ -3,6 +3,7 @@
   import { onMount } from 'svelte';
   import { env } from '$env/dynamic/public';
   import { RequestButton } from '$presentation/components/ui';
+  import { IconCheckmark } from '$presentation/components/icons';
   import {
     CONTACTS_CONSENT,
     CONTACTS_FORM_FIELDS,
@@ -25,6 +26,7 @@
 
   let captchaEnabled = $state(false);
   let captchaModalOpen = $state(false);
+  let successModalOpen = $state(false);
   let captchaToken = '';
 
   onMount(async () => {
@@ -50,12 +52,18 @@
     captchaModalOpen = false;
   }
 
+  function closeSuccessModal() {
+    successModalOpen = false;
+  }
+
   $effect(() => {
-    if (!captchaModalOpen) return;
+    if (!captchaModalOpen && !successModalOpen) return;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     const onKeydown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') closeCaptchaModal();
+      if (event.key !== 'Escape') return;
+      if (successModalOpen) closeSuccessModal();
+      else closeCaptchaModal();
     };
     window.addEventListener('keydown', onKeydown);
     return () => {
@@ -68,6 +76,7 @@
     name?: string;
     phone?: string;
     email?: string;
+    company?: string;
     wagonType?: string;
   }
 
@@ -75,6 +84,7 @@
     name?: boolean;
     phone?: boolean;
     email?: boolean;
+    company?: boolean;
     wagonType?: boolean;
   }
 
@@ -114,8 +124,15 @@
       phone = '+7';
     }
   }
+
+  function handleOkpoInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    okpo = input.value.replace(/\D/g, '').slice(0, 10);
+  }
+
   let email = $state('');
   let company = $state('');
+  let okpo = $state('');
   let wagonType = $state('');
   let directionFrom = $state('');
   let directionTo = $state('');
@@ -125,11 +142,13 @@
   let errors = $state<FormErrors>({});
   let touched = $state<TouchedFields>({});
   let formError = $state('');
-  let formSuccess = $state('');
-  let successTimeout = $state<ReturnType<typeof setTimeout> | null>(null);
 
   const isFormValid = $derived(
-    !validateName(name) && !validatePhone(phone) && !validateWagonType(wagonType) && consent
+    !validateName(name) &&
+      !validatePhone(phone) &&
+      !validateCompany(company) &&
+      !validateWagonType(wagonType) &&
+      consent
   );
   const isSubmitDisabled = $derived(isSubmitting || !isFormValid);
 
@@ -154,6 +173,11 @@
     return undefined;
   }
 
+  function validateCompany(value: string): string | undefined {
+    if (!value.trim()) return 'Обязательное поле';
+    return undefined;
+  }
+
   function validateWagonType(value: string): string | undefined {
     if (!value) return 'Обязательное поле';
     return undefined;
@@ -172,13 +196,11 @@
   });
 
   $effect(() => {
-    if (touched.wagonType) errors.wagonType = validateWagonType(wagonType);
+    if (touched.company) errors.company = validateCompany(company);
   });
 
   $effect(() => {
-    return () => {
-      if (successTimeout) clearTimeout(successTimeout);
-    };
+    if (touched.wagonType) errors.wagonType = validateWagonType(wagonType);
   });
 
   function resetForm() {
@@ -186,6 +208,7 @@
     phone = '';
     email = '';
     company = '';
+    okpo = '';
     wagonType = '';
     directionFrom = '';
     directionTo = '';
@@ -199,18 +222,31 @@
     event.preventDefault();
 
     formError = '';
-    formSuccess = '';
 
-    touched = { name: true, phone: true, email: true, wagonType: true };
+    touched = { name: true, phone: true, email: true, company: true, wagonType: true };
     errors = {
       name: validateName(name),
       phone: validatePhone(phone),
       email: validateEmail(email),
+      company: validateCompany(company),
       wagonType: validateWagonType(wagonType),
     };
 
-    if (errors.name || errors.phone || errors.email || errors.wagonType || !consent) {
-      if (!consent && !errors.name && !errors.phone && !errors.wagonType) {
+    if (
+      errors.name ||
+      errors.phone ||
+      errors.email ||
+      errors.company ||
+      errors.wagonType ||
+      !consent
+    ) {
+      if (
+        !consent &&
+        !errors.name &&
+        !errors.phone &&
+        !errors.company &&
+        !errors.wagonType
+      ) {
         formError = 'Необходимо согласие на обработку персональных данных';
       }
       return;
@@ -233,6 +269,7 @@
         phone: phone.trim(),
         email: email.trim(),
         company: company.trim(),
+        okpo: okpo.trim(),
         wagonType,
         directionFrom: directionFrom.trim(),
         directionTo: directionTo.trim(),
@@ -240,12 +277,8 @@
         captchaToken: captchaToken || undefined,
       });
 
-      formSuccess = 'Спасибо! Ваша заявка отправлена. Мы свяжемся с вами в ближайшее время.';
-      if (successTimeout) clearTimeout(successTimeout);
-      successTimeout = setTimeout(() => {
-        formSuccess = '';
-      }, 3000);
       resetForm();
+      successModalOpen = true;
     } catch (error) {
       formError =
         error instanceof Error ? error.message : 'Не удалось отправить форму. Попробуйте позже.';
@@ -318,6 +351,145 @@
     &__widget {
       display: flex;
       justify-content: center;
+    }
+  }
+
+  .success-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+
+    &__backdrop {
+      position: absolute;
+      inset: 0;
+      border: none;
+      padding: 0;
+      cursor: default;
+      background: rgba(3, 32, 81, 0.62);
+      backdrop-filter: blur(7px);
+      -webkit-backdrop-filter: blur(7px);
+    }
+
+    &__box {
+      position: relative;
+      box-sizing: border-box;
+      width: 100%;
+      max-width: 540px;
+      overflow: hidden;
+      padding: 52px 46px 44px;
+      border: 1px solid rgba(30, 96, 179, 0.16);
+      border-radius: 30px;
+      background: #fff;
+      box-shadow: 0 28px 80px rgba(3, 32, 81, 0.3);
+      text-align: center;
+    }
+
+    &__accent {
+      position: absolute;
+      inset: 0 0 auto;
+      height: 7px;
+      background: linear-gradient(90.01deg, #1e60b3 0.01%, #0d3776 98.72%);
+    }
+
+    &__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 68px;
+      height: 68px;
+      margin-bottom: 24px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e60b3 0%, #0d3776 100%);
+      color: #fff;
+      box-shadow: 0 12px 30px rgba(30, 96, 179, 0.28);
+    }
+
+    &__title {
+      margin: 0 0 14px;
+      color: var(--brand-navy);
+      font-family: var(--font-family-uncage);
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 500;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    &__text {
+      max-width: 420px;
+      margin: 0 auto 28px;
+      color: var(--brand-navy-80);
+      font-family: var(--font-family-ubuntu);
+      font-size: 18px;
+      line-height: 1.55;
+      text-align: left;
+    }
+
+    &__button {
+      min-width: 220px;
+      min-height: 58px;
+      border: none;
+      border-radius: 999px;
+      padding: 14px 30px;
+      background: linear-gradient(90.01deg, #1e60b3 0.01%, #0d3776 98.72%);
+      color: #fff;
+      cursor: pointer;
+      font-family: var(--font-family-ubuntu);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.46px;
+      line-height: 1;
+      text-transform: uppercase;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
+
+    &__close {
+      position: absolute;
+      top: 19px;
+      right: 22px;
+      border: none;
+      background: transparent;
+      padding: 6px;
+      color: var(--brand-navy);
+      cursor: pointer;
+      font-size: 27px;
+      line-height: 1;
+      opacity: 0.55;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      &__box {
+        padding: 46px 24px 32px;
+        border-radius: 22px;
+      }
+
+      &__icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 20px;
+      }
+
+      &__text {
+        font-size: 16px;
+      }
+
+      &__button {
+        width: 100%;
+        min-width: 0;
+      }
     }
   }
 </style>
@@ -410,17 +582,46 @@
     </div>
 
     <div class="contacts-form__field">
-      <label class="contacts-form__label" for="contacts-company">
+      <label
+        class="contacts-form__label"
+        class:contacts-form__label--required={CONTACTS_FORM_FIELDS.company.required}
+        for="contacts-company"
+      >
         {CONTACTS_FORM_FIELDS.company.label}
+        {#if CONTACTS_FORM_FIELDS.company.required}
+          <span class="contacts-form__required" aria-hidden="true">*</span>
+        {/if}
       </label>
       <input
         id="contacts-company"
         class="contacts-form__input"
+        class:contacts-form__input--error={touched.company && errors.company}
         type="text"
         name="company"
         autocomplete="organization"
         placeholder={CONTACTS_FORM_FIELDS.company.placeholder}
-        bind:value={company} />
+        bind:value={company}
+        onblur={() => (touched.company = true)}
+        aria-invalid={touched.company && errors.company ? 'true' : 'false'}
+        aria-describedby={touched.company && errors.company ? 'contacts-company-error' : undefined}
+      />
+      {#if touched.company && errors.company}
+        <span id="contacts-company-error" class="contacts-form__error" role="alert">
+          {errors.company}
+        </span>
+      {/if}
+      <input
+        id="contacts-okpo"
+        class="contacts-form__input"
+        type="text"
+        name="okpo"
+        inputmode="numeric"
+        maxlength="10"
+        aria-label={CONTACTS_FORM_FIELDS.okpo.label}
+        placeholder={CONTACTS_FORM_FIELDS.okpo.placeholder}
+        value={okpo}
+        oninput={handleOkpoInput}
+      />
     </div>
 
     <div class="contacts-form__field contacts-form__field--half">
@@ -544,15 +745,45 @@
     </div>
   {/if}
 
+  {#if successModalOpen}
+    <div
+      class="success-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="success-modal-title"
+      aria-describedby="success-modal-text">
+      <button
+        type="button"
+        class="success-modal__backdrop"
+        aria-label="Закрыть"
+        onclick={closeSuccessModal}></button>
+      <div class="success-modal__box">
+        <span class="success-modal__accent" aria-hidden="true"></span>
+        <button
+          type="button"
+          class="success-modal__close"
+          aria-label="Закрыть"
+          onclick={closeSuccessModal}>
+          ×
+        </button>
+        <span class="success-modal__icon" aria-hidden="true">
+          <IconCheckmark />
+        </span>
+        <h3 id="success-modal-title" class="success-modal__title">Заявка отправлена</h3>
+        <p id="success-modal-text" class="success-modal__text" role="status">
+          Ваша заявка успешно отправлена, мы ответим на Ваш запрос в ближайшее время
+        </p>
+        <button type="button" class="success-modal__button" onclick={closeSuccessModal}>
+          Хорошо
+        </button>
+      </div>
+    </div>
+  {/if}
+
   {#if formError}
     <div class="contacts-form__message contacts-form__message--error" role="alert">
       {formError}
     </div>
   {/if}
 
-  {#if formSuccess}
-    <div class="contacts-form__message contacts-form__message--success" role="status">
-      {formSuccess}
-    </div>
-  {/if}
 </form>

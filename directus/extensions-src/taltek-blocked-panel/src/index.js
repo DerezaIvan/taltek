@@ -19,6 +19,7 @@ export default definePanel({
         'phone',
         'email',
         'company',
+        'okpo',
         'wagon_type',
         'direction_from',
         'direction_to',
