@@ -42,9 +42,11 @@ jobs:
             git checkout main
             git pull --rebase --autostash origin main
             docker compose up -d --build
+            POSTGRES_CONTAINER=$(docker compose --profile cms ps -q postgres)
+            test -n "$POSTGRES_CONTAINER"
+            docker cp directus/migrate-okpo.sql "$POSTGRES_CONTAINER:/tmp/migrate-okpo.sql"
+            docker exec "$POSTGRES_CONTAINER" sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f /tmp/migrate-okpo.sql'
             DIRECTUS_CONTAINER=$(docker compose --profile cms ps -q directus)
             test -n "$DIRECTUS_CONTAINER"
-            docker cp directus/migrate-okpo.mjs "$DIRECTUS_CONTAINER:/tmp/migrate-okpo.mjs"
-            docker exec "$DIRECTUS_CONTAINER" node /tmp/migrate-okpo.mjs
             docker restart "$DIRECTUS_CONTAINER"
             docker image prune -f
