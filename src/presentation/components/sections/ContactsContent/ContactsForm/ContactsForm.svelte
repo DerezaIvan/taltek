@@ -311,6 +311,7 @@
       font-family: var(--font-family-ubuntu);
       font-size: 18px;
       line-height: 1.55;
+      text-align: left;
     }
 
     &__button {
