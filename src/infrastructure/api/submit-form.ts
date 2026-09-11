@@ -11,6 +11,7 @@ export interface ContactsFormPayload {
   phone: string;
   email: string;
   company: string;
+  okpo: string;
   wagonType: string;
   directionFrom: string;
   directionTo: string;

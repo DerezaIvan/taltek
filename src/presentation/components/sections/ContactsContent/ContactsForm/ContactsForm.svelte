@@ -34,6 +34,7 @@
     name?: string;
     phone?: string;
     email?: string;
+    company?: string;
     wagonType?: string;
   }
 
@@ -41,6 +42,7 @@
     name?: boolean;
     phone?: boolean;
     email?: boolean;
+    company?: boolean;
     wagonType?: boolean;
   }
 
@@ -80,8 +82,15 @@
       phone = '+7';
     }
   }
+
+  function handleOkpoInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    okpo = input.value.replace(/\D/g, '').slice(0, 10);
+  }
+
   let email = $state('');
   let company = $state('');
+  let okpo = $state('');
   let wagonType = $state('');
   let directionFrom = $state('');
   let directionTo = $state('');
@@ -93,7 +102,11 @@
   let formError = $state('');
 
   const isFormValid = $derived(
-    !validateName(name) && !validatePhone(phone) && !validateWagonType(wagonType) && consent
+    !validateName(name) &&
+      !validatePhone(phone) &&
+      !validateCompany(company) &&
+      !validateWagonType(wagonType) &&
+      consent
   );
   const isSubmitDisabled = $derived(isSubmitting || !isFormValid);
 
@@ -118,6 +131,11 @@
     return undefined;
   }
 
+  function validateCompany(value: string): string | undefined {
+    if (!value.trim()) return 'Обязательное поле';
+    return undefined;
+  }
+
   function validateWagonType(value: string): string | undefined {
     if (!value) return 'Обязательное поле';
     return undefined;
@@ -136,6 +154,10 @@
   });
 
   $effect(() => {
+    if (touched.company) errors.company = validateCompany(company);
+  });
+
+  $effect(() => {
     if (touched.wagonType) errors.wagonType = validateWagonType(wagonType);
   });
 
@@ -144,6 +166,7 @@
     phone = '';
     email = '';
     company = '';
+    okpo = '';
     wagonType = '';
     directionFrom = '';
     directionTo = '';
@@ -158,16 +181,30 @@
 
     formError = '';
 
-    touched = { name: true, phone: true, email: true, wagonType: true };
+    touched = { name: true, phone: true, email: true, company: true, wagonType: true };
     errors = {
       name: validateName(name),
       phone: validatePhone(phone),
       email: validateEmail(email),
+      company: validateCompany(company),
       wagonType: validateWagonType(wagonType),
     };
 
-    if (errors.name || errors.phone || errors.email || errors.wagonType || !consent) {
-      if (!consent && !errors.name && !errors.phone && !errors.wagonType) {
+    if (
+      errors.name ||
+      errors.phone ||
+      errors.email ||
+      errors.company ||
+      errors.wagonType ||
+      !consent
+    ) {
+      if (
+        !consent &&
+        !errors.name &&
+        !errors.phone &&
+        !errors.company &&
+        !errors.wagonType
+      ) {
         formError = 'Необходимо согласие на обработку персональных данных';
       }
       return;
@@ -181,6 +218,7 @@
         phone: phone.trim(),
         email: email.trim(),
         company: company.trim(),
+        okpo: okpo.trim(),
         wagonType,
         directionFrom: directionFrom.trim(),
         directionTo: directionTo.trim(),
@@ -433,17 +471,45 @@
     </div>
 
     <div class="contacts-form__field">
-      <label class="contacts-form__label" for="contacts-company">
+      <label
+        class="contacts-form__label"
+        class:contacts-form__label--required={CONTACTS_FORM_FIELDS.company.required}
+        for="contacts-company"
+      >
         {CONTACTS_FORM_FIELDS.company.label}
+        {#if CONTACTS_FORM_FIELDS.company.required}
+          <span class="contacts-form__required" aria-hidden="true">*</span>
+        {/if}
       </label>
       <input
         id="contacts-company"
         class="contacts-form__input"
+        class:contacts-form__input--error={touched.company && errors.company}
         type="text"
         name="company"
         autocomplete="organization"
         placeholder={CONTACTS_FORM_FIELDS.company.placeholder}
         bind:value={company}
+        onblur={() => (touched.company = true)}
+        aria-invalid={touched.company && errors.company ? 'true' : 'false'}
+        aria-describedby={touched.company && errors.company ? 'contacts-company-error' : undefined}
+      />
+      {#if touched.company && errors.company}
+        <span id="contacts-company-error" class="contacts-form__error" role="alert">
+          {errors.company}
+        </span>
+      {/if}
+      <input
+        id="contacts-okpo"
+        class="contacts-form__input"
+        type="text"
+        name="okpo"
+        inputmode="numeric"
+        maxlength="10"
+        aria-label={CONTACTS_FORM_FIELDS.okpo.label}
+        placeholder={CONTACTS_FORM_FIELDS.okpo.placeholder}
+        value={okpo}
+        oninput={handleOkpoInput}
       />
     </div>
 

@@ -24,6 +24,11 @@ export const CONTACTS_FORM_FIELDS = {
   company: {
     label: 'Компания',
     placeholder: 'Название организации',
+    required: true,
+  },
+  okpo: {
+    label: 'ОКПО',
+    placeholder: 'ОКПО',
     required: false,
   },
   wagonType: {

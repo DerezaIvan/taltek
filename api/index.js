@@ -93,10 +93,13 @@ function validateEmail(value) {
 }
 
 app.post('/contact', async (req, res) => {
-  const { name, phone, email, company, wagonType, directionFrom, directionTo, comment } = req.body;
+  const { name, phone, email, company, okpo, wagonType, directionFrom, directionTo, comment } =
+    req.body;
 
-  if (!name?.trim() || !phone?.trim()) {
-    return res.status(400).json({ error: 'Имя и телефон обязательны для заполнения' });
+  if (!name?.trim() || !phone?.trim() || !company?.trim()) {
+    return res
+      .status(400)
+      .json({ error: 'Имя, телефон и название организации обязательны для заполнения' });
   }
 
   if (name.trim().length < 2) {
@@ -125,7 +128,8 @@ app.post('/contact', async (req, res) => {
     name: name.trim(),
     phone: phone.trim(),
     email: email?.trim() || '',
-    company: company?.trim() || '',
+    company: company.trim(),
+    okpo: okpo?.trim() || '',
     wagonType: wagonTypeLabel,
     directionFrom: directionFrom?.trim() || '',
     directionTo: directionTo?.trim() || '',
@@ -147,7 +151,8 @@ app.post('/contact', async (req, res) => {
       lead.phone,
       '',
       lead.email ? `Email: ${lead.email}` : null,
-      lead.company ? `Компания: ${lead.company}` : null,
+      `Компания: ${lead.company}`,
+      lead.okpo ? `ОКПО: ${lead.okpo}` : null,
       `Тип вагона: ${lead.wagonType}`,
       lead.directionFrom || lead.directionTo
         ? `Направление: ${lead.directionFrom || '—'} → ${lead.directionTo || '—'}`
@@ -163,7 +168,8 @@ app.post('/contact', async (req, res) => {
         <tr><td><strong>Имя</strong></td><td>${escapeHtml(lead.name)}</td></tr>
         <tr><td><strong>Телефон</strong></td><td>${escapeHtml(lead.phone)}</td></tr>
         ${lead.email ? `<tr><td><strong>Email</strong></td><td>${escapeHtml(lead.email)}</td></tr>` : ''}
-        ${lead.company ? `<tr><td><strong>Компания</strong></td><td>${escapeHtml(lead.company)}</td></tr>` : ''}
+        <tr><td><strong>Компания</strong></td><td>${escapeHtml(lead.company)}</td></tr>
+        ${lead.okpo ? `<tr><td><strong>ОКПО</strong></td><td>${escapeHtml(lead.okpo)}</td></tr>` : ''}
         <tr><td><strong>Тип вагона</strong></td><td>${escapeHtml(lead.wagonType)}</td></tr>
         ${lead.directionFrom || lead.directionTo ? `<tr><td><strong>Направление</strong></td><td>${escapeHtml(lead.directionFrom || '—')} → ${escapeHtml(lead.directionTo || '—')}</td></tr>` : ''}
         ${lead.comment ? `<tr><td><strong>Комментарий</strong></td><td>${escapeHtml(lead.comment)}</td></tr>` : ''}
