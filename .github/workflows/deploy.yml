@@ -31,16 +31,25 @@ jobs:
     steps:
       - name: Deploy to server via SSH
         uses: appleboy/ssh-action@v1
+        env:
+          DIGEST_EMAILS: ${{ vars.DIGEST_EMAILS }}
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT || '22' }}
+          envs: DIGEST_EMAILS
           script: |
             set -e
             cd ${{ secrets.PROJECT_DIR }}
             git checkout main
             git pull --rebase --autostash origin main
+            test -n "$DIGEST_EMAILS"
+            if grep -q '^DIGEST_EMAILS=' .env; then
+              sed -i "s|^DIGEST_EMAILS=.*$|DIGEST_EMAILS=$DIGEST_EMAILS|" .env
+            else
+              printf '\nDIGEST_EMAILS=%s\n' "$DIGEST_EMAILS" >> .env
+            fi
             docker compose up -d --build
             POSTGRES_CONTAINER=$(docker compose --profile cms ps -q postgres)
             test -n "$POSTGRES_CONTAINER"
