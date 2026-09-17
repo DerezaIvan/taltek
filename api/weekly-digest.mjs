@@ -2,9 +2,11 @@ import ExcelJS from 'exceljs';
 
 // Europe/Moscow — всегда UTC+3, перехода на летнее время нет.
 const MSK_OFFSET_MS = 3 * 60 * 60 * 1000;
+const DAY_MS = 24 * 60 * 60 * 1000;
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
+const DIGEST_WEEKDAYS_UTC = [3, 5]; // Среда и пятница; для МСК в 09:00 день совпадает с UTC.
 
-// Еженедельная рассылка заявок за прошлую неделю: каждый понедельник
+// Рассылка заявок за непересекающиеся периоды: каждую среду и пятницу
 // в 09:00 МСК (06:00 UTC) отправляет XLSX-отчёт на адреса из DIGEST_EMAILS.
 export function startWeeklyDigest({ getTransporter, directusUrl, directusToken }) {
   const recipients = (process.env.DIGEST_EMAILS || '')
@@ -14,13 +16,13 @@ export function startWeeklyDigest({ getTransporter, directusUrl, directusToken }
 
   if (recipients.length === 0) {
     console.warn(
-      'Еженедельная рассылка не запущена: не задан DIGEST_EMAILS (список получателей через запятую).'
+      'Рассылка заявок не запущена: не задан DIGEST_EMAILS (список получателей через запятую).'
     );
     return;
   }
   if (!directusUrl || !directusToken) {
     console.warn(
-      'Еженедельная рассылка не запущена: Directus не настроен (PUBLIC_DIRECTUS_URL / DIRECTUS_API_TOKEN).'
+      'Рассылка заявок не запущена: Directus не настроен (PUBLIC_DIRECTUS_URL / DIRECTUS_API_TOKEN).'
     );
     return;
   }
@@ -29,17 +31,9 @@ export function startWeeklyDigest({ getTransporter, directusUrl, directusToken }
   const run = () => runDigest({ getTransporter, directusUrl: baseUrl, directusToken, recipients });
 
   if (!getTransporter()) {
-    console.warn('Еженедельная рассылка: SMTP не настроен, планировщик не запущен.');
+    console.warn('Рассылка заявок: SMTP не настроен, планировщик не запущен.');
   } else {
-    const nextRun = getNextRunDate();
-    console.log(
-      `Еженедельная рассылка заявок запущена. Следующая отправка: ${nextRun.toISOString()} ` +
-        `(${formatMoscowDateTime(nextRun)} МСК). Получатели: ${recipients.join(', ')}`
-    );
-    setTimeout(() => {
-      run();
-      setInterval(run, WEEK_MS);
-    }, nextRun.getTime() - Date.now());
+    scheduleNextRun(run, recipients);
   }
 
   if (process.env.DIGEST_RUN_NOW === '1') {
@@ -48,75 +42,100 @@ export function startWeeklyDigest({ getTransporter, directusUrl, directusToken }
   }
 }
 
+function scheduleNextRun(run, recipients) {
+  const nextRun = getNextRunDate();
+  console.log(
+    `Рассылка заявок запущена. Следующая отправка: ${nextRun.toISOString()} ` +
+      `(${formatMoscowDateTime(nextRun)} МСК). Получатели: ${recipients.join(', ')}`
+  );
+  setTimeout(() => {
+    run();
+    scheduleNextRun(run, recipients);
+  }, nextRun.getTime() - Date.now());
+}
+
 async function runDigest({ getTransporter, directusUrl, directusToken, recipients }) {
   try {
-    const { start, end } = getLastWeekRange();
+    const { start, end } = getDigestRange();
     const periodLabel = `${formatMoscowDay(start)}–${formatMoscowDay(end)}`;
 
     const submissions = await fetchSubmissions(directusUrl, directusToken, start, end);
     const buffer = await buildWorkbook(submissions);
     console.log(
-      `Еженедельная рассылка: отчёт за неделю ${periodLabel} сформирован, ` +
+      `Рассылка заявок: отчёт за период ${periodLabel} сформирован, ` +
         `заявок: ${submissions.length}, XLSX ${buffer.length} байт.`
     );
 
     const transporter = getTransporter();
     if (!transporter) {
-      console.warn('Еженедельная рассылка: SMTP не настроен, письмо не отправлено.');
+      console.warn('Рассылка заявок: SMTP не настроен, письмо не отправлено.');
       return;
     }
 
     await transporter.sendMail({
       from: process.env.FROM_EMAIL ? `"Сайт Taltek" <${process.env.FROM_EMAIL}>` : undefined,
       to: recipients.join(', '),
-      subject: `Заявки с сайта за неделю ${periodLabel}`,
+      subject: `Заявки с сайта за период ${periodLabel}`,
       text:
         submissions.length > 0
-          ? `Заявки с сайта за неделю ${periodLabel}.\n\nВсего заявок: ${submissions.length}.\n\nСписок заявок — во вложенном Excel-файле.`
-          : `Заявки с сайта за неделю ${periodLabel}.\n\nЗа прошедшую неделю заявок не было.\n\nПисьмо отправлено для подтверждения того, что рассылка работает.`,
+          ? `Заявки с сайта за период ${periodLabel}.\n\nВсего заявок: ${submissions.length}.\n\nСписок заявок — во вложенном Excel-файле.`
+          : `Заявки с сайта за период ${periodLabel}.\n\nЗа указанный период заявок не было.\n\nПисьмо отправлено для подтверждения того, что рассылка работает.`,
       attachments: [
         {
-          filename: `zayavki-${formatMoscowIsoDay(start)}.xlsx`,
+          filename: `zayavki-${formatMoscowIsoDay(start)}-${formatMoscowIsoDay(end)}.xlsx`,
           content: buffer,
         },
       ],
     });
-    console.log(`Еженедельная рассылка отправлена (${submissions.length} заявок): ${recipients.join(', ')}`);
+    console.log(`Рассылка заявок отправлена (${submissions.length} заявок): ${recipients.join(', ')}`);
   } catch (error) {
-    console.error('Ошибка еженедельной рассылки заявок:', error);
+    console.error('Ошибка рассылки заявок:', error);
   }
 }
 
-// Прошлая неделя: понедельник 00:00:00 МСК — воскресенье 23:59:59 МСК.
-// Считаем в сдвинутом на +3 часа времени, где UTC-поля даты — это московское время.
-function getLastWeekRange(now = new Date()) {
+// Для среды: предыдущая пятница 00:00:00 МСК — вторник 23:59:59 МСК.
+// Для пятницы: среда 00:00:00 МСК — четверг 23:59:59 МСК.
+// При ручном запуске берём период последнего наступившего дня рассылки.
+export function getDigestRange(now = new Date()) {
   const mskNow = new Date(now.getTime() + MSK_OFFSET_MS);
-  const daysSinceMonday = (mskNow.getUTCDay() + 6) % 7;
-  const thisMondayMsk = Date.UTC(
+  const mskWeekday = mskNow.getUTCDay();
+  const beforeDispatchTime = mskNow.getUTCHours() < 9;
+  let daysSinceWednesday = (mskWeekday - 3 + 7) % 7;
+  let daysSinceFriday = (mskWeekday - 5 + 7) % 7;
+  if (daysSinceWednesday === 0 && beforeDispatchTime) daysSinceWednesday = 7;
+  if (daysSinceFriday === 0 && beforeDispatchTime) daysSinceFriday = 7;
+  const dispatchWeekday = daysSinceWednesday <= daysSinceFriday ? 3 : 5;
+  const daysSinceDispatch = Math.min(daysSinceWednesday, daysSinceFriday);
+  const dispatchDayMsk = Date.UTC(
     mskNow.getUTCFullYear(),
     mskNow.getUTCMonth(),
-    mskNow.getUTCDate() - daysSinceMonday
+    mskNow.getUTCDate() - daysSinceDispatch
   );
-  // Границы в UTC для фильтра по created_at (DateTime в UTC).
+  const startDaysBeforeDispatch = dispatchWeekday === 3 ? 5 : 2;
+
   return {
-    start: new Date(thisMondayMsk - MSK_OFFSET_MS - WEEK_MS),
-    end: new Date(thisMondayMsk - MSK_OFFSET_MS - 1000),
+    start: new Date(dispatchDayMsk - MSK_OFFSET_MS - startDaysBeforeDispatch * DAY_MS),
+    end: new Date(dispatchDayMsk - MSK_OFFSET_MS - 1),
   };
 }
 
-// Ближайший понедельник 06:00:00 UTC (09:00 МСК) в будущем.
-function getNextRunDate(now = new Date()) {
-  const daysUntilMonday = (8 - now.getUTCDay()) % 7;
-  let next = Date.UTC(
-    now.getUTCFullYear(),
-    now.getUTCMonth(),
-    now.getUTCDate() + daysUntilMonday,
-    6,
-    0,
-    0
-  );
-  if (next <= now.getTime()) next += WEEK_MS;
-  return new Date(next);
+// Ближайшая среда или пятница в 06:00:00 UTC (09:00 МСК) в будущем.
+export function getNextRunDate(now = new Date()) {
+  const candidates = DIGEST_WEEKDAYS_UTC.map(weekday => {
+    const daysUntilWeekday = (weekday - now.getUTCDay() + 7) % 7;
+    let next = Date.UTC(
+      now.getUTCFullYear(),
+      now.getUTCMonth(),
+      now.getUTCDate() + daysUntilWeekday,
+      6,
+      0,
+      0
+    );
+    if (next <= now.getTime()) next += WEEK_MS;
+    return next;
+  });
+
+  return new Date(Math.min(...candidates));
 }
 
 async function fetchSubmissions(directusUrl, directusToken, start, end) {
