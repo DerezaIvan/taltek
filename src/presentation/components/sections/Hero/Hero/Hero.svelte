@@ -7,7 +7,7 @@
   import { DEFAULT_HERO_TITLE, DEFAULT_HERO_TITLE_MOBILE } from '$shared/constants/hero';
   import type { HeroProps } from '$shared/interfaces';
 
-  let { title, subtitle, background }: HeroProps = $props();
+  let { title, background }: HeroProps = $props();
 
   const resolvedTitle = $derived(title?.trim() || DEFAULT_HERO_TITLE);
   // const resolvedSubtitle = $derived(subtitle?.trim() || DEFAULT_HERO_SUBTITLE);
@@ -70,10 +70,5 @@
 <div class="container">
   <div class="hero__actions">
     <RequestButton variant="solid" />
-
-    <ActionButton variant="navy" href={`${resolve('/services/')}#${FLEET_MODELS_ANCHOR}`}>
-      Услуги и парк вагонов
-      <IconArrowExplore />
-    </ActionButton>
   </div>
 </div>

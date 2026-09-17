@@ -19,7 +19,6 @@ export interface FleetModelItem {
 }
 
 const DEFAULT_SPECS_TAIL: readonly FleetModelSpec[] = [
-  { label: 'Количество', value: 'уточняется' },
   { label: 'Год выпуска', value: '2025/2026' },
 ];
 
@@ -49,7 +48,6 @@ export const FLEET_MODELS_ITEMS: readonly FleetModelItem[] = [
     specs: [
       { label: 'Грузоподъёмность', value: 'до 70 т' },
       { label: 'Объём кузова', value: 'до 88 м³' },
-      { label: 'Количество', value: 'уточняется' },
       { label: 'Год выпуска', value: '2022-2025' },
     ],
   },
