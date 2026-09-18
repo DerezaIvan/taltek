@@ -55,6 +55,8 @@ jobs:
             test -n "$POSTGRES_CONTAINER"
             docker cp directus/migrate-okpo.sql "$POSTGRES_CONTAINER:/tmp/migrate-okpo.sql"
             docker exec "$POSTGRES_CONTAINER" sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f /tmp/migrate-okpo.sql'
+            docker cp directus/migrate-remove-fleet-quantity.sql "$POSTGRES_CONTAINER:/tmp/migrate-remove-fleet-quantity.sql"
+            docker exec "$POSTGRES_CONTAINER" sh -c 'psql -v ON_ERROR_STOP=1 -U "$POSTGRES_USER" -d "$POSTGRES_DB" -f /tmp/migrate-remove-fleet-quantity.sql'
             DIRECTUS_CONTAINER=$(docker compose --profile cms ps -q directus)
             test -n "$DIRECTUS_CONTAINER"
             docker restart "$DIRECTUS_CONTAINER"

@@ -4,6 +4,8 @@
   import type { DirectusFleetModelRecord } from '$infrastructure/cms/types';
 
   const { models = null }: { models?: DirectusFleetModelRecord[] | null } = $props();
+  const visibleSpecs = (specs: readonly { label: string; value: string }[] | null | undefined) =>
+    (specs ?? []).filter(spec => spec.label !== 'Количество');
 
   const items = $derived(
     models && models.length > 0
@@ -20,8 +22,8 @@
           imageAlt: model.image_alt ?? FLEET_MODELS_ITEMS[index]?.imageAlt ?? model.title,
           specs:
             model.specs && model.specs.length > 0
-              ? model.specs
-              : (FLEET_MODELS_ITEMS[index]?.specs ?? []),
+              ? visibleSpecs(model.specs)
+              : visibleSpecs(FLEET_MODELS_ITEMS[index]?.specs),
         }))
       : FLEET_MODELS_ITEMS
   );
