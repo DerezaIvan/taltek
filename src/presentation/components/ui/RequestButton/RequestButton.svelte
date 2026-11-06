@@ -4,6 +4,7 @@
   import { IconWagonBox, IconWagonFlat, IconWagonHopper } from '$presentation/components/icons';
   import { CONTACTS_FORM_ANCHOR } from '$shared/constants/navigation';
   import { REQUEST_BUTTON_CAPTION, REQUEST_BUTTON_LABEL } from '$shared/constants/request';
+  import { METRIKA_GOALS, reachGoal } from '$shared/utils/metrika';
   import type { RequestButtonProps } from '$shared/interfaces';
 
   let {
@@ -17,6 +18,8 @@
   const requestHref = $derived(
     type === 'submit' ? href : (href ?? `${resolve('/contacts/')}#${CONTACTS_FORM_ANCHOR}`)
   );
+
+  const trackClick = () => reachGoal(METRIKA_GOALS.PULSE_TTT_CLICK);
 </script>
 
 <style lang="scss">
@@ -94,7 +97,7 @@
 </style>
 
 <span class="request-button" class:request-button--glass={variant === 'glass'}>
-  <ActionButton {variant} href={requestHref} {type} {disabled} pulse {...rest}>
+  <ActionButton {variant} href={requestHref} {type} {disabled} pulse onclick={trackClick} {...rest}>
     <span class="request-button__title">{REQUEST_BUTTON_LABEL}</span>
   </ActionButton>
   <span class="request-button__details">

@@ -8,6 +8,10 @@ declare global {
   namespace App {
     interface Locals {}
   }
+
+  interface Window {
+    ym?: (counterId: number, method: string, ...args: unknown[]) => void;
+  }
 }
 
 export {};
